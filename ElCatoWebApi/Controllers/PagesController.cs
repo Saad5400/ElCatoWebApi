@@ -29,7 +29,7 @@ namespace ElCatoWebApi.Controllers
         [HttpGet]
         public async Task<IActionResult> GetPages()
         {
-            return Ok(_db.Pages.Select(p => Page.WithSectionAndCardSelector(p)).AsParallel());
+            return Ok(_db.Pages.Select(p => Page.WithCardSelector(p)).AsParallel());
         }
 
         // GET: api/Pages/5
@@ -46,6 +46,19 @@ namespace ElCatoWebApi.Controllers
             }
 
             return page;
+        }
+
+        [HttpPost("upsert")]
+        public async Task<IActionResult> UpsertPage(Page page)
+        {
+            if (page.Id == 0)
+            {
+                return await PostPage(page);
+            }
+            else
+            {
+                return await PutPage(page.Id, page);
+            }
         }
 
         // PUT: api/Pages/5
@@ -82,12 +95,8 @@ namespace ElCatoWebApi.Controllers
         // POST: api/Pages
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Page>> PostPage(Page page)
+        public async Task<IActionResult> PostPage(Page page)
         {
-            if (_db.Pages == null)
-            {
-                return Problem("Entity set 'AppDbContext.Pages'  is null.");
-            }
             _db.Pages.Add(page);
             await _db.SaveChangesAsync();
 
@@ -98,10 +107,6 @@ namespace ElCatoWebApi.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletePage(int id)
         {
-            if (_db.Pages == null)
-            {
-                return NotFound();
-            }
             var page = await _db.Pages.FindAsync(id);
             if (page == null)
             {

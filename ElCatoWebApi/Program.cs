@@ -73,6 +73,9 @@ public class Program
             });
         });
 
+        // Respne caching
+        builder.Services.AddResponseCaching();
+
         var app = builder.Build();
 
         // Configure the HTTP request pipeline.

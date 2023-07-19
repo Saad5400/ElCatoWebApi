@@ -32,6 +32,19 @@ namespace ElCatoWebApi.Controllers
             return Ok(_db.Cards.Select(c => Card.WithSectionSelector(c)).AsParallel());
         }
 
+        [HttpPost("upsert")]
+        public async Task<IActionResult> UpsertCard(Card card)
+        {
+            if (card.Id == 0)
+            {
+                return await PostCard(card);
+            }
+            else
+            {
+                return await PutCard(card.Id, card);
+            }
+        }
+
         // GET: api/Cards/5
         [AllowAnonymous]
         [HttpGet("{id}")]
@@ -81,7 +94,7 @@ namespace ElCatoWebApi.Controllers
         // POST: api/Cards
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Card>> PostCard(Card card)
+        public async Task<IActionResult> PostCard(Card card)
         {
             _db.Cards.Add(card);
             await _db.SaveChangesAsync();
