@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>
+        شرح اسايمنت 2
+    </title>
+
+    <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js?lang=java&amp;skin=sunburst"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <link rel="stylesheet" href="./../css/bootstrap.css">
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+<style>
+    html {
+        scroll-behavior: smooth;
+    }
+
+    p {
+        color: white;
+    }
+
+    .videoWrapper {
+        position: relative;
+        padding-bottom: 56.25%;
+        /* 16:9 */
+        padding-top: 25px;
+        height: 0;
+    }
+
+    .videoWrapper iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+    body {
+        -moz-user-select: none; 
+        -webkit-user-select: none; 
+        -ms-user-select:none; 
+        user-select:none;
+        -o-user-select:none;
+    }
+</style>
+
+</head>
+
+<body class="container" dir="rtl" id="fullCode"  unselectable="on" onselectstart="return false;" onmousedown="return false;">
+
+    <br>
+    <div class="row">
+        <div class="col">
+            <h5 class="text-primary">
+                ملف App.java
+            </h5>
+        </div>
+        <div class="col">
+            <h5 class="text-start">
+                دعواتكم ❤️
+            </h5>
+        </div>
+    </div>
+    <br>
+    <div class="text-center my-4">
+        <a class="btn btn-primary w-75" onclick="showFullCode(this);">
+            اضغط لاظهار الكود
+        </a>
+    </div>
+
+
+
+<pre id="fullScript" class="prettyprint" dir="ltr" hidden>
+package edu.uqu.cs;
+
+/* After completing this assignment, students will learn:
+* How to create and use user-defined methods 
+* How to call static methods
+* How to use built-in methods of class Math 
+* How to use built-in methods of class Random
+* How to control the flow of a program with IF-ELSE
+* How to control the flow of a program with SWITCH
+*/
+
+
+//import Random class below
+import java.util.Random;
+//import Scanner class below
+import java.util.Scanner;
+
+//DO NOT CHANGE CLASS NAME
+public class App {
+
+    
+    //Write a static method named "findDistance" that calculates and returns
+    //the distance between two points (x1,y1) and (x2,y2)
+    //All parameters and return value are of type double
+    //Parameters list should be match the following  (x1, y1, x2, y2)
+
+    //Hint: to calculate the distance use the following equation:
+    //distance = squareroot [(x2-x1)^2+(y2-y1)^2]
+    //Note: you may use methods of Math class
+
+    //Example: If point one is (7.5, 29.3) and point two is (48.1, 55.3)
+    //Then, the return value should be: 62.7152294
+
+
+    /**findDistance Method code should be below this comment**/
+    public static double findDistance(double x1, double x2, double y1, double y2) {
+        return Math.sqrt( Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2) );
+    }
+
+    /****************End of findDistnace Method****************/
+
+
+    //write a static method named "sumOfThreeMultiples" that 
+    //takes one integer number as parameter 
+    //and returns the sum of the first 3 multiples of that number
+
+    //For example: if the number equals 7, then 7 + 14 + 21= 42
+    //the return value should be: 42
+
+    /**sumOfThreeMultiples Method code should be below this comment**/
+    public static int sumOfThreeMultiples(int x) {
+        return x + x*2 + x*3;
+    }
+
+    /***************End of sumOfThreeMultiples Method*****************/
+    
+
+
+    //write a static method named "findMaxDigit" that 
+    //takes one integer number as a parameter which consists of 4 digits
+    //and returns the maximum digit among the 4 
+
+    //For example: if the given number is 2583
+    //Then, the return value should be 8
+
+    //Hint: to pull a number a part to its didgits, use n/10 and n%10
+    //Note: use if-else to find the maximum digit
+
+    // NEVER XcQ
+    /**findMaxDigit Method code should be below this comment**/
+    public static int findMaxDigit(int x) {
+
+        // 2583 / 1000 = 2
+        int firstDigit = x / 1000;
+
+        // 2583 / 100 = 25, 25 % 10 = 5
+        int secondDigit = (x / 100) % 10;
+
+        // 2583 / 10 = 258, 258 % 10 = 8
+        int thirdDigit = (x / 10) % 10;
+
+        // 2583 % 10 = 3
+        int fourthDigit = x % 10;
+
+        // assume the first digit is the max digit
+        int max = firstDigit;
+
+        if (secondDigit > max) {
+            max = secondDigit;
+        }
+
+        if (thirdDigit > max) {
+            max = thirdDigit;
+        }
+
+        if (fourthDigit > max) {
+            max = fourthDigit;
+        }
+
+        return max;
+    }
+
+
+    /***************End of findMaxDigit Method*****************/	
+
+    
+    //write a static method named "guessingNumber" that 
+    //takes one integer number as a parameter between the range of 1 to 100
+    //and returns true if the number matches a random number and displays "Congratulations!"
+    //else method returns false if the number is less than the random number and displays "Too low!"
+    //otherwise the method reutrns false if the number is greater than the random number and displays "Too high!"
+    
+    //For example: if the number equals 25 and the random number is 90
+    //the return value should be false
+    //and the output is: Too low!
+    
+    /** Hint: 
+        * Use Random class methods of the `rng` variable defined below
+        * For example, to get a random integer number between 0 and 10, and store it in a variable `r`,
+        * you can use the following statement: 
+        * int r = rng.nextInt(11);
+        * 
+        * Note 01: the Random object/variable has beed defined for you, so you only need to use it inside the method's body
+        *          its called "rng"
+        * Note 02: use if else to compare numbers
+        */ 
+    
+    public static Random rng = new Random ();
+    /**guessingNumber Method code should be below this comment**/
+    public static boolean guessingNumber(int x) {
+
+        int randomNumber = rng.nextInt(101);
+
+        if (x > randomNumber) {
+            System.out.println("Too high!");
+            return false;
+        }
+        else if (x < randomNumber) {
+            System.out.println("Too low!");
+            return false;
+        }
+        else if (x == randomNumber) {
+            System.out.println("Congratulations!");
+            return true;
+        }
+
+        return false;
+    }
+
+    /***************End of guessingNumber Method*****************/
+
+
+    //write a static method named "convertMonth" that takes a Gregorian month name
+    //and returns the month number or -1 if the month name is wrong
+    
+    //For example: if the month is January, the returned value is 1	
+
+    //Hint: you may use switch-cases
+
+    /**convertMonth Method code should be below this comment**/
+    public static int convertMonth(String monthName) {
+
+        switch (monthName) {
+            case "January":
+                return 1;
+            case "February":
+                return 2;
+            case "March":
+                return 3;
+            case "April":
+                return 4;
+            case "May":
+                return 5;
+            case "June":
+                return 6;
+            case "July":
+                return 7;
+            case "August":
+                return 8;
+            case "September":
+                return 9;
+            case "October":
+                return 10;
+            case "November":
+                return 11;
+            case "December":
+                return 12;
+            default:
+                return -1;
+        }
+    }
+
+    /***************End of convertMonth Method*****************/
+
+
+    /*************** main Method *****************/
+    //Write your code under each comment
+
+    public static void main (String []args){
+
+        Scanner scanner = new Scanner(System.in);
+
+        //prompt users to enter the coordinates of the first point x1 and y1 separated by space
+        System.out.println("Enter first points x, y: ");
+        int x1 = scanner.nextInt();
+        int y1 = scanner.nextInt();
+        //prompt users to enter the coordinates of the second point x2 and y2 separated by space
+        System.out.println("Enter second points x, y: ");
+        int x2 = scanner.nextInt();
+        int y2 = scanner.nextInt();
+        /*call method findDistance(x1,x2,y1,y2) to calculate the distance 
+        * between the given two points
+        * display the return distance value*/
+        System.out.println(findDistance(x1, y1, x2, y2));
+        
+
+        //prompt user to enter an integer number n
+        System.out.println("Enter number n: ");
+        int n = scanner.nextInt();
+
+        /*call method sumOfThreeMultiples() to find the first three multiples 
+        * of the given number
+        * display the sum */
+        System.out.println(sumOfThreeMultiples(n));
+        
+
+        //prompt user to enter a 4-digit number
+        System.out.println("Enter 4-digit number: ");
+        int fourDigitNumber = scanner.nextInt();
+
+        /*call method findMaxDigit() to find the maximum digit among the 4
+        *display the maximum value*/
+        System.out.println(findMaxDigit(fourDigitNumber));
+        
+
+        //prompt user to enter a whole number (integer)
+        System.out.println("Enter a whole number: ");
+        int wholeNumber = scanner.nextInt();
+        //call method guessingNumber() to compare a random number with the given one
+        guessingNumber(wholeNumber);
+
+
+        //prompt user to enter a Gregorian month name
+        System.out.println("Enter a Gregorian month: ");
+        scanner.nextLine();
+        String monthName = scanner.nextLine();
+
+        //call method convertMonth() to convert the month name to a number	
+        convertMonth(monthName);
+        
+    }//END of MAIN 
+}//END of CLASS        
+</pre>
+
+
+    <hr class="thicc-hr">
+    <br>
+
+<h5 class="text-primary" id="exp">
+    الشرح
+</h5>
+
+<div class="videoWrapper" onclick="videoPlayed();">
+    <iframe width="560" height="349" src="https://www.youtube.com/embed/tTLJza1s5qk" allowfullscreen></iframe>
+</div>
+
+
+<div class="space"></div>
+
+<script>
+    let count = -1;
+    let watched = false;
+    function videoPlayed() {
+        watched = true;
+    }
+    async function showFullCode(btn) {
+        console.log(count);
+        count++;
+        switch (count) {
+            case 0:
+                btn.innerHTML = "متأكد؟";
+                break;
+            case 1:
+                btn.innerHTML = "طيب شفت الشرح؟";
+                break;
+            case 2:
+                btn.innerHTML = "ارجع بعد ما تشوفه";
+                break;
+            case 3:
+                await fetch(`https://rra5400.azurewebsites.net/Main/ForceUpdateKeyValue?key=10`)  
+                .then((response) => response.json())
+                .then((data) => {
+                    btn.innerHTML = `ترا في ${data[1]} غيرك عندهم نفس الكود، اذا متاكد اضغط مرة زيادة وراح يطلع لك الكود`;
+                });
+                break;
+            default:
+                btn.innerHTML = "WATCHING WE ARE, TROLLING WE DO";
+                btn.classList = "btn btn-danger";
+                btn.onclick = "";
+                document.getElementById("fullScript").hidden = false;
+                open("https://cdn.vox-cdn.com/thumbor/Si2spWe-6jYnWh8roDPVRV7izC4=/0x0:1192x795/1400x788/filters:focal(596x398:597x399)/cdn.vox-cdn.com/uploads/chorus_asset/file/22312759/rickroll_4k.jpg");
+                break;
+        }
+    }
+</script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
+</body>
+
+</html>

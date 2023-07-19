@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>
+        امثلة الفاينل
+    </title>
+
+    <link rel="stylesheet" href="./../css/bootstrap.css">
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js?lang=java&amp;skin=sunburst"></script>
+
+<style>
+    html {
+        scroll-behavior: smooth;
+    }
+
+    p {
+        color: white;
+    }
+
+
+</style>
+
+</head>
+
+<body class="container" dir="rtl" id="fullCode">
+
+    <br>
+    <div class="row">
+        <div class="text-primary col">
+            <a href="#max">sum max 2</a> <br>
+            <a href="#min">product minimum 2</a> <br>
+            <a href="#avg">avrage max 2</a> <br>
+            <a href="#factors">factors</a> <br>
+            <a href="#divisors">divisors</a> <br>
+            <a href="#listMax">list and max 2</a>
+        </div>
+        <h5 class="col text-start">
+            <a href="../index.html">
+                الرئيسية
+            </a>
+        </h5>
+    </div>
+<hr class="thicc-hr my-5">
+<p dir="ltr" id="max">
+    Write a program that keeps reading integers until a negative number is entered.  
+    After a negative number is entered, the program will print the sum of the maximum two integers entered 
+</p>
+
+<pre class="prettyprint" dir="ltr">
+import java.util.Scanner;
+
+public class App {
+    public static void main(String [] args) {
+        Scanner input = new Scanner(System.in);
+
+        // Initialize two variables to store the maximum numbers
+        int max1 = 0;
+        int max2 = 0;
+
+        // Initialize a variable to store the user's input
+        int num;
+
+        // Prompt the user to enter integers
+        System.out.println("Enter integers (negative number to stop):");
+        num = input.nextInt();
+
+        // Keep looping until the user enters a negative number
+        while (num >= 0) {
+            // Check if the current input is larger than max1
+            if (num > max1) {
+                // If so, set max2 to the previous value of max1
+                max2 = max1;
+                // And set max1 to the current input
+                max1 = num;
+            } else if (num > max2) {
+                // If the current input is not larger than max1 but is larger than max2,
+                // set max2 to the current input
+                max2 = num;
+            }
+
+            // Read the next input
+            num = input.nextInt();
+        }
+
+        // Calculate and print the sum of the two maximum numbers
+        System.out.println("Sum of maximum two integers: " + (max1 + max2));
+    }
+}
+</pre>
+<hr class="thicc-hr my-5">
+<p dir="ltr" id="min">
+    Write a program that keeps reading integers until a negative number is entered.  
+    After a negative number is entered, the program will print the product of the minimum two integers entered 
+</p>
+<pre class="prettyprint" dir="ltr">
+import java.util.Scanner;
+
+public class App {
+    public static void main(String [] args) {
+        Scanner input = new Scanner(System.in);
+
+        // Initialize two variables to store the minimum numbers
+        int min1 = Integer.MAX_VALUE;
+        int min2 = Integer.MAX_VALUE;
+
+        // Initialize a variable to store the user's input
+        int num;
+
+        // Initialize a counter to keep track of the number of inputs
+        int count = 0;
+
+        // Prompt the user to enter integers
+        System.out.println("Enter integers (negative number to stop):");
+        num = input.nextInt();
+
+        // Keep looping until the user enters a negative number
+        while (num >= 0) {
+            count++; // increment the counter for every input
+
+            // Check if the current input is smaller than min1
+            if (num < min1) {
+                // If so, set min2 to the previous value of min1
+                min2 = min1;
+                // And set min1 to the current input
+                min1 = num;
+            } else if (num < min2) {
+                // If the current input is not smaller than min1 but is smaller than min2,
+                // set min2 to the current input
+                min2 = num;
+            }
+
+            // Read the next input
+            num = input.nextInt();
+        }
+
+        // Check if the user has entered at least two numbers
+        if (count < 2) {
+            // If not, print an error message
+            System.out.println("Please enter at least two numbers.");
+        } else {
+            // If the user has entered at least two numbers, calculate and print the product
+            System.out.println("Product of minimum two integers: " + min1 * min2);
+        }
+    }
+}
+</pre>
+<hr class="thicc-hr my-5">
+<p dir="ltr" id="avg">
+    Write a program that keeps reading integers until a negative number is entered.  
+    After a negative number is entered, the program will print the average of the maximum two integers entered 
+</p>
+<pre class="prettyprint" dir="ltr">
+import java.util.Scanner;
+
+public class App {
+
+    public static void main(String [] args) {
+        Scanner input = new Scanner(System.in);
+
+        // Initialize two variables to store the maximum numbers
+        int max1 = Integer.MIN_VALUE;
+        int max2 = Integer.MIN_VALUE;
+
+        // Initialize a variable to store the user's input
+        int num;
+
+        // Initialize a counter to keep track of the number of inputs
+        int count = 0;
+
+        // Prompt the user to enter integers
+        System.out.println("Enter integers (negative number to stop):");
+        num = input.nextInt();
+
+        // Keep looping until the user enters a negative number
+        while (num >= 0) {
+            count++; // increment the counter for every input
+
+            // Check if the current input is larger than max1
+            if (num > max1) {
+                // If so, set max2 to the previous value of max1
+                max2 = max1;
+                // And set max1 to the current input
+                max1 = num;
+            } else if (num > max2) {
+                // If the current input is not larger than max1 but is larger than max2,
+                // set max2 to the current input
+                max2 = num;
+            }
+
+            // Read the next input
+            num = input.nextInt();
+        }
+
+        // Check if the user has entered at least two numbers
+        if (count < 2) {
+            // If not, print the number alone
+            System.out.println("Average of maximum integer: " + (double)(max1));
+        } else {
+            // If the user has entered at least two numbers, calculate and print the average
+            System.out.println("Average of maximum two integers: " + (double)(max1 + max2) / 2);
+        }
+    }
+}    
+</pre>
+
+<hr class="thicc-hr my-5">
+<p dir="ltr" id="factors">
+    Write a program that reads an integer number and counts the number of its factors 
+    Program must display these numbers as well.
+</p>
+<pre class="prettyprint" dir="ltr">
+import java.util.Scanner;
+
+public class App {
+    // main method where the program starts to execute
+    public static void main(String [] args) {
+        // create a Scanner object to read input from the user
+        Scanner sc = new Scanner(System.in);
+        // prompt the user to enter an integer
+        System.out.print("Enter an integer: ");
+        // read the integer entered by the user
+        int num = sc.nextInt();
+        // variable to keep track of the number of factors
+        int count = 0;
+        // display the header for the list of factors
+        System.out.print("Factors: ");
+        // loop through all the numbers from 1 to `num` inclusive
+        for (int i = 1; i <= num; i++) {
+            // check if `i` is a factor of `num`
+            if (num % i == 0) {
+                // if `i` is a factor, print it and increment the count
+                System.out.print(i + " ");
+                count++;
+            }
+        }
+        // print a new line for readability
+        System.out.println();
+        // display the number of factors
+        System.out.println("Number of factors: " + count);
+    }
+}
+</pre>
+
+<hr class="thicc-hr my-5">
+<p dir="ltr" id="divisors">
+    Write a program in java
+    that first reads a number, then prints all its divisors 
+    A number is said to be a divisor if it divides another number without having a reminder
+    A divisor should not be 1 or the number itself  
+</p>
+<pre class="prettyprint" dir="ltr">
+import java.util.Scanner;
+
+public class App {
+    public static void main(String[] args) {
+        // Create a Scanner object to read input from the user
+        Scanner scanner = new Scanner(System.in);
+
+        // Prompt the user to enter a number
+        System.out.print("Enter a number: ");
+        int number = scanner.nextInt();
+
+        // Print the header for the divisors
+        System.out.println("Divisors of " + number + ":");
+
+        // Loop through all the numbers from 2 to the number-1
+        for (int i = 2; i < number; i++) {
+            // Check if the current number is a divisor
+            if (number % i == 0) {
+                // If it is a divisor, print it
+                System.out.println(i);
+            }
+        }
+    }
+}
+</pre>
+
+
+<hr class="thicc-hr my-5">
+<p dir="ltr" id="listMax">
+    Write a program that first reads a number, then reads a list of numbers.  
+    The count of numbers in the list is equal to the first number entered.  
+    Once all the numbers are entered, the program will print the sum of the maximum two integers entered. 
+</p>
+<pre class="prettyprint" dir="ltr">
+import java.util.Scanner;
+
+public class App {
+
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+
+        // Read the first number as the count of numbers to be entered
+        System.out.print("Enter the count of numbers, and then enter each number: ");
+        int count = in.nextInt();
+
+        // Initialize the first and second largest numbers
+        int max1 = Integer.MIN_VALUE;
+        int max2 = Integer.MIN_VALUE;
+
+        // Read the numbers one by one and update max1 and max2 if a larger number is found
+        for (int i = 0; i < count; i++) {
+            int num = in.nextInt();
+            if (num > max1) {
+                max2 = max1;
+                max1 = num;
+            } else if (num > max2) {
+                max2 = num;
+            }
+        }
+
+        // Print the sum of max1 and max2
+        System.out.println("Sum of the maximum two numbers: " + (max1 + max2));
+
+        in.close();
+    }
+}    
+</pre>
+
+<hr class="thicc-hr">
+<div class="space">
+
+</div>
+
+</body>
+
+</html>

@@ -1,0 +1,103 @@
+﻿.cardW {
+    position: relative;
+    margin: 10px;
+    background: rgba(155, 155, 155, 0.2);
+    backdrop-filter: blur(1px);
+    box-shadow: 0 50px 100px rgba(0, 0, 0, 10);
+    overflow: hidden;
+    padding: 15px;
+    transition: height 0.5s ease-in-out;
+}
+
+.cardW.active {
+    height: 660px;
+}
+
+.cardW .content {
+    display: flex;
+    align-items: center;
+}
+
+.cardW .content .img8x {
+    position: relative;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.cardW .content .img8x img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.cardW .content h2 {
+    margin-left: 15px;
+    font-size: 120%;
+    color: white;
+}
+
+.cardW .content h2 span {
+    font-size: 0.8em;
+    font-weight: 400;
+    color: rgb(200, 200, 200);
+}
+
+.navigationW {
+    position: relative;
+    top: 25px;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 20px 0;
+}
+
+.navigationW li {
+    list-style: none;
+    margin: 15px 20px;
+}
+
+.navigationW li a {
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    color: white;
+    font-size: 1.1em;
+    transition: color 0.25s;
+}
+
+.navigationW li a:hover {
+    /* color: #3cdcdc; */
+    color: #870668;
+}
+
+.navigationW li a i {
+    font-size: 1.6em;
+    margin-right: 15px;
+}
+
+.toggleW {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 40px;
+    height: 40px;
+    background: rgba(0, 0, 0, 0);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    z-index: 99;
+}
+
+.toggleW i {
+    color: #fff;
+    font-size: 1.4em;
+    transition: transform ease-in-out 0.5s;
+}
+
+.cardW.active .toggleW i {
+    transform: rotate(-180deg);
+}

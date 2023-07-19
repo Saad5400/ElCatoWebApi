@@ -1,0 +1,256 @@
+﻿@{
+    ViewData["Title"] = "Java 2 Lab 0";
+    Layout = "~/Views/Shared/_ProgrammingLayout.cshtml";
+}
+
+<pre id="fullScript">
+package edu.uqu.cs;
+
+import java.util.Scanner;
+
+public class App{
+
+    public static void twisters() {
+
+        for (int i = 1; i <= 110; i++) {
+
+            if (i % 2 == 0) {
+                System.out.print("Tweetle");
+
+                if (i % 4 == 0) {
+                    System.out.print("Beetle");
+                }
+
+                if (i % 6 == 0) {
+                    System.out.print("Poodle");
+                }
+            }
+            else {
+                System.out.print(" " + i + " ");
+            }
+        }
+    }
+
+    public static void phoneKeypad(String text) {
+
+        // this String var will hold the result
+        // it's String and not int so that when adding numbers 
+        // they are added next to each other and not math addition
+        String result = "";
+        
+        // loop for each char in the text
+        for (char ch : text.toUpperCase().toCharArray()) {
+            // switch case for each 3 letters
+            switch (ch) {
+                case 'A':
+                case 'B':
+                case 'C':
+                    result += "2";
+                    break;
+                case 'D':
+                case 'E':
+                case 'F':
+                    result += "3";
+                    break;
+                case 'G':
+                case 'H':
+                case 'I':
+                    result += "4";
+                    break;
+                case 'J':
+                case 'K':
+                case 'L':
+                    result += "5";
+                    break;
+                case 'M':
+                case 'N':
+                case 'O':
+                    result += "6";
+                    break;
+                case 'P':
+                case 'Q':
+                case 'R':
+                case 'S':
+                    result += "7";
+                    break;
+                case 'T':
+                case 'U':
+                case 'V':
+                    result += "8";
+                    break;
+                case 'W':
+                case 'X':
+                case 'Y':
+                case 'Z':
+                    result += "9";
+                    break;
+            }
+        }
+
+        System.out.println(result);
+    }
+
+    public static void main(String [] args) {
+
+        twisters();
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter a string >> ");
+        phoneKeypad(scanner.nextLine());
+
+    }
+
+}
+</pre>
+<h3 id="exp" class="m-5 text-white">
+    الشرح:
+</h3>
+<p>
+    نوع اخر للفور لوب foreach
+</p>
+<pre>
+    for (var name : enumerable)
+</pre>
+<p>
+    جدا يشبه الفور العادية لكن يختصر بعض الاشياء
+</p>
+<pre>
+    for (int i = 0; i < enumerable.length; i++) {
+        var name = enumerable[i]
+    }
+</pre>
+<p>
+    ال var هو نوع المتغير
+    <br />
+    و name هو اسم المتغير
+    <br/>
+    و enumerable ممكن يكون اي متغير عبارة عن مجموعة متغيرات، مثل ال Array او ال ArrayList
+    <br/>
+    في هذا المثال حيكون المتغير من نوع char والenumerable هو Array من الاحرف في ال text، بحيث اللوب تمر بجميع الاحرف في الtext
+    
+</p>
+<p>
+    استعملت toUpperCase لانه حسب المثال المعطى في الكومنتس، الcase ما يهم للحروف، سواء كان كابيتال او سمول
+    <br/>
+    يصير بدل ما يكون عندك كود مثل:
+</p>
+<pre>
+    String x = "a";
+    switch(x.charAt(0)) {
+        case 'A':
+        case 'a':
+        case 'B':
+        case 'b':
+        // etc..
+    }
+</pre>
+<p>
+    تقدر تبسطه الى (تختصر التحقق الى النصف)
+</p>
+<pre>
+    String x = "a".toUpperCase();
+    switch(x.charAt(0)) {
+        case 'A':
+        case 'B':
+        // etc..
+    }
+</pre>
+
+<p>
+    طرق اخر لحل ميثود phoneKeypad:
+</p>
+<p>
+    1- باستعمال الرياضيات وال ascii code
+</p>
+<pre>
+    public static void phoneKeypad(String text) {
+
+        String result = "";
+
+        // loop for each char in the text (case does not matter so I lowered it)
+        for (char c : text.toLowerCase().toCharArray()) {
+
+            // check if c is a letter
+            if (c >= 'a' && c <= 'z') {
+                result += (int)Math.ceil((c - 'a' + 1)/3.2) + 1;
+            }
+        }
+
+        System.out.println(result);
+    }
+</pre>
+<p>
+    2- باستعمال ال if range and ascii code
+</p>
+<pre>
+public static void phoneKeypad(String text) {
+    String result = "";
+    for (int i = 0; i < text.length(); i++) {
+        char ch = text.toUpperCase().charAt(i);
+        if (ch >= 'A' && ch <= 'C') {
+            result += "2";
+        } else if (ch >= 'D' && ch <= 'F') {
+            result += "3";
+        } else if (ch >= 'G' && ch <= 'I') {
+            result += "4";
+        } else if (ch >= 'J' && ch <= 'L') {
+            result += "5";
+        } else if (ch >= 'M' && ch <= 'O') {
+            result += "6";
+        } else if (ch >= 'P' && ch <= 'S') {
+            result += "7";
+        } else if (ch >= 'T' && ch <= 'V') {
+            result += "8";
+        } else if (ch >= 'W' && ch <= 'Z') {
+            result += "9";
+        }
+    }
+    System.out.println(result);
+}
+</pre>
+<p>
+    3- باستعمال HashMap يربط بين الحروف وقيمتها
+</p>
+<pre>
+import java.util.HashMap;
+
+public static void phoneKeypad(String text) {
+    HashMap<Character, Integer> map = new HashMap<>();
+    map.put('A', 2);
+    map.put('B', 2);
+    map.put('C', 2);
+    map.put('D', 3);
+    map.put('E', 3);
+    map.put('F', 3);
+    map.put('G', 4);
+    map.put('H', 4);
+    map.put('I', 4);
+    map.put('J', 5);
+    map.put('K', 5);
+    map.put('L', 5);
+    map.put('M', 6);
+    map.put('N', 6);
+    map.put('O', 6);
+    map.put('P', 7);
+    map.put('Q', 7);
+    map.put('R', 7);
+    map.put('S', 7);
+    map.put('T', 8);
+    map.put('U', 8);
+    map.put('V', 8);
+    map.put('W', 9);
+    map.put('X', 9);
+    map.put('Y', 9);
+    map.put('Z', 9);
+
+    String result = "";
+    for (char ch : text.toUpperCase().toCharArray()) {
+        if (map.containsKey(ch)) {
+            result += map.get(ch);
+        }
+    }
+    System.out.println(result);
+}
+</pre>
+<p>
+    وفيه طرق اخرى كثيرة جدا
+</p>

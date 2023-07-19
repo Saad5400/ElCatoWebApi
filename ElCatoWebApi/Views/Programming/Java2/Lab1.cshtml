@@ -1,0 +1,139 @@
+﻿@{
+    ViewData["Title"] = "Java 2 Lab 1";
+    Layout = "~/Views/Shared/_ProgrammingLayout.cshtml";
+}
+
+<pre id="fullScript">
+package edu.uqu.cs;
+
+import java.util.Scanner;
+
+public class App {
+
+    static void printArray(int[] arr) {
+        // loop for each number in the array
+        for (int i = 0; ; i++) {
+            // get the number from the array
+            int num = arr[i];
+            // check if it's the last number
+            if (i == arr.length - 1) {
+                // print the number, without a comma, and a new line
+                System.out.println(num);
+                break;
+            }
+            // print the number with a comma
+            System.out.print(num + ",");
+        }
+    }
+
+    static int[] readArrayReversed() {
+        // the returned array length
+        final int length = 5;
+        // make a new array, it will be {0, 0, 0, 0, 0}
+        // because 0 is the default value
+        int[] arr = new int[length];
+        // declare a scanner
+        Scanner scanner = new Scanner(System.in);
+        // loop 5 times, but start from the last index (4)
+        // and substract one each iteration, (4, 3, 2, 1, 0)
+        for (int i = length - 1; i >= 0; i--) {
+            // read a number, then store it in the array
+            arr[i] = scanner.nextInt();
+        }
+        return arr;
+    }
+
+    static String findNumberInArray(int[] arr, int target) {
+        boolean found = false;
+        for (int num : arr) {
+            if (num == target) {
+                found = true;
+                break;
+            }
+        }
+        // return the number as a string if found, (code between '?' and ':')
+        // or return NotFound, (code after ':')
+        return found ? target + "" : "NotFound";
+    }
+
+    public static void main(String[] args) {
+
+        /* You are not required to write any code here */
+
+    }
+
+}
+</pre>
+<h3 id="exp" class="m-5 text-white">
+    الشرح:
+</h3>
+<pre>
+    /************ Part 1 **************/
+    /**
+     * Code a method named "printArray" that takes an array of intergers as a
+     * parameter and prints them in a single line.
+     * Values are reparated by commas.
+     * Example:
+     * If the argument is an array: numbers = {1,2,3,4}
+     * then, printArray(numbers) shall print the following line:
+     * 1,2,3,4
+     */
+</pre>
+<p>
+    المطلوب: اكتب ميثود باسم printArray، لها باراميتر من نوع int array
+    الميثود تطبع كل عنصر في سطر واحد وتفصل بين القيم باستعمال فاصلة
+
+    مثال:
+    المدخل: int[] arr = {1,2,3,4}
+    المخرج: 1,2,3,4
+</p>
+<hr/>
+<pre>
+    static void printArray(int[] arr) {
+</pre>
+<p>
+    تعريف الميثود: بيكون نوعها void عشان ما طلب نسوي ريتيرن لأي شي، بس طباعة
+    عندها باراميتير واحد من نوع مصفوفة ارقام صحيحة
+</p>
+<hr/>
+<pre>
+        for (int i = 0; ; i++) {
+            // get the number from the array
+            int num = arr[i];
+            // check if it's the last number
+            if (i == arr.length - 1) {
+                // print the number, without a comma, and a new line
+                System.out.println(num);
+                break;
+            }
+            // print the number with a comma
+            System.out.print(num + ",");
+        }
+</pre>
+<p>
+    لوب على كل الارقام في المصفوفة، ما استخدمت ال foreach مثلا لاب 0، عشان راح نحتاج قيمة ال i
+    بنحتاجها عشان نحدد لما اللوب تخلص
+    والشرط اللي عادة يكون في منتصف الاقواس في الfor loop حذفته عشان بيكون في شرط داخل اللوب اذا اتحقق يخرج منها
+    الشرط هو اذا كانت قيمة ال i تساوي طول المصفوفة ناقص واحد
+    نقصنا واحد عشان الi  تمثل الindex، فاذا كان طول المصفوفة 3 عناصر، حتبدأ من index صفر، بعدين 1، واخر شي 2
+    يعني اقل من الطول بواحد
+    
+    مثلا:
+    int[] arr = { 0, 4, 1 };
+    System.out.println(arr[0]);
+    راح يطبع 0 لانه اول عنصر
+
+    System.out.println(arr[1]);
+    راح يطبع 4 لانها ثاني عنصر
+    
+    System.out.println(arr[2]);
+    واخر شي ال1
+    
+    System.out.println(arr[3]);
+    ايرور عشان الاراي اخر index فيها هو ال 2
+    
+    طيب اذا اتحقق الشرط، حنطبع الرقم في سطر جديد بدون فاصلة بعده، لاننا بنكون في اخر عنصر ومو مطلوب بعده فاصلة، بعدها الكود بيوصل عند ال break، اللي راح تخرج من اللوب وتكمل السطور اللي بعد الاقواس المتعرجة حقت اللوب
+    طبعا الشرط في منتصف اقواس الفور لوب، تقريبا نقدر نستبدله بif statement وbreak زي ما انا سويت
+    
+    في حالة انه الشرط ما اتحقق (يعني كل العناصر الا اخر عنصر) راح نطبع العنصر، وبعده فاصلة، بدون سطر جديد
+</p>

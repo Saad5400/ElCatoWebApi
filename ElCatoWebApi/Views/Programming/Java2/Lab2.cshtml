@@ -1,0 +1,501 @@
+﻿@{
+    ViewData["Title"] = "Java 2 Lab 2";
+    Layout = "~/Views/Shared/_ProgrammingLayout.cshtml";
+}
+
+<p id="fullScript" class="text-info" style="font-size: 150%;">
+    ملف App.java
+</p>
+<pre>
+package edu.uqu.cs;
+
+import java.util.Scanner;
+
+public class App {
+
+    public static double cacluateTriangleArea() {
+
+        Scanner scanner = new Scanner(System.in);
+
+        // read from user
+        double base = scanner.nextDouble();
+        double height = scanner.nextDouble();
+
+        // create object and set its base and height
+        Triangle triangle = new Triangle();
+        triangle.setBase(base);
+        triangle.setHeight(height);
+
+        // get the area from the object, and return it
+        return triangle.getArea();
+    }
+
+    public static void main(String[] args) {
+
+        // code here is just for experimenting and will not affect the test/grades
+
+    }
+
+}
+</pre>
+
+<p id="fullScript" class="text-info" style="font-size: 150%;">
+    ملف SquareMatrix.java
+</p>
+<pre>
+package edu.uqu.cs;
+
+public class SquareMatrix {
+
+    private int[][] matrix;
+
+    // the square matrix's dimension
+    final private int DIMENSION = 2;
+
+    public SquareMatrix() {
+        // assign the matrix to a new 2d array
+        // which will make it all zeros {{0, 0},{0, 0}}
+        matrix = new int[DIMENSION][DIMENSION];
+    }
+
+    public SquareMatrix(int[][] array) {
+        // matrix = array; will copy the address, which might affect the program
+        // so we will loop and copy each value
+
+        // initialize the matrix
+        matrix = new int[DIMENSION][DIMENSION];
+
+        // loop for each row
+        for (int row = 0; row < array.length; row++) {
+            // loop for each column in that row
+            for (int col = 0; col < array[row].length; col++) {
+                // copy the value at [row][column]
+                matrix[row][col] = array[row][col];
+            }
+        }
+    }
+
+    public String dim() {
+        return DIMENSION + "";
+    }
+
+    public int[][] getData() {
+        // return a reference
+        return matrix;
+    }
+
+    public int[][] getValues() {
+        int[][] array = new int[DIMENSION][DIMENSION];
+        for (int row = 0; row < array.length; row++) {
+            for (int col = 0; col < array[row].length; col++) {
+                array[row][col] = matrix[row][col];
+            }
+        }
+        return array;
+    }
+
+    public SquareMatrix add(SquareMatrix otherMatrix) {
+        // create a new square 2x2 matrix
+        int[][] result = new int[DIMENSION][DIMENSION];
+        // get the other matrix's data and store it
+        int[][] otherMatrixData = otherMatrix.getData();
+
+        // loop for each value
+        for (int row = 0; row < result.length; row++) {
+            for (int col = 0; col < result[row].length; col++) {
+                result[row][col] = matrix[row][col] + otherMatrixData[row][col];
+            }
+        }
+
+        return new SquareMatrix(result);
+    }
+
+    public SquareMatrix mul(SquareMatrix otherMatrix) {
+        // create a new square 2x2 matrix
+        int[][] result = new int[DIMENSION][DIMENSION];
+        // get the other matrix's data and store it
+        int[][] otherMatrixData = otherMatrix.getData();
+
+        // loop for each row
+        for (int row = 0; row < result.length; row++) {
+            // loop for each column
+            for (int col = 0; col < result[row].length; col++) {
+                // loop twice (or as much as the dimension of the array)
+                for (int k = 0; k < DIMENSION; k++) {
+                    result[row][col] += matrix[row][k] * otherMatrixData[k][col];
+                }
+                /*
+                the last for k loop, is the same as:
+                result[row][col] += matrix[row][0] * otherMatrixData[0][col];
+                result[row][col] += matrix[row][1] * otherMatrixData[1][col];
+                */
+            }
+        }
+
+        return new SquareMatrix(result);
+    }
+}
+</pre>
+
+<p id="fullScript" class="text-info" style="font-size: 150%;">
+    ملف Triangle.java (لا تعدل عليه)
+</p>
+<pre>
+package edu.uqu.cs;
+
+public class Triangle {
+    private double base;
+    private double height;
+
+    public void setBase(double userBase){
+       base = userBase;
+    }
+    public void setHeight(double userHeight) {
+       height = userHeight;
+    }
+
+    public double getArea() {
+       double area = 0.5 * base * height;
+       return area;
+    }
+
+    public void printInfo() {
+       System.out.printf("Base: %.2f\n", base);
+       System.out.printf("Height: %.2f\n", height);
+       System.out.printf("Area: %.2f\n", getArea());
+    }
+ }
+</pre>
+
+<hr />
+
+<h3 id="exp" class="m-5 text-white">
+    الشرح:
+</h3>
+<p class="my-0 py-9">
+    فين تحصل كل ملف
+</p>
+<div class="videoWrapper" onclick="videoPlayed();">
+    <div class="videoWrapper" onclick="videoPlayed();">
+        <iframe width="560" height="349" src="https://www.youtube.com/embed/8V9x7MZWBys" allowfullscreen></iframe>
+    </div>
+</div>
+<br/>
+<br/>
+<hr/>
+<pre>
+    /************ Part 1 **************/
+    /**
+     * Code a method named "cacluateTriangleArea" that reads two floating point numbers 
+     * representing the base and the height of a triangle.
+     * 
+     * The method shall create an object of the Triangle class (refer to Triangle.java) using the input values.
+     * The method shall return the area of the triangle using the triangle's method call.
+     * 
+     * Example:
+     * Input: 
+     * 2.0 4.0
+     * 
+     * The method shall return the value: 4.0
+     */
+</pre>
+<p>
+    مطلوب تسوي ميثود اسمها cacluateTriangleArea، تقرأ من المستخدم رقمين كسريين (double)، الرقم الاول يمثل القاعدة، والثاني الاترفاع لمثلث
+    الميثود تسوي اوبجكت جديد من الكلاس الموجود في ملف Triangle.java
+    واخر شي تسوي ريتيرن لمساحة المثلث
+</p>
+<hr/>
+<p>
+    نبدأ بتعريف الميثود ونسوي ساكنر ونقرأ القيم من المستخدم
+</p>
+<pre>
+    public static double cacluateTriangleArea() {
+
+        Scanner scanner = new Scanner(System.in);
+
+        // read from user
+        double base = scanner.nextDouble();
+        double height = scanner.nextDouble();
+</pre>
+<hr />
+<p>
+    ودحين مطلوب نسوي اوبجكت لكلاس Triangle، اول شي نسويه نشوف ونقرأ كلاس ال Triangle
+</p>
+<pre>
+    public class Triangle {
+    private double base;
+    private double height;
+</pre>
+<p>
+    فيه متغيرين، الاول للقاعدة والثاني للطول، لكنها private بمعنى ما نقدر نعدل عليها مباشرة من الاوبجكت
+</p>
+<hr />
+<pre>
+    public void setBase(double userBase){
+       base = userBase;
+    }
+    public void setHeight(double userHeight) {
+       height = userHeight;
+    }
+</pre>
+<p>
+    لكن فيه ميثود عشان نعدل على المتغيرين هذي، نقدر نستعملها عشان نحط القيم اللي قرأناها من المستخدم
+</p>
+<hr/>
+<pre>
+    public double getArea() {
+       double area = 0.5 * base * height;
+       return area;
+    }
+</pre>
+<p>
+    وفيه ميثود تحسب المساحة، نقدر نستعملها في الريتيرن لانه المطلوب حساب مساحة المثلث
+</p>
+<hr/>
+<pre>
+    public void printInfo() {
+       System.out.printf("Base: %.2f\n", base);
+       System.out.printf("Height: %.2f\n", height);
+       System.out.printf("Area: %.2f\n", getArea());
+    }
+ }
+</pre>
+<p>
+    اخر ميثود راح تطبع معلومات المثلث، ممكن نستعملها في حالة احتجناها مستقبلا (ما راح نحتاجها :)
+</p>
+<hr/>
+<p>
+    كذا عرفنا هيكل كلاس المثلث، ونقدر نكمل الميثود في بارت 1، وصلنا هنا
+</p>
+<pre>
+    public static double cacluateTriangleArea() {
+
+        Scanner scanner = new Scanner(System.in);
+
+        // read from user
+        double base = scanner.nextDouble();
+        double height = scanner.nextDouble();
+</pre>
+<p>
+    بنسوي اوبجكت جديد من الكلاس، باستعمال الكلمة new، ونقدر بعدها نستعمل الميثود اللي تعدل قيمة القاعدة، والميثود اللي تعدل قيمة الارتفاع
+</p>
+<pre>
+        // create object and set its base and height
+        Triangle triangle = new Triangle();
+        triangle.setBase(base);
+        triangle.setHeight(height);
+</pre>
+<hr />
+<p>
+    واخر شي نسوي ريتيرن لقيمة المساحة، اللي نقدر نجيبها من ميثود الاوبجكت .getArea()
+</p>
+<pre>
+        // get the area from the object, and return it
+        return triangle.getArea();
+</pre>
+<p>
+    الشكل النهائي للميثود في اعلى الصفحة
+</p>
+<hr/>
+<pre>
+    /************ Part 2 **************/
+    /**
+     * Code new class called SquareMatrix that uses a 2x2 2D array as a private field. 
+     * 
+     * Important!!! ****** Put your code in another file called SquareMatrix.java ********
+     * 
+     * There should two constructors. An empty constructor which shall initialize the 2x2 matrix to zeros. 
+     * The second constructor takes a 2x2 array an initlizes the matrix to the values of the given array.
+</pre>
+<p>
+    المطلوب نسوي كلاس جديد اسمه SquareMatrix، في ملف جديد اسمه SquareMatrix.java
+    يكون عنده متغير private من نوع مصفوفة 2x2 او 2d array
+    
+    ويبغا 2 constructor، الاول ما ياخذ ارقمونتس وما عنده باراميتيرز، بس يخزن اصفار في مصفوفة الكلاس
+    
+    الثاني عنده باراميتير من نوع 2d array وينسخها لمصفوفة الكلاس
+    
+    الكوسنتركتر، هي ميثود خاصة، اسمها نفس اسم الكلاس، تسوي ريتيرن لobject من الكلاس (لكن ما يحتاج تكتب الريتيرن)
+
+    الobject هذا بيكون يقدر يوصل لكل المتغيرات، والميثودز الstatic والعادية (بدون static)
+
+    الفرق بين الستاتيك، والعادية، انه الستاتيك يكون عام لكل الكلاس والاوبجكتس، اذا عندم متغير ستاتيك اسمه x وغيرته عن طريق اسم الكلاس او اوبجكت من الكلاس،
+    مثلا obj.x = 2 راح يتغير لكل الاوبجكتس الثانية
+    لكن اذا ما كان ستاتيك، كل اوبجكت بيكون له قيمة خاصة فيه
+
+    وفي الميثودز، باختصار اذا كانت الميثود ستاتيك، بتقدر توصل للمتغيرات والميثودز الثانية الستاتيك فقط، وما تقدر توصل للعادية
+
+    لكن اذا كانت الميثود عادية، بتقدر توصل لكل المتغيرات، وكل الميثودز
+</p>
+<pre>
+public class SquareMatrix {
+
+    private int[][] matrix;
+
+    // the square matrix's dimension
+    final private int DIMENSION = 2;
+
+    public SquareMatrix() {
+        // assign the matrix to a new 2d array
+        // which will make it all zeros {{0, 0},{0, 0}}
+        matrix = new int[DIMENSION][DIMENSION];
+    }
+
+    public SquareMatrix(int[][] array) {
+        // matrix = array; will copy the address, which might affect the program
+        // so we will loop and copy each value
+
+        // initialize the matrix
+        matrix = new int[DIMENSION][DIMENSION];
+
+        // loop for each row
+        for (int row = 0; row < array.length; row++) {
+            // loop for each column in that row
+            for (int col = 0; col < array[row].length; col++) {
+                // copy the value at [row][column]
+                matrix[row][col] = array[row][col];
+            }
+        }
+    }
+</pre>
+<p>
+    ملاحظة: سويت متغير final (يعني قيمته ما تتغير) سميته DIMENSION وخزنت فيه الرقم 2، لانه الرقم 2 راح يتكرر كثير، والافضل تتجنب تستعمل الارقام (بدون متغيرات) في البرمجة، كمان يسهل اننا نغير الكود لو احتجناه لمصفوفة 3x3 بدل 2x2
+</p>
+<p>
+    ملاحظة: في ثاني constructor ما حطيت علامة المساواة، مثلا
+    <pre>
+        matrix = array;
+    </pre>
+    لأنها كذا تنسخ ال memory address وممكن تسبب مشاكل في حال اتغيرت قيمة الarray، لانه المصفوفتين لها نفس الaddress، اذا اتغيرت وحدة، راح تتغير الثانية
+    عشان كذا سويت فور لوب، اول شي لكل صف، بعدين لكل عمود، ونسخت كل قيمة
+</p>
+<p>
+    طبعا كل الميثودز والمتغيرات ما بتكون static، لاننا نبغا كل اوبجكت يكون له مصفوفة خاصة فيه
+</p>
+<hr/>
+<pre>
+     // * The class should have four public methods:
+     // * 
+     // * dim: takes no arguments and returns a String with the diminsions.
+     // * For example, if the diminsion is 2, calling dim() should return "2x2"
+</pre>
+<p>
+    اول ميثود مطلوبة هي dim اللي بترجع "2x2"، لكن لما شغلت التيست جاني ايرور، وكان المطلوب بس ارجع "2" .-.
+</p>
+<pre>
+    public String dim() {
+        return DIMENSION + "";
+    }
+</pre>
+<hr/>
+<pre>
+    // * getData: takes no arguments and returns a reference to the 2x2 array used to store the matrix's values
+</pre>
+<p>
+    المطلوب ترجع refrence، يعني الmemory address، لمصفوفة الكلاس، طبعا نوع الميثود بيكون int[][] لانها حتسوي ريتيرن للمصفوفة
+</p>
+<pre>
+    public int[][] getData() {
+        // return a reference
+        return matrix;
+    }
+</pre>
+<p>
+    لما شغلت التيست جاني ايرور انه فيه ميثود اسمها getValues غير موجودة، لكنها غير مذكورة في المتطلبات، عموما ضفتها وخليتها تنسخ القيم، وتسوي لها ريتيرن، تقريبا مثل الكوسنتركتر الثاني
+</p>
+<pre>
+    public int[][] getValues() {
+        int[][] array = new int[DIMENSION][DIMENSION];
+        for (int row = 0; row < array.length; row++) {
+            for (int col = 0; col < array[row].length; col++) {
+                array[row][col] = matrix[row][col];
+            }
+        }
+        return array;
+    }
+</pre>
+<hr/>
+<pre>
+     //* add: takes another matrix object as an argument and returns the result of 
+     //* the addition of that matrix and the current matrix object
+     //* For example, if we have matrix mA = | 1  5 |
+     //*                                     |-4  3 |
+     //* and matrix mB = | 2 -1 |
+     //*                 | 4 -1 |
+     //* mA.add(mB) should return a SquareMatrix object with values | 3  4 | 
+     //*                                                            | 0  2 |
+</pre>
+<p>
+    المطلوب نضيف ميثود، لها باراميتير ثاني، عبارة عند اوبجكت لنفس الكلاس SquareMatrix، وتجمع المصفوفتين وتسوي لهم ريتيرن على شكل object من نفس الكلاس
+</p>
+<pre>
+    public SquareMatrix add(SquareMatrix otherMatrix) {
+        // create a new square 2x2 matrix
+        int[][] result = new int[DIMENSION][DIMENSION];
+        // get the other matrix's data and store it
+        int[][] otherMatrixData = otherMatrix.getData();
+
+        // loop for each value
+        for (int row = 0; row < result.length; row++) {
+            for (int col = 0; col < result[row].length; col++) {
+                result[row][col] = matrix[row][col] + otherMatrixData[row][col];
+            }
+        }
+
+        return new SquareMatrix(result);
+    }
+</pre>
+<p>
+    راح نسوي مصفوفة جديدة للناتج، وبعدها نسوي فور لوب لكل قيمة، ونجمع ونخزن في المصفوفة الجديدة
+    واخر شي عشان المطلوب الريتيرن مو بس مصفوفة، لكن اوبجكت من نفس الكلاس، بنستعمل الكلمة new، ونمرر مصفوفة الناتج، وكذا راح نستدعي الكونستركتر الثاني عشان يسوي اوبجكت، فيه متغير مصفوفة، بنفس قيم الناتج
+</p>
+<hr/>
+<pre>
+     //* mul: takes another matrix object as an argument and returns the result of 
+     //* the multiplication of that matrix and the current matrix object
+     //* 
+     //* For example, if we have matrix mA = | 7  5 |
+     //*                                     | 6  3 |
+     //* and matrix mB = | 2  1 |
+     //*                 | 5  1 |
+     //* mA.mul(mB) should return a SquareMatrix object with values | 39  12 |
+     //*                                                            | 27   9 |
+</pre>
+<p>
+    اخر ميثود، زي اللي قبلها لكن تضرب المصفوفتين، طبعا ضرب المصفوفات بيكو صف في عمود، تقدر تكتب كل عملية في سطر لحاله، او تستعمل اكثر من فور لوب
+</p>
+<pre>
+    public SquareMatrix mul(SquareMatrix otherMatrix) {
+        // create a new square 2x2 matrix
+        int[][] result = new int[DIMENSION][DIMENSION];
+        // get the other matrix's data and store it
+        int[][] otherMatrixData = otherMatrix.getData();
+
+        // loop for each row
+        for (int row = 0; row < result.length; row++) {
+            // loop for each column
+            for (int col = 0; col < result[row].length; col++) {
+                // loop twice (or as much as the dimension of the array)
+                for (int k = 0; k < DIMENSION; k++) {
+                    result[row][col] += matrix[row][k] * otherMatrixData[k][col];
+                }
+                /*
+                the last for k loop, is the same as:
+                result[row][col] += matrix[row][0] * otherMatrixData[0][col];
+                result[row][col] += matrix[row][1] * otherMatrixData[1][col];
+                */
+            }
+        }
+
+        return new SquareMatrix(result);
+    }
+</pre>
+<p>
+    الطريقة الثانية بدون فور لوب
+</p>
+<pre>
+    result[0][0] = matrix[0][0] * otherMatrixData[0][0] + matrix[0][1] * otherMatrixData[1][0];
+    result[0][1] = matrix[0][0] * otherMatrixData[0][1] + matrix[0][1] * otherMatrixData[1][1];
+    result[1][0] = matrix[1][0] * otherMatrixData[0][0] + matrix[1][1] * otherMatrixData[1][0];
+    result[1][1] = matrix[1][0] * otherMatrixData[0][1] + matrix[1][1] * otherMatrixData[1][1];
+</pre>

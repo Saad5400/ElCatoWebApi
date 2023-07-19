@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>
+        حل اسايمنت 3
+    </title>
+
+    <link rel="stylesheet" href="./../css/bootstrap.css">
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js?lang=java&amp;skin=sunburst"></script>
+
+<style>
+    html {
+        scroll-behavior: smooth;
+    }
+
+    p {
+        color: white;
+    }
+
+    body {
+        -moz-user-select: none; 
+        -webkit-user-select: none; 
+        -ms-user-select:none; 
+        user-select:none;
+        -o-user-select:none;
+    }
+</style>
+
+</head>
+
+<body class="container" dir="rtl" id="fullCode"  unselectable="on" onselectstart="return false;" onmousedown="return false;">
+
+    <br>
+    <div class="row">
+        <h5 class="text-primary col">
+            ملف App.java
+        </h5>
+        <h5 class="col text-start">
+            <a href="../index.html">
+                الرئيسية
+            </a>
+        </h5>
+    </div>
+    <span class="text-info" href="#exp">الشرح في <a class="link-info" href="#exp">الأسفل</a></span>
+
+<pre id="fullScript" class="prettyprint" dir="ltr">
+package edu.uqu.cs;
+
+import java.util.Scanner;
+
+public class App{
+
+    /**displayCalendar Method code should be below this comment**/
+
+    public static void displayCalendar() {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Enter a month and a year: ");
+        int m = scanner.nextInt();
+        int y = scanner.nextInt();
+
+        String monthName = "";
+        int days = 31;
+
+        switch(m) {
+            case 1:
+                monthName = "January";
+                break;
+            case 2:
+                monthName = "February";
+                if ((y % 4 == 0 && y % 100 != 0) || y % 400 == 0) {
+                    days = 29;
+                }
+                else {
+                    days = 28;
+                }
+                break;
+            case 3:
+                monthName = "March";
+                break;
+            case 4:
+                monthName = "April";
+                break;
+            case 5:
+                monthName = "May";
+                break;
+            case 6:
+                monthName = "June";
+                break;
+            case 7:
+                monthName = "July";
+                break;
+            case 8:
+                monthName = "August";
+                break;
+            case 9:
+                monthName = "September";
+                break;
+            case 10:
+                monthName = "October";
+                break;
+            case 11:
+                monthName = "November";
+                break;
+            case 12:
+                monthName = "December";
+                break;
+        }
+
+        System.out.printf("%11s %d\n", monthName, y);
+        System.out.println("S  M  Tu  W  Th  F  S");
+        System.out.println("1  2  3   4  5   6  7");
+        System.out.println("8  9  10  11 12  13 14");
+        System.out.println("15 16 17  18 19  20 21");
+        System.out.println("22 23 24  25 26  27 28");
+        switch (days) {
+            case 31:
+                System.out.println("29 30 31");
+                break;
+            case 29:
+                System.out.println("29");
+                break;
+        }
+    }
+
+    /****************End of displayCalendar Method***************/
+
+    /**isMagicalWord Method code should be below this comment**/
+
+    public static boolean isMagicalWord(String str) {
+        String reversed = "";
+
+        for (int i = str.length() - 1; i >= 0; i--) {
+            reversed += str.charAt(i);
+        }
+
+        return str.compareToIgnoreCase(reversed) == 0;
+    }
+    
+    
+    /***************End of isMagicalWord Method*****************/
+
+    /**wordsGame  Method code should be below this comment**/
+    public static String wordsGame(String word1, String word2) {
+        String sentence = "Go to the shop";
+
+        if (word1.compareTo("Go") == 0) {
+            return "No insertion at the beginning of the sentence!";
+        }
+        int index = sentence.indexOf(word1);
+        if (index == -1) {
+            return word1 + " could not be found in the sentence";
+        }
+        return sentence.substring(0, index) + word1 + " " + word2 + sentence.subSequence(index + word1.length(), sentence.length());
+
+    }
+    /***************End of wordsGame Method*****************/	
+
+    
+    /*************** main Method *****************/
+    //Write your code under each comment
+
+    public static void main (String []args){
+        
+    }//END of MAIN    
+}//END of CLASS
+</pre>
+
+    <hr class="thicc-hr">
+    
+<h5 class="text-primary mt-4" id="exp">
+    الشرح
+</h5>
+
+<br>
+
+<p dir="ltr">
+    No شرح, only pain.
+</p>
+
+<hr class="thicc-hr">
+
+
+<a class="link-info" href="#fullCode">الكود كامل</a>
+
+<div class="space">
+
+</div>
+
+</body>
+
+</html>

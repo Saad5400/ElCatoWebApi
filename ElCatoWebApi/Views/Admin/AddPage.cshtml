@@ -1,0 +1,75 @@
+﻿@model ElCatoWebApi.Models.OldModels.Page
+
+@{
+    ViewData["Title"] = "AddPage";
+    Layout = "~/Views/Admin/_AdminLayout.cshtml";
+}
+
+<h1>AddPage</h1>
+
+<h4>Page</h4>
+<hr />
+<div class="row">
+    <div class="">
+        <form asp-action="AddPage">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Folder" class="control-label"></label>
+                <input asp-for="Folder" class="form-control" />
+                <span asp-validation-for="Folder" class="text-danger"></span>
+            </div>
+            <div>
+                <div class="btn-group">
+                    <a class="btn btn-primary" onclick="showContent();">
+                        Content
+                    </a>
+                    <a class="btn btn-primary" onclick="showPreview();">
+                        Preview
+                    </a>
+                </div>
+                <div style="overflow-y: scroll; height: 500px;">
+                    <div id="content" style="display: block;">
+                        <label asp-for="Content" class="control-label"></label>
+                        <textarea asp-for="Content" class="form-control" rows="17"></textarea>
+                        <span asp-validation-for="Content" class="text-danger"></span>
+                    </div>
+                    <div id="preview" style="display: none;">
+                        <label class="control-label"> Preview</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ViewCount" class="control-label"></label>
+                <input asp-for="ViewCount" class="form-control" />
+                <span asp-validation-for="ViewCount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index" asp-route-password="@AdminController.PASSWORD">Back to List</a>
+</div>
+
+@section Scripts {
+    <script>
+        function showContent() {
+            document.getElementById("content").style.display = "block";
+            document.getElementById("preview").style.display = "none";
+        }
+        function showPreview() {
+            document.getElementById("content").style.display = "none";
+            document.getElementById("preview").style.display = "block";
+            document.getElementById("preview").innerHTML = document.getElementById("Content").value;
+        }
+    </script>
+}

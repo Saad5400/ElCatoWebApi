@@ -1,0 +1,8 @@
+﻿@model Page
+
+@{
+    ViewData["Title"] = $"{Model.Folder} {Model.Name}";
+    Layout = "~/Views/Shared/_ProgrammingLayout.cshtml";
+}
+
+@Html.Raw(Model.Content)

@@ -1,0 +1,156 @@
+﻿@{
+    Layout = "_Layout";
+}
+
+<script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js?lang=java&amp;skin=sunburst"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<style>
+    pre {
+        -webkit-user-select: text !important; /* Safari */
+        -ms-user-select: text !important; /* IE 10 and IE 11 */
+        user-select: text !important; /* Standard syntax */
+    }
+    * {
+         scroll-margin: 100px;
+    }
+    p {
+        margin-right: 3%;
+        white-space: pre-wrap;
+    }
+</style>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
+    <div class="container-fluid">
+        <a class="navbar-brand px-lg-5 px-2">@ViewData["Title"]</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" 
+                data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarColor01">
+            <ul class="navbar-nav me-auto px-lg-0 px-4">
+                <li class="nav-item">
+                    <a class="nav-link" asp-controller="Home" asp-action="Index">
+                        Back To Home
+                    </a>
+                </li>
+                @if (ViewData["ProgrammingNavBar"] == null)
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" href="#fullScript">Full Code</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#exp">Explanation</a>
+                    </li>
+                }
+                else
+                {
+                    @Html.Raw(ViewData["ProgrammingNavBar"])
+                }
+                <li class="nav-item">
+                    <a class="nav-link" class="clickable" onclick="toggleBinaryBackground();">Toggle background</a>
+                </li>
+            </ul>
+            <div class="d-flex">
+                @*<p class="text-info my-auto mx-4">
+                    Views: 0
+                </p>*@
+            </div>
+        </div>
+    </div>
+</nav>
+
+<div class="container text-white" dir="rtl" style="background: rgba(50, 50, 50, 0.1); backdrop-filter: blur(1px);">
+    <div id="contentDiv" class="arabicFont pt-2 pt-lg-3">
+        @RenderBody()
+    </div>
+    <hr />
+    <div style="position: static; height: 50px">
+
+    </div>
+    @* @Html.Partial("_CommentsSection", (PageVM)Model) *@
+    <div style="position: static; height: 250px">
+
+    </div>
+
+</div>
+
+@await RenderSectionAsync("Scripts", required: false)
+
+@section Scripts {
+    <script>
+        pres = document.getElementsByTagName("pre");
+        for (var i = 0; i < pres.length; i++) {
+            if (!pres[i].classList.contains("prettyprint")) {
+                pres[i].classList += "prettyprint";
+            }
+        }
+
+        function getSelectedText() {
+            if (window.getSelection) {
+                return window.getSelection().toString();
+            } else if (document.selection && document.selection.type != "Control") {
+                return document.selection.createRange().text;
+            }
+            return "";
+        }
+        async function copySelection() {
+            const selectedText = getSelectedText();
+            if (selectedText) {
+                try {
+                    await navigator.clipboard.writeText(selectedText);
+
+                } catch (err) {
+                    console.error("Error copying text: ", err);
+                }
+            } else {
+
+            }
+        }
+        document.getElementById('contentDiv').oncopy = function () {
+            Swal.fire({
+                title: 'Someone is copying',
+                text: "Copying and pasting code may result in not understanding the fundamentals.",
+                icon: 'warning',
+                showCloseButton: true,
+                focusConfirm: false,
+                confirmButtonText:
+                    'Ok copy anyway'
+            });
+            copySelection();
+        }
+
+        @if (ViewData["Error"] != null)
+        {
+            <text>
+                if ('@ViewData["Error"]'.toLowerCase().includes('comment')) {
+                    location.href = '#comments';
+                }
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: '@ViewData["Error"]',
+                });
+            </text>
+        }
+        @if (ViewData["Success"] != null)
+        {
+            <text>
+                if ('@ViewData["Success"]'.toLowerCase().includes('comment')) {
+                    location.href = '#comments';
+                }
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Done',
+                    text: '@ViewData["Success"]',
+                });
+            </text>
+        }
+        @if (ViewData["scrollTo"] != null)
+        {
+            <text>
+        location.href = '@ViewData["scrollTo"]';
+            </text>
+        }
+    </script>
+}

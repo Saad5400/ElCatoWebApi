@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>
+        شرح لاب 4
+    </title>
+
+    <link rel="stylesheet" href="./../css/bootstrap.css">
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js?lang=java&amp;skin=sunburst"></script>
+
+<style>
+    html {
+        scroll-behavior: smooth;
+    }
+
+    p {
+        color: white;
+    }
+
+    body {
+        -moz-user-select: none; 
+        -webkit-user-select: none; 
+        -ms-user-select:none; 
+        user-select:none;
+        -o-user-select:none;
+    }
+</style>
+
+</head>
+
+<body class="container" dir="rtl" id="fullCode"  unselectable="on" onselectstart="return false;" onmousedown="return false;">
+
+    <br>
+    <h5 class="text-primary">
+        ملف App.java
+    </h5>
+    <span class="text-info" href="#exp">الشرح في <a class="link-info" href="#exp">الأسفل</a></span>
+
+<pre id="fullScript" class="prettyprint" dir="ltr">
+package edu.uqu.cs;
+
+/*
+    * Lab 4
+    * CS11211
+    */
+
+/*
+* After the completion of this assignment, students should be able to: 
+* Use the Scanner class to read input from the user
+* Use conditionl/branching statements
+*/
+
+import java.util.Scanner;
+
+public class App {
+    
+    /**
+        * This is the same lab exercise as 5.22 on Zybooks
+        * @see {@linktourl https://learn.zybooks.com/zybook/UmmAl-QuraUniversityCS1211QadahWinter2023/chapter/5/section/22 }
+        *
+        * Write a code that takes three integers from the user and outputs the smallest of the three values.
+        *
+        * Ex: If the input numbers are:
+        * 7 15 3
+        *
+        * the output is:
+        * 3
+        * 
+        * Note: use IF-ELSE statement
+        */
+    
+    public static void part1(){
+        /* Write your code here */
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Enter three numbers to get the smallest");
+
+        System.out.println("Enter the first number: ");
+        int n1 = scanner.nextInt();
+
+        System.out.println("Enter the second number: ");
+        int n2 = scanner.nextInt();
+
+        System.out.println("Enter the third number: ");
+        int n3 = scanner.nextInt();
+
+        int smallest = n1;
+
+        if (n2 < smallest)
+            smallest = n2;
+
+        if (n3 < smallest)
+            smallest = n3;
+
+        System.out.println(smallest);
+    }
+
+    /**
+        * 
+        * Write a code which takes as input a given wavelength in nanometers (double) 
+        * and outputs the corresponding color in the visible spectrum
+        *
+        * Ex: if the wavelength is: 
+        * 630
+        * 
+        * The output is:
+        * The color is Red
+        *
+        * Ex: if the wavelength is:
+        * 1000
+        * 
+        * The output is:
+        * Invalid wavelength
+        *
+        * Note: the visible colors and their wavelengths are:
+        * Violet: 380-450
+        * Blue: 450-495
+        * Green: 495-570
+        * Yellow: 570-590
+        * Orange: 590-620
+        * Red: 620-750
+        *
+        * Note: 
+        *      - use cascadeing IF-ELSE statement
+        *      - For each wavelength range; for example (570-590) 
+        *        ONLY the number on the left is included in the range and not the right
+        */
+    
+
+    public static void part2(){
+        
+        /* Write your code here  */
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Enter wavelength in nanometers: ");
+
+        double wave = scanner.nextDouble();
+
+        if (380 <= wave && wave < 450)
+            System.out.println("The color is Violet");
+
+        else if (450 <= wave && wave < 495)
+            System.out.println("The color is Blue");
+            
+        else if (495 <= wave && wave < 570)
+            System.out.println("The color is Green");
+
+        else if (570 <= wave && wave < 590)
+            System.out.println("The color is Yellow");
+
+        else if (590 <= wave && wave < 620)
+            System.out.println("The color is Orange");
+
+        else if (620 <= wave && wave < 750)
+            System.out.println("The color is Red");
+
+        else
+            System.out.println("Invalid wavelength");
+
+    }
+
+    /**
+        * Write a code which will determine the next color of a stop light according to the following pattern:
+        * Red to Green to Yellow to Red based on the current stop light color taken from the user of type String
+        *
+        * Ex: if the input is:  
+        * Red
+        * 
+        * The output is: 
+        * Next Traffic Light is Green
+        *
+        *
+        * Ex: if the input is:  
+        * Yellow
+        * 
+        * The output is: 
+        * Next Traffic Light is Red
+        *
+        *
+        * Ex: if the input is:  
+        * Blue
+        * 
+        * The output is: 
+        * Invalid color
+        *
+        * 
+        * Note: use switch-case statement 
+        */ 
+
+    public static void part3(){
+
+        /* Write your code here */
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Enter a light color: ");
+
+        String color = scanner.nextLine();
+
+        switch(color) {
+            case "Red": 
+                System.out.println("Next Traffic Light is Green");
+                break;
+
+            case "Green": 
+                System.out.println("Next Traffic Light is Yellow");
+                break;
+
+            case "Yellow":
+                System.out.println("Next Traffic Light is Red");
+                break;
+                
+            default: 
+                System.out.println("Invalid color"); 
+        }
+    }
+
+
+    /*
+        * main()
+        *
+        * Program execution begins with this method.
+        */
+        
+    public static void main(String [] cargs) {
+        /** 
+            * The following lines will run the code that you have implmented above
+            * Currently, they are commented-out. You can uncomment to enble running
+            * Each part individually as you code.
+            */
+
+        part1();
+        part2();
+        part3();
+    }
+
+}
+</pre>
+
+    <hr class="thicc-hr">
+    
+<h5 class="text-primary mt-4" id="exp">
+    الشرح
+</h5>
+
+<br>
+
+<pre class="prettyprint" dir="ltr">
+    /* Write a code that takes three integers from the user and outputs the smallest of the three values.
+    *
+    * Ex: If the input numbers are:
+    * 7 15 3
+    *
+    * the output is:
+    * 3
+    * 
+    * Note: use IF-ELSE statement */
+</pre>
+
+<p style="white-space: pre-line">
+    اكتب كود ياخد 3 ارقام انتجر من المستخدم ويطبع اصغر رقم بينهم
+    فيه أكثر من طريقة عشان تجيب اصغر/اكبر رقم بين 3 ارقام، حاستعمل نفس طريقة اسايمنت 2 لأنها  بسيطة وما تحتاج if داخل if او (nested if statements)
+</p>
+
+<pre class="prettyprint" dir="ltr">
+    // تعريف المتغيرات
+    int n1 = scanner.nextInt();
+    int n2 = scanner.nextInt();
+    int n3 = scanner.nextInt();
+
+    // افترض انه اصغر رقم هو اول رقم ونخزنه في متغير
+    int smallest = n1;
+
+    // في حال ثاني رقم كان اصغر من اصغر رقم راح نخزنه كأصغر رقم
+    if (n2 < smallest)
+        smallest = n2;
+
+    // نفس الشي
+    if (n3 < smallest)
+        smallest = n3;
+
+    // اخر شي اطبع اصغر رقم مهما كان
+    System.out.println(smallest);
+</pre>
+
+<p style="white-space: pre-line;">
+    ملاحظة: لا تستعمل else if لانها ما تشتغل اذا اشتغل قبلها if، تشتغل فقط اذا ال if اللي قبلها ما اشتغلت
+    ملاحظة: عندما لا تستعمل الاقواس المتعرجة تحت ال if راح يتنفذ اول سطر فقط، مثال:
+</p>
+
+<pre class="prettyprint" dir="ltr">
+    int x = 5;
+    if (x > 1) {
+        System.out.println(x);
+    }
+    System.out.println(10);
+    // الكود يطابق
+    if (x > 1)
+        System.out.println(x);
+    System.out.println(10);
+    // طبعا المسافات ما تفرق لكن للتوضيح وسهولة قرائة الكود
+</pre>
+
+<p>
+    بعض الطرق الأخرى لايجاد اصغر قيمة بين 3 ارقام:
+</p>
+
+<pre class="prettyprint" dir="ltr">
+int a = 2,
+    b = 5,
+    c = 0;
+
+int smallest;
+
+// باستعمال كلاس ماث
+smallest = Math.min(Math.min(a, b), c);
+
+// باستعمال if-else
+if (a < b && a < c) {
+    smallest = a;
+}
+else if (b < c) {
+    smallest = b;
+}
+else {
+    smallest = c;
+}
+
+// باستعمال nested if
+if (a < b) {
+    if (a > c) {
+      smallest = c;
+    } else { // a <= c
+      smallest = a;
+    }
+  } else { // a >= b
+    if (b > c) {
+      smallest = c;
+    } else { // b <= c
+      smallest = b;
+    }
+}
+
+// باستعمال Ternary Operator (Short If-else Statement)
+smallest = a < b && a < c ? a : b < c ? b : c ;
+// او
+smallest = (a < b) ? a : b;
+smallest = (smallest < c) ? smallest : c;
+</pre>
+
+<hr class="thicc-hr">
+
+
+<a class="link-info" href="#fullCode">الكود كامل</a>
+
+<div class="space">
+
+</div>
+
+</body>
+
+</html>

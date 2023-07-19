@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33815.320
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ElCatoWebApi", "ElCatoWebApi\ElCatoWebApi.csproj", "{F72D81FB-EE50-4EB9-A243-BD592EB831CD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F72D81FB-EE50-4EB9-A243-BD592EB831CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F72D81FB-EE50-4EB9-A243-BD592EB831CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F72D81FB-EE50-4EB9-A243-BD592EB831CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F72D81FB-EE50-4EB9-A243-BD592EB831CD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {172B5C06-386E-40E6-A4F6-4034124C4270}
+	EndGlobalSection
+EndGlobal
