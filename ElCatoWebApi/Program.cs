@@ -112,6 +112,7 @@ public class Program
             pattern: "{controller}/{action}/{id?}");
 
         //app.MapFallbackToFile("react/index.html");
+        app.MapGet("/", () => Results.Redirect("~/react/index.html"));
 
         // Auto run migrations
         using (var scope = app.Services.CreateScope())

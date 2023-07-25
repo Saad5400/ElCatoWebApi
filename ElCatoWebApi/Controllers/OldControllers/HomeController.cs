@@ -42,7 +42,7 @@ namespace ElCatoWebApi.Controllers.OldControllers
             return View(vm);
         }
 
-        [HttpGet("Programming/{folder}/{name}")]
+        [HttpGet("[controller]/Programming/{folder}/{name}")]
         public IActionResult Java(string? folder, string? name)
         {
             if (folder == null || name == null)
