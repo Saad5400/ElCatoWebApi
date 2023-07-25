@@ -15,11 +15,9 @@ public class Program
         var builder = WebApplication.CreateBuilder(args);
 
         // Add services to the container.
-
-        builder.Services.AddControllers().AddNewtonsoftJson(options =>
+        builder.Services.AddControllersWithViews().AddNewtonsoftJson(options =>
             options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
         );
-        builder.Services.AddControllersWithViews();
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
@@ -87,16 +85,7 @@ public class Program
         }
 
         app.UseHttpsRedirection();
-        app.UseStaticFiles(new StaticFileOptions
-        {
-            OnPrepareResponse = (context) =>
-            {
-                var headers = context.Context.Response.Headers;
-                var contentType = headers["Content-Type"];
-                contentType += "; charset=utf-8";
-                headers["Content-Type"] = contentType;
-            }
-        });
+        app.UseStaticFiles();
         app.UseRouting();
 
         app.UseCors(corsName);
@@ -104,8 +93,6 @@ public class Program
 
         app.UseAuthentication();
         app.UseAuthorization();
-
-        app.MapControllers();
 
         app.MapControllerRoute(
             name: "default",
