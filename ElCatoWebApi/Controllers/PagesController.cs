@@ -45,6 +45,9 @@ namespace ElCatoWebApi.Controllers
                 return NotFound();
             }
 
+            page.ViewCount += 1;
+            await _db.SaveChangesAsync();
+
             return page;
         }
 

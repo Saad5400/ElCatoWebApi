@@ -98,7 +98,7 @@ public class Program
             name: "default",
             pattern: "{controller}/{action}/{id?}");
 
-        //app.MapFallbackToFile("react/index.html");
+        // Map static react frontend
         app.MapGet("/", () => Results.Redirect("~/react/index.html"));
 
         // Auto run migrations
