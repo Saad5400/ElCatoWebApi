@@ -24,7 +24,7 @@
 
 	<ItemGroup>
 		<None Update="Data\Db\main.db">
-			<CopyToOutputDirectory>Never</CopyToOutputDirectory>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
 		<None Update="Data\Db\old.db">
 			<CopyToOutputDirectory>Never</CopyToOutputDirectory>

@@ -16,7 +16,11 @@ namespace ElCatoWebApi.Models
         
         [Key]
         public int Id { get; set; }
+
+        [MinLength(4)]
+        [MaxLength(50)]
         public string Title { get; set; } = string.Empty;
+        [MaxLength(50)]
         public string Subtitle { get; set; } = string.Empty;
         public int Order { get; set; } = 0;
 

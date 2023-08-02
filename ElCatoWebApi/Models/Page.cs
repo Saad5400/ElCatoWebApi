@@ -15,14 +15,20 @@ namespace ElCatoWebApi.Models
 
         [Key]
         public int Id { get; set; }
+        [MinLength(4)]
+        [MaxLength(50)]
         public string Title { get; set; } = string.Empty;
+        [MaxLength(50)]
         public string TitleIcon { get; set; } = string.Empty;
+        [MaxLength(50)]
         public string Subtitle { get; set; } = string.Empty;
+        [MaxLength(102400)]
         public string Content { get; set; } = string.Empty;
         public int Order { get; set; } = 0;
         public int ViewCount { get; set; } = 0;
-
+        [MaxLength(500)]
         public string? IpAddress { get; set; } = string.Empty;
+        [MaxLength(500)]
         public string? FingerPrint { get; set; } = string.Empty;
         public DateTime? CreatedAt { get; set; } = DateTime.UtcNow;
         public bool? Accepted { get; set; } = false;
