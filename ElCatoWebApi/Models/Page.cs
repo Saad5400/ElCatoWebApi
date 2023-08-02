@@ -5,12 +5,12 @@ namespace ElCatoWebApi.Models
     public class Page
     {
         public static Func<Page, dynamic> MinimalSelector { get; } =
-            (Page p) => new { p.Id, p.Title, p.Accepted, p.Order, p.ViewCount, p.CardId };
+            (Page p) => new { p.Id, p.Title, p.Accepted, p.Order, p.ViewCount, p.FingerPrint, p.CardId };
 
         public static Func<Page, dynamic> WithCardSelector { get; } =
             (Page p) => new
             {
-                p.Id, p.Title, p.Accepted, p.Content, p.Order, p.ViewCount, p.CardId, Card = Card.WithSectionSelector(p.Card)
+                p.Id, p.Title, p.Accepted, p.Content, p.Order, p.ViewCount, p.FingerPrint, p.CardId, Card = Card.WithSectionSelector(p.Card)
             };
 
         [Key]

@@ -1,0 +1,103 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: 'Sdglitch';
+  src: local('Sdglitch'), url(./fonts/Sdglitchrobotdemo-GOPdO.ttf) format('woff');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Tajawal';
+  src: local('Tajawal'), url(./fonts/Tajawal-Regular.ttf) format('woff');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Glitch Goblin';
+  src: local('Glitch Goblin'), url(./fonts/GlitchGoblin-2O87v.ttf) format('woff');
+  font-display: swap;
+}
+
+.sdglitch {
+  font-family: 'Sdglitch', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  sans-serif;
+}
+
+.tajawal {
+  font-family: 'Tajawal', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  sans-serif;
+}
+
+.sdglitch-tajawal {
+  font-family: 'Sdglitch', 'Tajawal', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  sans-serif;
+}
+
+.glitchgoblin {
+  font-family: 'Glitch Goblin', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  sans-serif;
+}
+
+body {
+  margin: 0;
+  @apply sdglitch;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth !important;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+tr {
+  @apply border-primary !important;
+}
+
+.responsive-input {
+  @apply input-sm lg:input-md;
+}
+
+.responsive-select {
+  @apply select-sm lg:select-md;
+}
+
+.responsive-textarea {
+  @apply textarea-sm lg:textarea-md;
+}
+
+p {
+  @apply text-sm xl:text-lg;
+}
+
+button, ul, li, code, span, input, select, textarea {
+  text-align: start !important;
+  unicode-bidi: plaintext !important;
+}
+
+li > p[style="text-align: start;"] {
+  direction: rtl !important;
+}
+
+.progress:indeterminate {
+  animation: progress-loading 0.5s ease-in-out infinite !important;
+}
+
+.more {
+  @apply text-white !text-sm !font-bold !bg-primary !rounded-lg !px-2 !py-1 !cursor-pointer;
+
+}
+
+pre {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}

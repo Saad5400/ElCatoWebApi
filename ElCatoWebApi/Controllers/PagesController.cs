@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using ElCatoWebApi.Data;
 using ElCatoWebApi.Models;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace ElCatoWebApi.Controllers
 {
@@ -23,11 +24,38 @@ namespace ElCatoWebApi.Controllers
             _db = db;
         }
 
+        private async Task<bool> IsAdmin()
+        {
+            return User?.Claims?.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value is not null;
+        }
+
+        private async Task<string?> GetIpAddress()
+        {
+            return HttpContext?.Connection?.RemoteIpAddress?.GetHashCode().ToString();
+        }
+
+        private async Task<string?> GetFingerPrint(string? current)
+        {
+            return string.IsNullOrWhiteSpace(current)
+                ? HttpContext?.Request?.Headers["User-Agent"].GetHashCode().ToString()
+                : current;
+        }
+
         // GET: api/Pages
         [AllowAnonymous]
         [HttpGet]
-        public async Task<IActionResult> GetPages()
+        public async Task<IActionResult> GetPages(string? fingerPrint)
         {
+            if (! await IsAdmin() && string.IsNullOrWhiteSpace(fingerPrint))
+            {
+                return Unauthorized();
+            }
+            else if (!await IsAdmin())
+            {
+                var ipAddress = await GetIpAddress();
+                return Ok(_db.Pages.Where(p => p.FingerPrint == fingerPrint || p.IpAddress == ipAddress).Select(p => Page.WithCardSelector(p)).AsParallel());
+            }
+
             return Ok(_db.Pages.Select(p => Page.WithCardSelector(p)).AsParallel());
         }
 
@@ -50,6 +78,7 @@ namespace ElCatoWebApi.Controllers
             return page;
         }
 
+        [AllowAnonymous]
         [HttpPost("upsert")]
         public async Task<IActionResult> UpsertPage(Page page)
         {
@@ -97,10 +126,31 @@ namespace ElCatoWebApi.Controllers
 
         // POST: api/Pages
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> PostPage(Page page)
         {
             page.Card = null;
+
+            if (! await IsAdmin())
+            {
+                page.Accepted = false;
+                page.IpAddress = await GetIpAddress();
+                page.FingerPrint = await GetFingerPrint(page.FingerPrint);
+
+                if (string.IsNullOrWhiteSpace(page.FingerPrint) ||
+                    string.IsNullOrWhiteSpace(page.IpAddress))
+                {
+                    return BadRequest("Missing IP address or FingerPrint");
+                }
+
+                if (await _db.Pages.CountAsync(p => (p.FingerPrint == page.FingerPrint || p.IpAddress == page.IpAddress) &&
+                                         p.CreatedAt > DateTime.Now.AddHours(-1)) > 5)
+                {
+                    return BadRequest("Too many posts");
+                }
+            }
+
             _db.Pages.Add(page);
             await _db.SaveChangesAsync();
 
