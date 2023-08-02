@@ -87,7 +87,7 @@ namespace ElCatoWebApi.Controllers
                     throw;
                 }
             }
-            return NoContent();
+            return Ok(section);
         }
 
         // POST: api/Sections

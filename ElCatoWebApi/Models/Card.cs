@@ -12,7 +12,7 @@ namespace ElCatoWebApi.Models
             c => new { c?.Id, c?.Title, c?.Subtitle, c?.Order, c?.SectionId, Section = Models.Section.MinimalSelector(c?.Section) };
 
         public static Func<Card?, dynamic> WithPagesSelector =>
-            c => new { c?.Id, c?.Title, c?.Subtitle, c?.Order, c?.SectionId, Pages = c?.Pages?.Select(p => Page.MinimalSelector(p)) };
+            c => new { c?.Id, c?.Title, c?.Subtitle, c?.Order, c?.SectionId, Pages = c?.Pages?.Where(p => p.Accepted == true).Select(p => Page.MinimalSelector(p)) };
         
         [Key]
         public int Id { get; set; }

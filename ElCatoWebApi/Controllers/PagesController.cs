@@ -25,7 +25,6 @@ namespace ElCatoWebApi.Controllers
 
         // GET: api/Pages
         [AllowAnonymous]
-        [ResponseCache(Duration = 60)]
         [HttpGet]
         public async Task<IActionResult> GetPages()
         {
@@ -69,6 +68,7 @@ namespace ElCatoWebApi.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutPage(int id, Page page)
         {
+            page.Card = null;
             if (id != page.Id)
             {
                 return BadRequest();
@@ -92,7 +92,7 @@ namespace ElCatoWebApi.Controllers
                 }
             }
 
-            return NoContent();
+            return Ok(page);
         }
 
         // POST: api/Pages
@@ -100,6 +100,7 @@ namespace ElCatoWebApi.Controllers
         [HttpPost]
         public async Task<IActionResult> PostPage(Page page)
         {
+            page.Card = null;
             _db.Pages.Add(page);
             await _db.SaveChangesAsync();
 

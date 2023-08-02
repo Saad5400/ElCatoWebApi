@@ -5,12 +5,12 @@ namespace ElCatoWebApi.Models
     public class Page
     {
         public static Func<Page, dynamic> MinimalSelector { get; } =
-            (Page p) => new { p.Id, p.Title, p.TitleIcon, p.Subtitle, p.Order, p.ViewCount, p.CardId };
+            (Page p) => new { p.Id, p.Title, p.Accepted, p.Order, p.ViewCount, p.CardId };
 
         public static Func<Page, dynamic> WithCardSelector { get; } =
             (Page p) => new
             {
-                p.Id, p.Title, p.TitleIcon, p.Subtitle, p.Content, p.Order, p.ViewCount, p.CardId, Card = Card.MinimalSelector(p.Card)
+                p.Id, p.Title, p.Accepted, p.Content, p.Order, p.ViewCount, p.CardId, Card = Card.WithSectionSelector(p.Card)
             };
 
         [Key]
@@ -21,6 +21,11 @@ namespace ElCatoWebApi.Models
         public string Content { get; set; } = string.Empty;
         public int Order { get; set; } = 0;
         public int ViewCount { get; set; } = 0;
+
+        public string? IpAddress { get; set; } = string.Empty;
+        public string? FingerPrint { get; set; } = string.Empty;
+        public DateTime? CreatedAt { get; set; } = DateTime.UtcNow;
+        public bool? Accepted { get; set; } = false;
 
         public int CardId { get; set; }
         public virtual Card? Card { get; set; } = null!;

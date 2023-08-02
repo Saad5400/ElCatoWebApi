@@ -88,7 +88,7 @@ namespace ElCatoWebApi.Controllers
                 }
             }
 
-            return NoContent();
+            return Ok(card);
         }
 
         // POST: api/Cards
