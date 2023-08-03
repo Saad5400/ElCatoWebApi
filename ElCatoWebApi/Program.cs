@@ -20,7 +20,7 @@ public class Program
         builder.Services.AddControllersWithViews().AddNewtonsoftJson(options =>
             options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
         );
-            
+
         builder.Services.AddSpaStaticFiles(configuration =>
         {
             configuration.RootPath = "wwwroot/react";
@@ -114,24 +114,34 @@ public class Program
         app.UseRouting();
 
         app.UseCors(corsName);
-        app.UseResponseCaching();
+
         app.UseOutputCache();
 
         app.UseAuthentication();
         app.UseAuthorization();
 
-        app.MapControllerRoute(
-            name: "default",
-            pattern: "{controller}/{action}/{id?}").RequireAuthorization(fixedPolicy);
+        app.UseEndpoints(endpoints =>
+        {
+            endpoints.MapControllerRoute
+                (
+                    name: "default",
+                    pattern: "{controller}/{action}/{id?}"
+                )
+                .RequireRateLimiting(fixedPolicy);
 
-        // Map static react frontend
-        app.MapGet(
-            "/",
-            async (context) =>
-            {
-                context.Response.Redirect("/index.html");
-            }
-        ).RequireRateLimiting(fixedPolicy).CacheOutput();
+            endpoints.MapFallback
+                (
+               "/{**slug}",
+                   async (context) =>
+                   {
+                       // render and return the SPA
+                       context.Response.ContentType = "text/html";
+                       await context.Response.SendFileAsync(Path.Combine(app.Environment.ContentRootPath, "wwwroot/react/index.html"));
+                   }
+                )
+                .RequireRateLimiting(fixedPolicy)
+                .CacheOutput();
+        });
 
         // Auto run migrations
         using (var scope = app.Services.CreateScope())
