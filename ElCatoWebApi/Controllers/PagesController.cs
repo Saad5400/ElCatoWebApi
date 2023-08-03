@@ -62,6 +62,7 @@ namespace ElCatoWebApi.Controllers
 
         // GET: api/Pages/5
         [AllowAnonymous]
+        [ResponseCache(Duration = 60 * 60)]
         [OutputCache(Duration = 60 * 60)]
         [HttpGet("{id}")]
         public async Task<ActionResult<Page>> GetPage(int id)

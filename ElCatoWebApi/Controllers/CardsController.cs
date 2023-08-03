@@ -26,7 +26,8 @@ namespace ElCatoWebApi.Controllers
 
         // GET: api/Cards
         [AllowAnonymous]
-        [OutputCache(Duration = 60 * 60 * 24)]
+        [ResponseCache(Duration = 60 * 60)]
+        [OutputCache(Duration = 60 * 60)]
         [HttpGet]
         public async Task<IActionResult> GetCards()
         {

@@ -12,7 +12,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ElCatoWebApi.Controllers.OldControllers
 {
-    [OutputCache(Duration = 60 * 60 * 24)]
+    [ResponseCache(Duration = 60 * 60 * 24 * 30)]
+    [OutputCache(Duration = 60 * 60 * 24 * 30)]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;

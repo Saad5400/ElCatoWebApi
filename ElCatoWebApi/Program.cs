@@ -98,6 +98,8 @@ public class Program
             });
         });
 
+        builder.Services.AddResponseCaching();
+
         var app = builder.Build();
 
         // Configure the HTTP request pipeline.
@@ -114,7 +116,7 @@ public class Program
         app.UseRouting();
 
         app.UseCors(corsName);
-
+        app.UseResponseCaching();
         app.UseOutputCache();
 
         app.UseAuthentication();

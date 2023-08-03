@@ -10,6 +10,7 @@ using ElCatoWebApi.Data;
 using ElCatoWebApi.Models;
 using ElCatoWebApi.Services;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.OutputCaching;
 
 namespace ElCatoWebApi.Controllers
 {
@@ -28,6 +29,8 @@ namespace ElCatoWebApi.Controllers
 
         [HttpPost]
         [Route("login")]
+        [ResponseCache(Duration = 60 * 60)]
+        [OutputCache(Duration = 60 * 60)]
         public async Task<ActionResult<Token>> Authenticate(User user)
         {
             var token = await _jwtManager.Authenticate(user.Username, user.Password);
