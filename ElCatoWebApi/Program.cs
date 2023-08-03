@@ -3,7 +3,9 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using System.Threading.RateLimiting;
 using ElCatoWebApi.Services;
+using Microsoft.AspNetCore.RateLimiting;
 
 namespace ElCatoWebApi;
 
@@ -18,6 +20,12 @@ public class Program
         builder.Services.AddControllersWithViews().AddNewtonsoftJson(options =>
             options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
         );
+            
+        builder.Services.AddSpaStaticFiles(configuration =>
+        {
+            configuration.RootPath = "wwwroot/react";
+        });
+
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
@@ -54,6 +62,17 @@ public class Program
                 IssuerSigningKey = new SymmetricSecurityKey(Key)
             };
         });
+
+        const string fixedPolicy = "fixed";
+        builder.Services.AddRateLimiter(_ => _
+            .AddFixedWindowLimiter(policyName: fixedPolicy, options =>
+            {
+                options.PermitLimit = 10;
+                options.Window = TimeSpan.FromSeconds(10);
+                options.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
+                options.QueueLimit = 3;
+            }));
+
         builder.Services.AddAuthorization();
 
         builder.Services.AddScoped<JwtManager, JwtManager>();
@@ -71,8 +90,13 @@ public class Program
             });
         });
 
-        // Respne caching
-        builder.Services.AddResponseCaching();
+        builder.Services.AddOutputCache(options =>
+        {
+            options.AddBasePolicy(builder =>
+            {
+                builder.Expire(TimeSpan.FromMinutes(60));
+            });
+        });
 
         var app = builder.Build();
 
@@ -86,20 +110,28 @@ public class Program
 
         app.UseHttpsRedirection();
         app.UseStaticFiles();
+        app.UseSpaStaticFiles();
         app.UseRouting();
 
         app.UseCors(corsName);
         app.UseResponseCaching();
+        app.UseOutputCache();
 
         app.UseAuthentication();
         app.UseAuthorization();
 
         app.MapControllerRoute(
             name: "default",
-            pattern: "{controller}/{action}/{id?}");
+            pattern: "{controller}/{action}/{id?}").RequireAuthorization(fixedPolicy);
 
         // Map static react frontend
-        app.MapGet("/", () => Results.Redirect("~/react/index.html"));
+        app.MapGet(
+            "/",
+            async (context) =>
+            {
+                context.Response.Redirect("/index.html");
+            }
+        ).RequireRateLimiting(fixedPolicy).CacheOutput();
 
         // Auto run migrations
         using (var scope = app.Services.CreateScope())

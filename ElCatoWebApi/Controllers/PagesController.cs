@@ -9,6 +9,7 @@ using ElCatoWebApi.Data;
 using ElCatoWebApi.Models;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
+using Microsoft.AspNetCore.OutputCaching;
 
 namespace ElCatoWebApi.Controllers
 {
@@ -61,7 +62,7 @@ namespace ElCatoWebApi.Controllers
 
         // GET: api/Pages/5
         [AllowAnonymous]
-        [ResponseCache(Duration = 60)]
+        [OutputCache(Duration = 60 * 60)]
         [HttpGet("{id}")]
         public async Task<ActionResult<Page>> GetPage(int id)
         {
@@ -88,6 +89,10 @@ namespace ElCatoWebApi.Controllers
             }
             else
             {
+                if (!await IsAdmin())
+                {
+                    return Unauthorized();
+                }
                 return await PutPage(page.Id, page);
             }
         }
@@ -145,9 +150,9 @@ namespace ElCatoWebApi.Controllers
                 }
 
                 if (await _db.Pages.CountAsync(p => (p.FingerPrint == page.FingerPrint || p.IpAddress == page.IpAddress) &&
-                                         p.CreatedAt > DateTime.Now.AddHours(-1)) > 5)
+                                         p.CreatedAt > DateTime.UtcNow.AddHours(-1)) > 5)
                 {
-                    return BadRequest("Too many posts");
+                    return StatusCode(429, "Too many pages, try again later");
                 }
             }
 

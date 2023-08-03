@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using ElCatoWebApi.Data;
 using ElCatoWebApi.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.OutputCaching;
 
 namespace ElCatoWebApi.Controllers
 {
@@ -25,7 +26,7 @@ namespace ElCatoWebApi.Controllers
 
         // GET: api/Cards
         [AllowAnonymous]
-        [ResponseCache(Duration = 60)]
+        [OutputCache(Duration = 60 * 60 * 24)]
         [HttpGet]
         public async Task<IActionResult> GetCards()
         {
@@ -46,7 +47,6 @@ namespace ElCatoWebApi.Controllers
         }
 
         // GET: api/Cards/5
-        [AllowAnonymous]
         [HttpGet("{id}")]
         public async Task<ActionResult<Card>> GetCard(int id)
         {

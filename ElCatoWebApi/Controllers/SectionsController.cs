@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using ElCatoWebApi.Data;
 using ElCatoWebApi.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.OutputCaching;
 
 namespace ElCatoWebApi.Controllers
 {
@@ -26,14 +27,13 @@ namespace ElCatoWebApi.Controllers
         // GET: api/Sections
         [AllowAnonymous]
         [HttpGet]
-        [ResponseCache(Duration = 60)]
+        [OutputCache(Duration = 60 * 60 * 24)]
         public IActionResult GetSections()
         {
             return Ok(_db.Sections.Select(s => Section.WithCardsAndPagesSelector(s)));
         }
 
         // GET: api/Sections/5
-        [AllowAnonymous]
         [HttpGet("{id}")]
         public ActionResult<Section> GetSection(int id)
         {

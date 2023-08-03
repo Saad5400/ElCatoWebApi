@@ -1,1 +1,0 @@
-{"version":3,"file":"static/js/713.3f264e4a.chunk.js","mappings":"yJAAe,SAASA,IACpB,OAAQC,EAAAA,EAAAA,KAAAC,EAAAA,SAAA,GACZ,C","sources":["components/Empty.js"],"sourcesContent":["export default function Empty() {\r\n    return (<></>);\r\n}"],"names":["Empty","_jsx","_Fragment"],"sourceRoot":""}

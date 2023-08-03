@@ -7,10 +7,12 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewEngines;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using Microsoft.AspNetCore.OutputCaching;
 using Microsoft.EntityFrameworkCore;
 
 namespace ElCatoWebApi.Controllers.OldControllers
 {
+    [OutputCache(Duration = 60 * 60 * 24)]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
