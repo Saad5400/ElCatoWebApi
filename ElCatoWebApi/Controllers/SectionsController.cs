@@ -29,8 +29,8 @@ namespace ElCatoWebApi.Controllers
         [AllowAnonymous]
         [HttpGet]
         [EnableRateLimiting("fixed")]
-        [ResponseCache(Duration = 60 * 60)]
-        [OutputCache(Duration = 60 * 60)]
+        [ResponseCache(Duration = 60 * 10)]
+        [OutputCache(Duration = 60 * 10)]
         public IActionResult GetSections()
         {
             return Ok(_db.Sections.Select(s => Section.WithCardsAndPagesSelector(s)));

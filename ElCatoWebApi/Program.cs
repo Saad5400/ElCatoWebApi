@@ -116,8 +116,8 @@ public class Program
         app.UseRouting();
         app.UseCors(corsName);
         app.UseResponseCaching();
-        app.UseRateLimiter();
         app.UseOutputCache();
+        app.UseRateLimiter();
 
         app.UseAuthentication();
         app.UseAuthorization();
