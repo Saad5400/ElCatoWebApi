@@ -3,10 +3,12 @@ using ElCatoWebApi.Models.OldModels;
 using ElCatoWebApi.Models.OldModels.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.EntityFrameworkCore;
 
 namespace ElCatoWebApi.Controllers.OldControllers
 {
+    [EnableRateLimiting("fixed")]
     public class AdminController : Controller
     {
         public static readonly string PASSWORD = "MyVeryStrongAndUnPredictablePasswordForTheAdminController";

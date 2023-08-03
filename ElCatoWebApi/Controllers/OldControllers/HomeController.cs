@@ -8,10 +8,12 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewEngines;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.OutputCaching;
+using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.EntityFrameworkCore;
 
 namespace ElCatoWebApi.Controllers.OldControllers
 {
+    [EnableRateLimiting("fixed")]
     [ResponseCache(Duration = 60 * 60 * 24 * 30)]
     [OutputCache(Duration = 60 * 60 * 24 * 30)]
     public class HomeController : Controller

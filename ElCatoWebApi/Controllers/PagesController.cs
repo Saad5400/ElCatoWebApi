@@ -10,9 +10,11 @@ using ElCatoWebApi.Models;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 using Microsoft.AspNetCore.OutputCaching;
+using Microsoft.AspNetCore.RateLimiting;
 
 namespace ElCatoWebApi.Controllers
 {
+    [EnableRateLimiting("fixed")]
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]

@@ -9,6 +9,7 @@ using ElCatoWebApi.Data;
 using ElCatoWebApi.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.OutputCaching;
+using Microsoft.AspNetCore.RateLimiting;
 
 namespace ElCatoWebApi.Controllers
 {
@@ -26,6 +27,7 @@ namespace ElCatoWebApi.Controllers
 
         // GET: api/Cards
         [AllowAnonymous]
+        [EnableRateLimiting("fixed")]
         [ResponseCache(Duration = 60 * 60)]
         [OutputCache(Duration = 60 * 60)]
         [HttpGet]

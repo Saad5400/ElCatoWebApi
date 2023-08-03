@@ -12,6 +12,7 @@ namespace ElCatoWebApi;
 public class Program
 {
     public static bool IsDevelopment { get; private set; } = false;
+    public static readonly string FixedPolicy = "fixed";
     public static void Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
@@ -21,10 +22,10 @@ public class Program
             options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
         );
 
-        builder.Services.AddSpaStaticFiles(configuration =>
-        {
-            configuration.RootPath = "wwwroot/react";
-        });
+        // builder.Services.AddSpaStaticFiles(configuration =>
+        // {
+        //     configuration.RootPath = "wwwroot/react";
+        // });
 
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddEndpointsApiExplorer();
@@ -63,14 +64,13 @@ public class Program
             };
         });
 
-        const string fixedPolicy = "fixed";
         builder.Services.AddRateLimiter(_ => _
-            .AddFixedWindowLimiter(policyName: fixedPolicy, options =>
+            .AddFixedWindowLimiter(policyName: FixedPolicy, options =>
             {
-                options.PermitLimit = 10;
+                options.PermitLimit = 4;
                 options.Window = TimeSpan.FromSeconds(10);
                 options.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
-                options.QueueLimit = 3;
+                options.QueueLimit = 2;
             }));
 
         builder.Services.AddAuthorization();
@@ -112,38 +112,22 @@ public class Program
 
         app.UseHttpsRedirection();
         app.UseStaticFiles();
-        app.UseSpaStaticFiles();
+        // app.UseSpaStaticFiles();
         app.UseRouting();
-
         app.UseCors(corsName);
         app.UseResponseCaching();
+        app.UseRateLimiter();
         app.UseOutputCache();
 
         app.UseAuthentication();
         app.UseAuthorization();
 
-        app.UseEndpoints(endpoints =>
-        {
-            endpoints.MapControllerRoute
-                (
-                    name: "default",
-                    pattern: "{controller}/{action}/{id?}"
-                )
-                .RequireRateLimiting(fixedPolicy);
-
-            endpoints.MapFallback
-                (
-               "/{**slug}",
-                   async (context) =>
-                   {
-                       // render and return the SPA
-                       context.Response.ContentType = "text/html";
-                       await context.Response.SendFileAsync(Path.Combine(app.Environment.ContentRootPath, "wwwroot/react/index.html"));
-                   }
-                )
-                .RequireRateLimiting(fixedPolicy)
-                .CacheOutput();
-        });
+        app.MapControllerRoute
+            (
+                name: "default",
+                pattern: "{controller=Frontend}/{action=Index}/{id?}"
+            )
+            .RequireRateLimiting(FixedPolicy);
 
         // Auto run migrations
         using (var scope = app.Services.CreateScope())

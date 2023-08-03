@@ -11,9 +11,11 @@ using ElCatoWebApi.Models;
 using ElCatoWebApi.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.OutputCaching;
+using Microsoft.AspNetCore.RateLimiting;
 
 namespace ElCatoWebApi.Controllers
 {
+    [EnableRateLimiting("fixed")]
     [Route("api/[controller]")]
     [ApiController]
     public class UsersController : ControllerBase
