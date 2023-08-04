@@ -43,7 +43,7 @@ namespace ElCatoWebApi.Controllers
                 }
                 else
                 {
-                    ViewData["Title"] = "El Cato - Not Found"
+                    ViewData["Title"] = "El Cato - Not Found";
                 }
             }
             else if (path.StartsWith("admin"))

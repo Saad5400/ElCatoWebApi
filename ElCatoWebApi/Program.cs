@@ -65,14 +65,20 @@ public class Program
             };
         });
 
-        builder.Services.AddRateLimiter(_ => _
-            .AddFixedWindowLimiter(policyName: FixedPolicy, options =>
-            {
-                options.PermitLimit = 6;
-                options.Window = TimeSpan.FromSeconds(10);
-                options.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
-                options.QueueLimit = 2;
-            }));
+        builder.Services.AddRateLimiter(limiterOptions =>
+        {
+            limiterOptions
+                .AddSlidingWindowLimiter(policyName: FixedPolicy, options =>
+                {
+                    options.PermitLimit = 25;
+                    options.Window = TimeSpan.FromSeconds(30);
+                    options.SegmentsPerWindow = 10;
+
+                    options.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
+                    options.QueueLimit = 2;
+                });
+            limiterOptions.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
+        });
 
         builder.Services.AddAuthorization();
 
