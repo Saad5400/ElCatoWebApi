@@ -1,24 +1,25 @@
 {
   "files": {
-    "main.css": "https://elcato.azurewebsites.net/react/static/css/main.d2b105ef.css",
-    "main.js": "https://elcato.azurewebsites.net/react/static/js/main.22849055.js",
-    "static/js/338.505570b2.chunk.js": "https://elcato.azurewebsites.net/react/static/js/338.505570b2.chunk.js",
+    "main.css": "https://elcato.azurewebsites.net/react/static/css/main.eb2a5a8d.css",
+    "main.js": "https://elcato.azurewebsites.net/react/static/js/main.15d136c9.js",
+    "static/js/399.c9710839.chunk.js": "https://elcato.azurewebsites.net/react/static/js/399.c9710839.chunk.js",
+    "static/js/338.02e5c909.chunk.js": "https://elcato.azurewebsites.net/react/static/js/338.02e5c909.chunk.js",
     "static/css/930.1ffcc55f.chunk.css": "https://elcato.azurewebsites.net/react/static/css/930.1ffcc55f.chunk.css",
-    "static/js/930.9febb71a.chunk.js": "https://elcato.azurewebsites.net/react/static/js/930.9febb71a.chunk.js",
+    "static/js/930.f9e1313c.chunk.js": "https://elcato.azurewebsites.net/react/static/js/930.f9e1313c.chunk.js",
     "static/js/902.04a1f753.chunk.js": "https://elcato.azurewebsites.net/react/static/js/902.04a1f753.chunk.js",
-    "static/js/525.26d43444.chunk.js": "https://elcato.azurewebsites.net/react/static/js/525.26d43444.chunk.js",
-    "static/js/422.d7149e56.chunk.js": "https://elcato.azurewebsites.net/react/static/js/422.d7149e56.chunk.js",
-    "static/js/580.5c2f670d.chunk.js": "https://elcato.azurewebsites.net/react/static/js/580.5c2f670d.chunk.js",
-    "static/js/412.d99c2c6a.chunk.js": "https://elcato.azurewebsites.net/react/static/js/412.d99c2c6a.chunk.js",
-    "static/js/654.a93eb190.chunk.js": "https://elcato.azurewebsites.net/react/static/js/654.a93eb190.chunk.js",
-    "static/js/881.ee53ff39.chunk.js": "https://elcato.azurewebsites.net/react/static/js/881.ee53ff39.chunk.js",
+    "static/js/525.930047fc.chunk.js": "https://elcato.azurewebsites.net/react/static/js/525.930047fc.chunk.js",
+    "static/js/422.5a83db11.chunk.js": "https://elcato.azurewebsites.net/react/static/js/422.5a83db11.chunk.js",
+    "static/js/580.a725672b.chunk.js": "https://elcato.azurewebsites.net/react/static/js/580.a725672b.chunk.js",
+    "static/js/412.9ac7ea88.chunk.js": "https://elcato.azurewebsites.net/react/static/js/412.9ac7ea88.chunk.js",
+    "static/js/654.e7ce5218.chunk.js": "https://elcato.azurewebsites.net/react/static/js/654.e7ce5218.chunk.js",
+    "static/js/881.10967d1d.chunk.js": "https://elcato.azurewebsites.net/react/static/js/881.10967d1d.chunk.js",
+    "static/js/792.bf55ad63.chunk.js": "https://elcato.azurewebsites.net/react/static/js/792.bf55ad63.chunk.js",
     "static/js/468.81c334aa.chunk.js": "https://elcato.azurewebsites.net/react/static/js/468.81c334aa.chunk.js",
-    "static/js/113.fc0881da.chunk.js": "https://elcato.azurewebsites.net/react/static/js/113.fc0881da.chunk.js",
+    "static/js/113.da31d17a.chunk.js": "https://elcato.azurewebsites.net/react/static/js/113.da31d17a.chunk.js",
     "static/js/661.0705ecfc.chunk.js": "https://elcato.azurewebsites.net/react/static/js/661.0705ecfc.chunk.js",
-    "static/js/27.1939f024.chunk.js": "https://elcato.azurewebsites.net/react/static/js/27.1939f024.chunk.js",
     "static/js/316.6f1eafda.chunk.js": "https://elcato.azurewebsites.net/react/static/js/316.6f1eafda.chunk.js",
-    "static/css/143.39040f73.chunk.css": "https://elcato.azurewebsites.net/react/static/css/143.39040f73.chunk.css",
-    "static/js/143.d87a625e.chunk.js": "https://elcato.azurewebsites.net/react/static/js/143.d87a625e.chunk.js",
+    "static/css/334.39040f73.chunk.css": "https://elcato.azurewebsites.net/react/static/css/334.39040f73.chunk.css",
+    "static/js/334.36528c25.chunk.js": "https://elcato.azurewebsites.net/react/static/js/334.36528c25.chunk.js",
     "static/js/173.91a00beb.chunk.js": "https://elcato.azurewebsites.net/react/static/js/173.91a00beb.chunk.js",
     "static/media/Tajawal-Regular.ttf": "https://elcato.azurewebsites.net/react/static/media/Tajawal-Regular.e4ac0a5abb7d379e2308.ttf",
     "static/media/GlitchGoblin-2O87v.ttf": "https://elcato.azurewebsites.net/react/static/media/GlitchGoblin-2O87v.37ee9c9361643bfc72ea.ttf",
@@ -26,7 +27,7 @@
     "index.html": "https://elcato.azurewebsites.net/react/index.html"
   },
   "entrypoints": [
-    "static/css/main.d2b105ef.css",
-    "static/js/main.22849055.js"
+    "static/css/main.eb2a5a8d.css",
+    "static/js/main.15d136c9.js"
   ]
 }
