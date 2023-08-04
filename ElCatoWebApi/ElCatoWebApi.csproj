@@ -34,12 +34,7 @@
 
 	<ItemGroup>
 		<Folder Include="Models\OldModels\Compiled\" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<Content Update="wwwroot\react\*">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</Content>
+		<Folder Include="wwwroot\react\" />
 	</ItemGroup>
 
 </Project>
