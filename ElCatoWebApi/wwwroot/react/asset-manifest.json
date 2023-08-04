@@ -1,0 +1,28 @@
+{
+  "files": {
+    "main.css": "/react/static/css/main.b6bd61f1.css",
+    "main.js": "/react/static/js/main.802dd691.js",
+    "static/js/338.d35715ff.chunk.js": "/react/static/js/338.d35715ff.chunk.js",
+    "static/css/815.a5c87e23.chunk.css": "/react/static/css/815.a5c87e23.chunk.css",
+    "static/js/815.45b92d87.chunk.js": "/react/static/js/815.45b92d87.chunk.js",
+    "static/js/902.04a1f753.chunk.js": "/react/static/js/902.04a1f753.chunk.js",
+    "static/js/525.3debb362.chunk.js": "/react/static/js/525.3debb362.chunk.js",
+    "static/js/422.91f358af.chunk.js": "/react/static/js/422.91f358af.chunk.js",
+    "static/js/580.65013983.chunk.js": "/react/static/js/580.65013983.chunk.js",
+    "static/js/412.c21ad0d7.chunk.js": "/react/static/js/412.c21ad0d7.chunk.js",
+    "static/js/654.80658587.chunk.js": "/react/static/js/654.80658587.chunk.js",
+    "static/js/881.5ec3c166.chunk.js": "/react/static/js/881.5ec3c166.chunk.js",
+    "static/js/316.23189217.chunk.js": "/react/static/js/316.23189217.chunk.js",
+    "static/css/334.39040f73.chunk.css": "/react/static/css/334.39040f73.chunk.css",
+    "static/js/334.e5cbb766.chunk.js": "/react/static/js/334.e5cbb766.chunk.js",
+    "static/js/736.dccfb809.chunk.js": "/react/static/js/736.dccfb809.chunk.js",
+    "static/media/Tajawal-Regular.ttf": "/react/static/media/Tajawal-Regular.e4ac0a5abb7d379e2308.ttf",
+    "static/media/GlitchGoblin-2O87v.ttf": "/react/static/media/GlitchGoblin-2O87v.37ee9c9361643bfc72ea.ttf",
+    "static/media/Sdglitchrobotdemo-GOPdO.ttf": "/react/static/media/Sdglitchrobotdemo-GOPdO.a4805a18231bfe4c00d1.ttf",
+    "index.html": "/react/index.html"
+  },
+  "entrypoints": [
+    "static/css/main.b6bd61f1.css",
+    "static/js/main.802dd691.js"
+  ]
+}

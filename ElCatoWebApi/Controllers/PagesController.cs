@@ -152,9 +152,9 @@ namespace ElCatoWebApi.Controllers
                 }
 
                 if (await _db.Pages.CountAsync(p => (p.FingerPrint == page.FingerPrint || p.IpAddress == page.IpAddress) &&
-                                         p.CreatedAt > DateTime.UtcNow.AddHours(-1)) > 5)
+                                         p.CreatedAt > DateTime.UtcNow.AddHours(-1)) >= 3)
                 {
-                    return StatusCode(429, "Too many pages, try again later");
+                    return StatusCode(429, $"Too many pages, try again after an hour or contact the admin");
                 }
             }
 
