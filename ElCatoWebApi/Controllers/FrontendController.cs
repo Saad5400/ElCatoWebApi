@@ -10,8 +10,8 @@ using Microsoft.AspNetCore.RateLimiting;
 namespace ElCatoWebApi.Controllers
 {
     [EnableRateLimiting("fixed")]
-    // [ResponseCache(Duration = 60 * 60)]
-    // [OutputCache(Duration = 60 * 60 * 24)]
+    [ResponseCache(Duration = 60 * 60 * 24 * 7)]
+    [OutputCache(Duration = 60 * 60 * 24 * 7)]
     [Route("/")]
     public class FrontendController : Controller
     {
@@ -40,6 +40,10 @@ namespace ElCatoWebApi.Controllers
                 if (!string.IsNullOrWhiteSpace(pageTitle))
                 {
                     ViewData["Title"] = pageTitle;
+                }
+                else
+                {
+                    ViewData["Title"] = "El Cato - Not Found"
                 }
             }
             else if (path.StartsWith("admin"))
