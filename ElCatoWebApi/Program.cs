@@ -67,7 +67,7 @@ public class Program
         builder.Services.AddRateLimiter(_ => _
             .AddFixedWindowLimiter(policyName: FixedPolicy, options =>
             {
-                options.PermitLimit = 4;
+                options.PermitLimit = 6;
                 options.Window = TimeSpan.FromSeconds(10);
                 options.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
                 options.QueueLimit = 2;
