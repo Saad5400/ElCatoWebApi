@@ -1,3 +1,4 @@
+using System.Globalization;
 using ElCatoWebApi.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -111,7 +112,15 @@ public class Program
         }
 
         app.UseHttpsRedirection();
-        app.UseStaticFiles();
+        app.UseStaticFiles(new StaticFileOptions()
+        {
+            HttpsCompression = Microsoft.AspNetCore.Http.Features.HttpsCompressionMode.Compress,
+            OnPrepareResponse = ctx =>
+            {
+                ctx.Context.Response.Headers.Append("Cache-Control", "public,max-age=604800");
+                ctx.Context.Response.Headers.Append("Expires", DateTime.UtcNow.AddDays(7).ToString("R", CultureInfo.InvariantCulture));
+            }
+        });
         // app.UseSpaStaticFiles();
         app.UseRouting();
         app.UseCors(corsName);

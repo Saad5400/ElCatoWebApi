@@ -27,6 +27,9 @@ namespace ElCatoWebApi.Controllers.OldControllers
             _db = db;
             _viewEngine = viewEngine;
         }
+
+        [HttpGet("/[controller]")]
+        [HttpGet("/[controller]/[action]")]
         public IActionResult Index()
         {
             Random random = new Random();
@@ -48,6 +51,7 @@ namespace ElCatoWebApi.Controllers.OldControllers
         }
 
         [HttpGet("/Programming/{folder}/{name}")]
+        [HttpGet("/[controller]/Programming/{folder}/{name}")]
         public IActionResult Java(string? folder, string? name)
         {
             if (folder == null || name == null)

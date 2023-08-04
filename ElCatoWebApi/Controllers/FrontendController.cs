@@ -10,8 +10,8 @@ using Microsoft.AspNetCore.RateLimiting;
 namespace ElCatoWebApi.Controllers
 {
     [EnableRateLimiting("fixed")]
-    [ResponseCache(Duration = 60 * 60)]
-    [OutputCache(Duration = 60 * 60 * 24)]
+    // [ResponseCache(Duration = 60 * 60)]
+    // [OutputCache(Duration = 60 * 60 * 24)]
     [Route("/")]
     public class FrontendController : Controller
     {
@@ -27,6 +27,7 @@ namespace ElCatoWebApi.Controllers
         [HttpGet("/{**path}")]
         public async Task<IActionResult> Index(string? path)
         {
+            ViewData["Title"] = "El Cato";
             string? pageTitle = null;
             path ??= string.Empty;
             path = path.ToLower().Trim();
@@ -36,8 +37,15 @@ namespace ElCatoWebApi.Controllers
                     .Where(p => p.Id == pageId)
                     .Select(p => $"{p.Card.Section.Title} - {p.Card.Title} - {p.Title}")
                     .FirstOrDefaultAsync();
+                if (!string.IsNullOrWhiteSpace(pageTitle))
+                {
+                    ViewData["Title"] = pageTitle;
+                }
             }
-            ViewData["Title"] = string.IsNullOrWhiteSpace(pageTitle) ? "El Cato" : pageTitle;
+            else if (path.StartsWith("admin"))
+            {
+                ViewData["Title"] = "El Cato - Admin";
+            }
             return View();
         }
     }
