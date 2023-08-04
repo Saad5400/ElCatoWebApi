@@ -1,29 +1,29 @@
 {
   "files": {
-    "main.css": "https://elcato.azurewebsites.net/react/static/css/main.0dadb281.css",
-    "main.js": "https://elcato.azurewebsites.net/react/static/js/main.9656612a.js",
-    "static/css/815.a5c87e23.chunk.css": "https://elcato.azurewebsites.net/react/static/css/815.a5c87e23.chunk.css",
-    "static/js/815.4cf6ed6a.chunk.js": "https://elcato.azurewebsites.net/react/static/js/815.4cf6ed6a.chunk.js",
-    "static/js/902.04a1f753.chunk.js": "https://elcato.azurewebsites.net/react/static/js/902.04a1f753.chunk.js",
-    "static/js/525.66e4ec4e.chunk.js": "https://elcato.azurewebsites.net/react/static/js/525.66e4ec4e.chunk.js",
-    "static/js/422.ab5e7244.chunk.js": "https://elcato.azurewebsites.net/react/static/js/422.ab5e7244.chunk.js",
-    "static/js/580.961d8617.chunk.js": "https://elcato.azurewebsites.net/react/static/js/580.961d8617.chunk.js",
-    "static/js/316.204e91cd.chunk.js": "https://elcato.azurewebsites.net/react/static/js/316.204e91cd.chunk.js",
-    "static/js/654.b9c04b0c.chunk.js": "https://elcato.azurewebsites.net/react/static/js/654.b9c04b0c.chunk.js",
-    "static/js/881.e61d41ec.chunk.js": "https://elcato.azurewebsites.net/react/static/js/881.e61d41ec.chunk.js",
-    "static/js/468.81c334aa.chunk.js": "https://elcato.azurewebsites.net/react/static/js/468.81c334aa.chunk.js",
-    "static/js/661.0705ecfc.chunk.js": "https://elcato.azurewebsites.net/react/static/js/661.0705ecfc.chunk.js",
-    "static/js/642.86977f87.chunk.js": "https://elcato.azurewebsites.net/react/static/js/642.86977f87.chunk.js",
-    "static/css/334.39040f73.chunk.css": "https://elcato.azurewebsites.net/react/static/css/334.39040f73.chunk.css",
-    "static/js/334.e5cbb766.chunk.js": "https://elcato.azurewebsites.net/react/static/js/334.e5cbb766.chunk.js",
-    "static/js/364.778011c8.chunk.js": "https://elcato.azurewebsites.net/react/static/js/364.778011c8.chunk.js",
-    "static/media/Tajawal-Regular.ttf": "https://elcato.azurewebsites.net/react/static/media/Tajawal-Regular.e4ac0a5abb7d379e2308.ttf",
-    "static/media/GlitchGoblin-2O87v.ttf": "https://elcato.azurewebsites.net/react/static/media/GlitchGoblin-2O87v.37ee9c9361643bfc72ea.ttf",
-    "static/media/Sdglitchrobotdemo-GOPdO.ttf": "https://elcato.azurewebsites.net/react/static/media/Sdglitchrobotdemo-GOPdO.a4805a18231bfe4c00d1.ttf",
-    "index.html": "https://elcato.azurewebsites.net/react/index.html"
+    "main.css": "/react/static/css/main.3738a16b.css",
+    "main.js": "/react/static/js/main.a3d65fdf.js",
+    "static/css/815.a5c87e23.chunk.css": "/react/static/css/815.a5c87e23.chunk.css",
+    "static/js/815.4cf6ed6a.chunk.js": "/react/static/js/815.4cf6ed6a.chunk.js",
+    "static/js/902.04a1f753.chunk.js": "/react/static/js/902.04a1f753.chunk.js",
+    "static/js/525.66e4ec4e.chunk.js": "/react/static/js/525.66e4ec4e.chunk.js",
+    "static/js/422.ab5e7244.chunk.js": "/react/static/js/422.ab5e7244.chunk.js",
+    "static/js/580.961d8617.chunk.js": "/react/static/js/580.961d8617.chunk.js",
+    "static/js/316.204e91cd.chunk.js": "/react/static/js/316.204e91cd.chunk.js",
+    "static/js/654.b9c04b0c.chunk.js": "/react/static/js/654.b9c04b0c.chunk.js",
+    "static/js/881.e61d41ec.chunk.js": "/react/static/js/881.e61d41ec.chunk.js",
+    "static/js/468.81c334aa.chunk.js": "/react/static/js/468.81c334aa.chunk.js",
+    "static/js/661.0705ecfc.chunk.js": "/react/static/js/661.0705ecfc.chunk.js",
+    "static/js/642.93593332.chunk.js": "/react/static/js/642.93593332.chunk.js",
+    "static/css/334.39040f73.chunk.css": "/react/static/css/334.39040f73.chunk.css",
+    "static/js/334.e5cbb766.chunk.js": "/react/static/js/334.e5cbb766.chunk.js",
+    "static/js/364.778011c8.chunk.js": "/react/static/js/364.778011c8.chunk.js",
+    "static/media/Tajawal-Regular.ttf": "/react/static/media/Tajawal-Regular.e4ac0a5abb7d379e2308.ttf",
+    "static/media/GlitchGoblin-2O87v.ttf": "/react/static/media/GlitchGoblin-2O87v.37ee9c9361643bfc72ea.ttf",
+    "static/media/Sdglitchrobotdemo-GOPdO.ttf": "/react/static/media/Sdglitchrobotdemo-GOPdO.a4805a18231bfe4c00d1.ttf",
+    "index.html": "/react/index.html"
   },
   "entrypoints": [
-    "static/css/main.0dadb281.css",
-    "static/js/main.9656612a.js"
+    "static/css/main.3738a16b.css",
+    "static/js/main.a3d65fdf.js"
   ]
 }
