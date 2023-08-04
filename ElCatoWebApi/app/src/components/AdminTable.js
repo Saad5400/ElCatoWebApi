@@ -108,14 +108,12 @@ export default function AdminTable(props) {
                     sort(data);
                     setModels(data);
                     reset(e);
-                    setSuccess("model saved successfully");
-                }
-                else {
-                    setError(JSON.stringify(res));
+                    setSuccess("item was saved successfully");
                 }
             })
             .catch(err => {
-                setError(JSON.stringify(err.message));
+                console.log(err);
+                setError(err.message + ": " + JSON.stringify(err.response?.data));
             })
             .finally(() => {
                 document.querySelector("button[id=submit]").disabled = false;
@@ -133,14 +131,14 @@ export default function AdminTable(props) {
         }];
     }
 
-    return (<div className="w-full max-w-md sm:max-w-none h-full tajawal lg:mt-5">
+    return (<div className="w-full max-w-md md:max-w-6xl h-full tajawal lg:mt-5">
         <form id="mainForm">
             <h1 className="flex justify-between">
                 <span className="text-2xl">
                     {state} {model ? model.title : props.title}
                 </span>
                 <button className="btn btn-primary" onClick={handleCreate}>
-                    New
+                    Load new
                 </button>
             </h1>
             {props.children}

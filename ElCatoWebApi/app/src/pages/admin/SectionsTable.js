@@ -21,7 +21,7 @@ export default function SectionsTable(props) {
         apiPath="/sections"
         cols={[
             { name: "ID", selector: (s, i) => s.id },
-            { name: "title", name: "Title", selector: (s, i) => s.title },
+            { name: "Title", selector: (s, i) => s.title },
             { name: "Order", selector: (s, i) => s.order },
         ]}
     >

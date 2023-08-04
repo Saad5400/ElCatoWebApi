@@ -5,6 +5,7 @@ import { api } from "../../App";
 import BundledEditor from '../../components/BundledEditor';
 import { UserContext } from "../../App";
 import FingerprintJS from '@fingerprintjs/fingerprintjs';
+import Alert from "../../components/Alert";
 
 export default function PagesTable(props) {
 
@@ -17,6 +18,7 @@ export default function PagesTable(props) {
     const [availableCards, setAvailableCards] = React.useState(null);
     const userContext = React.useContext(UserContext);
     const [fingerPrint, setFingerPrint] = React.useState(null);
+    const [editorError, setEditorError] = React.useState(null);
 
 
     React.useEffect(() => {
@@ -105,6 +107,8 @@ export default function PagesTable(props) {
         });
     }
 
+    const isSmallScreen = window.matchMedia('(max-width: 1023.5px)').matches;
+
     return (<AdminTable
         reset={reset}
         sort={sort}
@@ -119,7 +123,7 @@ export default function PagesTable(props) {
     >
         <div>
             <input type="hidden" name="id" value={page ? page.id : 0} />
-            <FormControl label="Title">
+            <FormControl label="Title" hint="عنوان الصفحة">
                 <input name="title" type="text" className="input input-bordered" value={page ? page.title : ""} onChange={e => {
                     setPage({ ...page, title: e.target.value });
                 }} />
@@ -134,12 +138,12 @@ export default function PagesTable(props) {
                     setPage({ ...page, viewCount: e.target.value });
                 }} />
             </FormControl>}
-            <FormControl label="Order">
+            <FormControl label="Order" hint="ترتيب الصفحة">
                 <input name="order" type="number" className="input input-bordered" value={page ? page.order : ""} onChange={e => {
                     setPage({ ...page, order: e.target.value });
                 }} />
             </FormControl>
-            <FormControl label="Section">
+            <FormControl label="Section" hint="القسم">
                 <select name="sectionId" className="select select-bordered w-full" value={sectionId} onChange={e => {
                     setSectionId(e.target.value);
                 }}>
@@ -148,7 +152,7 @@ export default function PagesTable(props) {
                     }
                 </select>
             </FormControl>
-            <FormControl label="Card">
+            <FormControl label="Card" hint="الفئة">
                 <select name="cardId" className="select select-bordered w-full" value={page ? page.cardId : availableCards ? availableCards[0]?.id : ""} onChange={e => {
                     setPage({ ...page, cardId: e.target.value });
                 }}>
@@ -162,7 +166,10 @@ export default function PagesTable(props) {
                     setPage({ ...page, accepted: e.target.checked });
                 }} />
             </FormControl>}
-            <FormControl label="Content" />
+            <FormControl label="Content" hint="محتوى الصفحة" />
+            {editorError && <Alert className="alert-error">
+                {editorError}
+            </Alert>}
             <div className="">
                 <BundledEditor
                     onInit={(evt, editor) => editorRef.current = editor}
@@ -171,11 +178,12 @@ export default function PagesTable(props) {
 
                         menubar: 'edit view insert format tools table',
 
-                        plugins: 'paste searchreplace autolink directionality code visualblocks visualchars fullscreen image link media codesample table charmap hr nonbreaking anchor toc insertdatetime advlist lists wordcount imagetools textpattern noneditable help charmap quickbars emoticons',
+                        plugins: 'preview searchreplace autolink directionality code visualchars fullscreen image link media codesample table insertdatetime advlist lists wordcount',
 
-                        toolbar: 'undo redo | bold italic | numlist bullist | forecolor backcolor removeformat | charmap emoticons | fullscreen image media link anchor codesample | ltr rtl',
+                        toolbar: 'undo redo | bold italic | fontsize blocks | ltr rtl alignleft aligncenter alignright alignjustify |  numlist bullist | forecolor backcolor removeformat | fullscreen | image media link codesample',
 
-                        toolbar_sticky: true,
+                        image_caption: true,
+                        toolbar_mode: 'sliding',
 
                         content_style: `body { font-family: Tahoma; font-size: 14px; background-color: #000; color: #c7c7c7; }`,
 
@@ -189,9 +197,22 @@ export default function PagesTable(props) {
                             { text: 'SQL', value: 'sql' },
                             { text: 'Bash', value: 'bash' },
                         ],
+                        relative_urls : false,
+                        promotion: false,
+                        mobile: {
+                            menubar: 'edit view insert format tools table',
+                            toolbar_mode: 'sliding',
+                        },
                     }}
                     onEditorChange={(content, editor) => {
-                        setPage({ ...page, content });
+                        if (content.length < 102400) {
+                            setPage({ ...page, content });
+                            setEditorError(null);
+                        }
+                        else {
+                            editorRef.current.setContent(content.substring(0, 102100));
+                            setEditorError("Content is too large");
+                        }
                     }}
                 />
             </div>

@@ -77,7 +77,7 @@ p {
   @apply text-sm xl:text-lg;
 }
 
-button, ul, li, code, span, input, select, textarea {
+button, ul, li, code, span, input, select, textarea, label {
   text-align: start !important;
   unicode-bidi: plaintext !important;
 }

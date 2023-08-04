@@ -5,6 +5,9 @@ export default function FormControl(props) {
                 <span className="label-text">
                     {props.label}
                 </span>
+                {props.hint && <span className="label-text-alt">
+                    {props.hint}
+                </span>}
             </label>
             {props.children}
         </div>

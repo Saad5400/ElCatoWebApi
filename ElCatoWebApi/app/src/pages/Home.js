@@ -3,9 +3,9 @@ import React from "react"
 import { api } from "../App"
 import { LayoutContext } from "./Layout";
 
-const CustomLink = React.lazy(() => import('../components/CustomLink'));
-const Dimmer = React.lazy(() => import('../components/Dimmer'));
-const Alert = React.lazy(() => import('../components/Alert'));
+import CustomLink from '../components/CustomLink';
+import Dimmer from '../components/Dimmer';
+import Alert from '../components/Alert';
 
 function Section(props) {
 
@@ -15,7 +15,7 @@ function Section(props) {
 				<div className="divider text-xl sm:text-2xl before:bg-base-content after:bg-base-content text-base-content">{props.title}</div>
 				<div className="flex flex-row flex-wrap">
 					{
-						props.cards?.map((card, index) => (
+						props.cards?.map((card, index) => card.pages?.length > 0 && (
 							<div key={card.id} className="m-2 grow">
 								<div className="collapse collapse-arrow bg-base-content">
 									<input id={`cardCheck${card.id}`} type="checkbox" aria-label={`${props.title} - ${card.title}`} />
@@ -102,7 +102,7 @@ export default function Home(props) {
 			},
 		];
 
-		for (let i = 1; i <= random(2, 5); i++) {
+		for (let i = 1; i <= random(1, 2); i++) {
 			let sec = {
 				id: i,
 				title:
@@ -111,7 +111,7 @@ export default function Home(props) {
 					</div>,
 				cards: []
 			};
-			for (let j = 1; j <= random(2, 5); j++) {
+			for (let j = 1; j <= random(1, 2); j++) {
 				sec.cards.push({
 					id: j * i,
 					title: <div role="status" className="max-w-sm animate-pulse">
@@ -131,8 +131,8 @@ export default function Home(props) {
 
 	return (
 		<>
-			<Alert>
-				You can contribute by visiting the <CustomLink to="/admin" className="link">admin panel</CustomLink>
+			<Alert dir="rtl">
+				تستطيع المشاركة بنشر المحتوى عن طريق <CustomLink to="/admin" className="link">لوحة التحكم</CustomLink>
 			</Alert>
 			<div className="flex flex-row flex-wrap">
 				{

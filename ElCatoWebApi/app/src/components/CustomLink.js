@@ -24,6 +24,7 @@ export default function CustomLink(props) {
                 }
                 else {
                     navigate(props.to);
+                    window.scrollTo(0, 0);
                 }
             }}>
                 {props.children}

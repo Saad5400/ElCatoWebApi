@@ -1,4 +1,4 @@
-import { useContext, useRef } from "react"
+import { useContext } from "react"
 import { LayoutContext } from "../pages/Layout"
 
 export default function Dimmer(props) {

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useLayoutEffect, useRef, useState } from "react"
 
 export default function BinaryBackground(props) {
 
@@ -6,19 +6,17 @@ export default function BinaryBackground(props) {
     const frColorRef = useRef(null);
     const bgColorRef = useRef(null);
     const [windowWidth, setWindowWidth] = useState(window.outerHeight);
-    const [windowHeight, setWindowHeight] = useState(window.outerWidth);
 
     useEffect(() => {
         function handleResize() {
             setWindowWidth(window.innerWidth);
-            setWindowHeight(window.innerHeight);
         }
 
         window.addEventListener('resize', handleResize);
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         if (canvasRef.current) {
             const canvas = canvasRef.current;
             const ctx = canvas.getContext('2d');
@@ -66,7 +64,7 @@ export default function BinaryBackground(props) {
 
             return () => clearInterval(inter);
         }
-    }, [windowWidth, windowHeight, props.size, props.speed, props.text]);
+    }, [windowWidth, props.size, props.speed, props.text]);
 
     return (
         <>

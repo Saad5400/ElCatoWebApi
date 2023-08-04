@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { api } from "../App";
 import Dimmer from "../components/Dimmer";
 import { LayoutContext } from "./Layout";
-import 'prismjs/themes/prism-okaidia.min.css';
+import './Page.css';
 import Prism from 'prismjs';
 
 import 'prismjs/components/prism-markup';
@@ -19,7 +19,6 @@ export default function Page(props) {
 
     const [loading, setLoading] = useState(true)
     const [title, setTitle] = useState("")
-    const [iframe, setIframe] = useState(<></>)
     const [content, setContent] = useState(<></>)
     const layoutContext = React.useContext(LayoutContext);
 
@@ -61,7 +60,7 @@ export default function Page(props) {
         }).catch(err => {
             // console.log(err);
         });
-    }, [id, layoutContext])
+    }, [])
 
     useEffect(() => {
         if (contentRef?.current) {
@@ -76,7 +75,7 @@ export default function Page(props) {
     return (
         <>
             <Dimmer>
-                <div className="max-w-7xl mx-auto">
+                <div className="max-w-5xl mx-auto">
                     <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-base-content mb-5">
                         {loading ?
                             <div role="status" className="animate-pulse">
@@ -87,8 +86,7 @@ export default function Page(props) {
                     </h1>
                     <article id="content" className="mb-5 prose max-w-full
                                         prose-sm md:prose-md
-                                        text-base-content
-                                        font-bold
+                                        text-secondary-content
                                         tajawal
                                     "
                     >
@@ -110,7 +108,6 @@ export default function Page(props) {
                             </div>
                         }
                         {content}
-                        {iframe}
                     </article>
                 </div>
             </Dimmer>
