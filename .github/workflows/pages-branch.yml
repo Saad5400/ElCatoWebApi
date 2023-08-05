@@ -20,11 +20,13 @@ jobs:
           git branch pages
           git checkout pages
       
-      - name: Copy files to Pages Branch
+      - name: Copy files to Pages Branch and delete the rest
         run: |
           ls
           cp -R ./ElCatoWebApi/wwwroot/react ./
           rm -r ./ElCatoWebApi
+          git config --global user.email "sdbtwa@gmail.com"
+          git config --global user.name "Saad5400"
           git add .
           git commit -m "Copy files to Pages Branch"
           git push origin pages --force
