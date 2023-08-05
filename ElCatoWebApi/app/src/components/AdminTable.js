@@ -124,9 +124,9 @@ export default function AdminTable(props) {
     if (userContext.isAdmin) {
         columns = [...props.cols, {
             name: "Actions",
-            cell: row => <div className="flex justify-between">
+            cell: row => <div className="btn-group">
                 <button className="btn btn-primary" value={row.id} onClick={handleEdit}>Edit</button>
-                <button className="btn btn-danger" value={row.id} onClick={handleDelete}>Delete</button>
+                <button className="btn btn-error" value={row.id} onClick={handleDelete}>Delete</button>
             </div>
         }];
     }

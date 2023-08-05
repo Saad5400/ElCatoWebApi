@@ -9,14 +9,10 @@
     "prismjs": "^1.29.0",
     "raw-loader": "^4.0.2",
     "react": "^18.2.0",
-    "react-data-table-component": "^7.5.3",
     "react-dom": "^18.2.0",
     "react-lazy-with-preload": "^2.2.1",
     "react-router-dom": "^6.14.1",
     "react-scripts": "5.0.1",
-    "styled-components": "^6.0.6",
-    "tinymce": "^6.6.0",
-    "tui-color-picker": "^2.2.8",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

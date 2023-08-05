@@ -1,27 +1,21 @@
-import React from 'react';
-import DataTable from 'react-data-table-component';
+import React, { useEffect } from 'react';
+// import DataTable from 'react-data-table-component';
 
-function FilterComponent({ filterText, onFilter, onClear }) {
+function FilterComponent({ filterText, onFilter }) {
     return (
         <>
-            <div className="join w-full">
-                <div className='w-full'>
-                    <div className='w-full'>
-                        <input className="input input-bordered join-item w-full" placeholder="Search"
-                            id="search" type="text" value={filterText} onChange={onFilter}
-                        />
-                    </div>
-                </div>
-                <button className="btn btn-error join-item" onClick={onClear}>X</button>
+            <div className='w-full mt-5'>
+                <input className="input join-item w-full" placeholder="Search"
+                    id="search" type="text" value={filterText} onChange={onFilter}
+                />
             </div>
         </>
     );
 }
 
 export default function MyDataTable(props) {
-    
+
     const [filterText, setFilterText] = React.useState('');
-    const [resetPaginationToggle, setResetPaginationToggle] = React.useState(false);
     const filteredItems = props.data?.filter(item => {
         return props.columns.some(
             c => {
@@ -31,32 +25,71 @@ export default function MyDataTable(props) {
         );
     });
 
+    const [page, setPage] = React.useState(1);
+    const [pageSize, setPageSize] = React.useState(10);
+    const [rows, setRows] = React.useState([]);
 
-    const subHeaderComponentMemo = React.useMemo(() => {
-        const handleClear = () => {
-            if (filterText) {
-                setResetPaginationToggle(!resetPaginationToggle);
-                setFilterText('');
-            }
-        };
+    useEffect(() => {
+        let items = filteredItems?.slice((page - 1) * pageSize, page * pageSize);
+        setRows(items?.map((item, i) => (
+            <tr key={i}>
+                {props.columns.map((col, j) => (
+                    <td key={j}>{typeof col.selector === 'function' ? col.selector(item) : col.cell(item)}</td>
+                ))}
+            </tr>
+        )));
+    }, [filterText, page, pageSize, props.data]);
 
-        return (
-            <FilterComponent onFilter={e => setFilterText(e.target.value)} onClear={handleClear} filterText={filterText} />
-        );
-    }, [filterText, resetPaginationToggle]);
+    useEffect(() => {
+        setPage(1);
+    }, [filterText]);
 
     return (
-        <DataTable
-            title={props.title}
-            columns={props.columns}
-            data={filteredItems}
-            pagination
-            paginationResetDefaultPage={resetPaginationToggle} // optionally, a hook to reset pagination to page 1
-            subHeader
-            subHeaderComponent={subHeaderComponentMemo}
-            persistTableHead
-            theme='dark'
-            onColumnOrderChange={cols => console.log(cols)}
-        />
+        <>
+            <div className='flex flex-row justify-between w-full mt-5'>
+                <div>
+                    <select className="select select-bordered w-full max-w-xs"
+                        value={pageSize ? pageSize : ""} onChange={e => setPageSize(e.target.value)}
+                    >
+                        <option>5</option>
+                        <option>10</option>
+                        <option>25</option>
+                    </select>
+                </div>
+                <div className="join">
+                    <button className="join-item btn"
+                        onClick={() => setPage(page - 1)}
+                        disabled={page === 1}
+                    >«</button>
+                    <select className="join-item select"
+                        value={page ? page : ""} onChange={e => setPage(e.target.value)}
+                    >
+                        {filteredItems && Array.from(Array(Math.ceil(filteredItems?.length / pageSize)).keys()).map(i => (
+                            <option key={i} value={i + 1}>Page {i + 1}</option>
+                        ))}
+                    </select>
+                    <button className="join-item btn"
+                        onClick={() => setPage(page + 1)}
+                        disabled={filteredItems == null || filteredItems?.length < page * pageSize}
+                    >»</button>
+                </div>
+            </div>
+            <FilterComponent onFilter={e => setFilterText(e.target.value)} filterText={filterText} />
+            <div className="overflow-x-auto">
+                <table className="table bg-base-300">
+                    {/* head */}
+                    <thead>
+                        <tr className='bg-base-100'>
+                            {props.columns.map((col, i) => (
+                                <th className='min-w-[100px]' key={i}>{col.name}</th>
+                            ))}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {rows}
+                    </tbody>
+                </table>
+            </div>
+        </>
     );
 }
