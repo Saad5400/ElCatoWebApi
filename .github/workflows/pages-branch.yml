@@ -3,27 +3,28 @@ name: Create Pages Branch
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:
   create-pages-branch:
     runs-on: ubuntu-latest
     
     steps:
-      - name: Checkout main branch
+      - name: Checkout master branch
         uses: actions/checkout@v2
         with:
-          ref: main
+          ref: master
       
       - name: Create Pages Branch
         run: |
           git branch pages
           git checkout pages
-          git push origin pages
-          
+      
       - name: Copy files to Pages Branch
         run: |
-          cp -R ElCatoWebApi/ElCatoWebApi/wwwroot/react/* .
+          ls
+          cp -R ./ElCatoWebApi/wwwroot/react ./
+          rm -r ./ElCatoWebApi
           git add .
           git commit -m "Copy files to Pages Branch"
-          git push origin pages
+          git push origin pages --force
