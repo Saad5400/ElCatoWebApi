@@ -124,7 +124,10 @@ public class Program
             OnPrepareResponse = ctx =>
             {
                 // utf 8 encoding
-                ctx.Context.Response.Headers.Append("Content-Type", "text/html; charset=utf-8");
+                var headers = ctx.Context.Response.Headers;
+                var contentType = headers["Content-Type"];
+                contentType += "; charset=utf-8";
+                headers["Content-Type"] = contentType;
                 // 7 days cache
                 ctx.Context.Response.Headers.Append("Cache-Control", "public,max-age=604800");
                 ctx.Context.Response.Headers.Append("Expires", DateTime.UtcNow.AddDays(7).ToString("R", CultureInfo.InvariantCulture));
@@ -152,6 +155,7 @@ public class Program
         {
             var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
             db.Database.Migrate();
+            SitemapUpdater.UpdateSiteMap(db).GetAwaiter().GetResult();
         }
 
         app.Run();
