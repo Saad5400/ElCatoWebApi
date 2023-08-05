@@ -123,7 +123,7 @@ public class Program
             HttpsCompression = Microsoft.AspNetCore.Http.Features.HttpsCompressionMode.Compress,
             OnPrepareResponse = ctx =>
             {
-                // utf 8 encoding
+                // // utf 8 encoding
                 var headers = ctx.Context.Response.Headers;
                 var contentType = headers["Content-Type"];
                 contentType += "; charset=utf-8";
