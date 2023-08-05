@@ -23,8 +23,12 @@ jobs:
           
       - name: Copy files to Pages Branch
         run: |
-          cp -R ElCatoWebApi/wwwroot/react/* .
+          cp -R ElCatoWebApi/wwwroot/react ./
           git pull
           git add .
           git commit -m "Copy files to Pages Branch"
           git push origin pages
+
+      - name: Remove the rest of files
+        run: |
+          rm -r ElCatoWebApi/wwwroot/react
