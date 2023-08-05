@@ -1,20 +1,20 @@
 import React, { Suspense } from "react";
-import { lazyWithPreload } from "react-lazy-with-preload";
 import axios from "axios";
 import { Route, Routes } from "react-router-dom";
+import loadable from '@loadable/component'
 
 import Loading from "./components/Loading";
 import Layout from "./pages/Layout";
 
-const Home = lazyWithPreload(() => import('./pages/Home'));
-const Page = lazyWithPreload(() => import('./pages/Page'));
-const Empty = lazyWithPreload(() => import('./components/Empty'));
-const AdminLayout = lazyWithPreload(() => import('./pages/admin/AdminLayout'));
-export const Index = lazyWithPreload(() => import('./pages/admin/Index'));
-export const NotFound = lazyWithPreload(() => import('./pages/NotFound'));
-export const SectionsTable = lazyWithPreload(() => import('./pages/admin/SectionsTable'));
-export const CardsTable = lazyWithPreload(() => import('./pages/admin/CardsTable'));
-export const PagesTable = lazyWithPreload(() => import('./pages/admin/PagesTable'));
+const Home = loadable(() => import('./pages/Home'));
+const Page = loadable(() => import('./pages/Page'));
+const Empty = loadable(() => import('./components/Empty'));
+const AdminLayout = loadable(() => import('./pages/admin/AdminLayout'));
+const Index = loadable(() => import('./pages/admin/Index'));
+const NotFound = loadable(() => import('./pages/NotFound'));
+export const SectionsTable = loadable(() => import('./pages/admin/SectionsTable'));
+export const CardsTable = loadable(() => import('./pages/admin/CardsTable'));
+export const PagesTable = loadable(() => import('./pages/admin/PagesTable'));
 
 // create an axios instance
 export const api = axios.create({

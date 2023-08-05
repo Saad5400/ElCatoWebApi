@@ -1,10 +1,11 @@
 import { Outlet } from "react-router-dom";
 import React, { createContext, useState } from "react";
-
+import loadable from '@loadable/component'
 import IntroVideo from '../components/IntroVideo';
-import BinaryBackground from '../components/BinaryBackground';
-import CustomLink from '../components/CustomLink';
-import Toast from '../components/Toast';
+
+const BinaryBackground = loadable(() => import('../components/BinaryBackground'));
+const CustomLink = loadable(() => import('../components/CustomLink'));
+const Toast = loadable(() => import('../components/Toast'));
 
 const toasts = [
     'سبحان الله وبحمده، سبحان الله العظيم',
@@ -21,6 +22,12 @@ const randomToast = toasts[Math.floor(Math.random() * toasts.length)];
 export const LayoutContext = createContext();
 
 export default function Layout(props) {
+
+    React.useLayoutEffect(() => {
+        BinaryBackground.preload();
+        CustomLink.preload();
+        Toast.preload();
+    }, []);
 
     const [introComplete, setIntroComplete] = useState(false);
     const [loadingPage, setLoadingPage] = useState(false);
