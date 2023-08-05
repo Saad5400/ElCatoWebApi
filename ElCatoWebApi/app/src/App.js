@@ -23,6 +23,7 @@ export const api = axios.create({
 		'Content-Type': 'application/json'
 	}
 });
+
 export const UserContext = React.createContext(null);
 
 function App(props) {
