@@ -17,7 +17,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build && cd C:\\Users\\Family\\source\\repos\\ElCatoWebApi\\ElCatoWebApi\\wwwroot\\react && mv static/js/main.*.js static/js/main.js && mv static/css/main.*.css static/css/main.css",
+    "build": "react-scripts build && cd ../wwwroot/react && ren static/js/main.*.js static/js/main.js && ren static/css/main.*.css static/css/main.css",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
