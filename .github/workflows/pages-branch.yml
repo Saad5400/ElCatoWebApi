@@ -25,8 +25,8 @@ jobs:
           ls
           cp -R ./ElCatoWebApi/wwwroot/react ./
           rm -r ./ElCatoWebApi
-          git add .
-          git commit -m "Copy files to Pages Branch"
           git config --global user.email "sdbtwa@gmail.com"
           git config --global user.name "Saad5400"
+          git add .
+          git commit -m "Copy files to Pages Branch"
           git push origin pages --force
