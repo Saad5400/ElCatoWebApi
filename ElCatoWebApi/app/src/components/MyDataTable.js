@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 // import DataTable from 'react-data-table-component';
 
 function FilterComponent({ filterText, onFilter }) {
@@ -15,7 +15,7 @@ function FilterComponent({ filterText, onFilter }) {
 
 export default function MyDataTable(props) {
 
-    const [filterText, setFilterText] = React.useState('');
+    const [filterText, setFilterText] = useState('');
     const filteredItems = props.data?.filter(item => {
         return props.columns.some(
             c => {
@@ -25,9 +25,9 @@ export default function MyDataTable(props) {
         );
     });
 
-    const [page, setPage] = React.useState(1);
-    const [pageSize, setPageSize] = React.useState(10);
-    const [rows, setRows] = React.useState([]);
+    const [page, setPage] = useState(1);
+    const [pageSize, setPageSize] = useState(10);
+    const [rows, setRows] = useState([]);
 
     useEffect(() => {
         let items = filteredItems?.slice((page - 1) * pageSize, page * pageSize);

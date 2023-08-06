@@ -1,4 +1,4 @@
-import React from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import AdminTable from "../../components/AdminTable";
 import FormControl from "../../components/FormControl";
 import { api } from "../../App";
@@ -9,19 +9,19 @@ import Alert from "../../components/Alert";
 
 export default function PagesTable(props) {
 
-    const editorRef = React.useRef(null);
+    const editorRef = useRef(null);
     const defaultPage = { card: {} };
-    const [page, setPage] = React.useState(defaultPage);
-    const [pages, setPages] = React.useState(null);
-    const [sections, setSections] = React.useState(null);
-    const [sectionId, setSectionId] = React.useState(null);
-    const [availableCards, setAvailableCards] = React.useState(null);
-    const userContext = React.useContext(UserContext);
-    const [fingerPrint, setFingerPrint] = React.useState(null);
-    const [editorError, setEditorError] = React.useState(null);
+    const [page, setPage] = useState(defaultPage);
+    const [pages, setPages] = useState(null);
+    const [sections, setSections] = useState(null);
+    const [sectionId, setSectionId] = useState(null);
+    const [availableCards, setAvailableCards] = useState(null);
+    const userContext = useContext(UserContext);
+    const [fingerPrint, setFingerPrint] = useState(null);
+    const [editorError, setEditorError] = useState(null);
 
 
-    React.useEffect(() => {
+    useEffect(() => {
         api.get("/sections").then(res => {
             setSections(res.data);
             setSectionId(res.data[0].id);
@@ -38,13 +38,13 @@ export default function PagesTable(props) {
         setFp();
     }, []);
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (userContext?.isAdmin == false) {
             setPage({ ...page, fingerPrint: fingerPrint });
         }
     }, [fingerPrint]);
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (sectionId) {
             const cards = sections.find(s => s.id == sectionId).cards;
             setAvailableCards(cards);
@@ -52,7 +52,7 @@ export default function PagesTable(props) {
         }
     }, [sectionId]);
 
-    React.useEffect(() => {
+    useEffect(() => {
         setSectionId(page?.card?.section?.id);
         setPage(page);
 

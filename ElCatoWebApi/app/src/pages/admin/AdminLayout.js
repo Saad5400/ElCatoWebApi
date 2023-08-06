@@ -1,6 +1,6 @@
 import { Outlet, useLocation } from "react-router-dom";
 import { UserContext, SectionsTable, CardsTable, PagesTable } from "../../App";
-import React, { useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import Container from "../../components/Container";
 import CustomLink from "../../components/CustomLink";
 import { LayoutContext } from "../Layout";
@@ -8,11 +8,11 @@ import Dimmer from "../../components/Dimmer";
 
 function DrawerLink(props) {
 
-    const [isActive, setIsActive] = React.useState(false);
+    const [isActive, setIsActive] = useState(false);
 
     const location = useLocation();
 
-    React.useEffect(() => {
+    useEffect(() => {
         setIsActive(location.pathname === props.to);
     }, [location.pathname]);
 
@@ -32,8 +32,8 @@ function DrawerLink(props) {
 
 export default function AdminLayout(props) {
 
-    const isAdmin = React.useContext(UserContext).isAdmin;
-    const layoutContext = React.useContext(LayoutContext);
+    const isAdmin = useContext(UserContext).isAdmin;
+    const layoutContext = useContext(LayoutContext);
 
     useEffect(() => {
 

@@ -1,23 +1,23 @@
-import React from "react";
 import { api } from "../App";
 import Alert from "./Alert";
 import { UserContext } from "../App";
 import MyDataTable from "./MyDataTable";
 import FingerprintJS from '@fingerprintjs/fingerprintjs';
+import { useContext, useEffect, useState } from "react";
 
 export default function AdminTable(props) {
 
     const { model, setModel, models, setModels, sort, defaultModel } = props;
 
-    const userContext = React.useContext(UserContext);
-    const [error, setError] = React.useState(null);
-    const [success, setSuccess] = React.useState(null);
+    const userContext = useContext(UserContext);
+    const [error, setError] = useState(null);
+    const [success, setSuccess] = useState(null);
 
     const CREATE = "Create",
         EDIT = "Edit";
-    const [state, setState] = React.useState(CREATE); // Create, Edit
+    const [state, setState] = useState(CREATE); // Create, Edit
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (userContext.isAdmin) {
             api.get(props.apiPath).then(res => {
                 let data = res.data;

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { api } from "../App";
 import Dimmer from "../components/Dimmer";
@@ -20,7 +20,7 @@ export default function Page(props) {
     const [loading, setLoading] = useState(true)
     const [title, setTitle] = useState("")
     const [content, setContent] = useState(<></>)
-    const layoutContext = React.useContext(LayoutContext);
+    const layoutContext = useContext(LayoutContext);
 
     const contentRef = useRef(null);
 

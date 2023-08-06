@@ -1,4 +1,4 @@
-import React, { Suspense } from "react";
+import { Suspense, createContext, useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { Route, Routes } from "react-router-dom";
 import loadable from '@loadable/component'
@@ -24,29 +24,27 @@ export const api = axios.create({
 	}
 });
 
-export const UserContext = React.createContext(null);
+export const UserContext = createContext(null);
 
 function App(props) {
 
-	const [token, setToken] = React.useState("");
-	const [isAdmin, setIsAdmin] = React.useState(false);
+	const [token, setToken] = useState("");
+	const [isAdmin, setIsAdmin] = useState(false);
 
-	React.useEffect(() => {
+	useEffect(() => {
 		Home.preload();
 		Page.preload();
 		Empty.preload();
 		AdminLayout.preload();
 		Index.preload();
-	}, []);
 
-	React.useEffect(() => {
 		const token = localStorage.getItem('token');
 		if (token) {
 			setToken(token);
 		}
 	}, []);
 
-	React.useEffect(() => {
+	useEffect(() => {
 		if (token) {
 			api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 			localStorage.setItem('token', token);
@@ -69,7 +67,7 @@ function App(props) {
 		setToken(e.target.value);
 	}
 
-	const themeDivRef = React.useRef(null);
+	const themeDivRef = useRef(null);
 
 	return (
 		<>

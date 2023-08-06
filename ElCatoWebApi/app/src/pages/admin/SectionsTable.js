@@ -1,11 +1,11 @@
-import React from "react";
+import { useState } from "react";
 import AdminTable from "../../components/AdminTable";
 import FormControl from "../../components/FormControl";
 
 export default function SectionsTable(props) {
 
-    const [section, setSection] = React.useState(null);
-    const [sections, setSections] = React.useState(null);
+    const [section, setSection] = useState(null);
+    const [sections, setSections] = useState(null);
 
     function sort(sections) {
         sections.sort((a, b) => a.order - b.order);

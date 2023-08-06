@@ -1,5 +1,4 @@
-import { useEffect, useState } from "react"
-import React from "react"
+import { useContext, useEffect, useState } from "react"
 import { api } from "../App"
 import { LayoutContext } from "./Layout";
 
@@ -46,7 +45,7 @@ function Section(props) {
 export default function Home(props) {
 
 	const [sections, setSections] = useState([])
-	const layoutContext = React.useContext(LayoutContext);
+	const layoutContext = useContext(LayoutContext);
 
 	useEffect(() => {
 		api.get("/sections").then(res => {

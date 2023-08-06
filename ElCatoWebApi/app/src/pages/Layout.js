@@ -1,5 +1,5 @@
 import { Outlet } from "react-router-dom";
-import React, { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import loadable from '@loadable/component'
 import IntroVideo from '../components/IntroVideo';
 
@@ -21,7 +21,7 @@ export const LayoutContext = createContext();
 
 export default function Layout(props) {
 
-    React.useEffect(() => {
+    useEffect(() => {
         LayoutContent.preload();
     }, []);
 

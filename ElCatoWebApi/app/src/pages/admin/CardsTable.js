@@ -1,15 +1,15 @@
-import React from "react";
 import AdminTable from "../../components/AdminTable";
 import FormControl from "../../components/FormControl";
 import { api } from "../../App";
+import { useEffect, useState } from "react";
 
 export default function CardsTable() {
 
-    const [card, setCard] = React.useState(null);
-    const [cards, setCards] = React.useState(null);
-    const [sections, setSections] = React.useState(null);
+    const [card, setCard] = useState(null);
+    const [cards, setCards] = useState(null);
+    const [sections, setSections] = useState(null);
 
-    React.useEffect(() => {
+    useEffect(() => {
         api.get("/sections").then(res => {
             setSections(res.data);
         }).catch(err => {

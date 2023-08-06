@@ -1,10 +1,10 @@
-import React from "react";
+import { useContext } from "react";
 import { UserContext } from "../../App";
 import CustomLink from "../../components/CustomLink";
 
 export default function Index() {
 
-	const { token, setToken } = React.useContext(UserContext);
+	const { token, setToken } = useContext(UserContext);
 
 	return (
 		<div className="tajawal flex flex-col md:flex-row w-full mt-20">
