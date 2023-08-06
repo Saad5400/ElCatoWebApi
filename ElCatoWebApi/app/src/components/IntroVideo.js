@@ -74,7 +74,7 @@ export default function IntroVideo(props) {
 
     return (
         <>
-            <div ref={mainDivRef} className="fixed top-0 left-0 w-full h-full pt-36 text-center bg-base-100 z-40">
+            <div ref={mainDivRef} className="fixed top-0 left-0 w-full h-full text-center bg-base-100 z-40">
                 <div className="fixed top-[45%] left-1/2 -translate-x-1/2 -translate-y-1/2 z-30">
                     <button className="btn btn-lg btn-outline mt-12 px-12" onClick={(e) => {
                         setVideoStarted(true);

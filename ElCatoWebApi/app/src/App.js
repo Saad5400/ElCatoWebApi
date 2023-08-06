@@ -31,7 +31,7 @@ function App(props) {
 	const [token, setToken] = React.useState("");
 	const [isAdmin, setIsAdmin] = React.useState(false);
 
-	React.useLayoutEffect(() => {
+	React.useEffect(() => {
 		Home.preload();
 		Page.preload();
 		Empty.preload();

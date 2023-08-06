@@ -12,10 +12,10 @@ export default function CustomLink(props) {
         <>
             <Link to={props.to} className={props.className} onClick={e => {
                 e.preventDefault();
-                layoutContext?.setLoadingPage(true);
-                setTimeout(() => {
-                    layoutContext?.setLoadingPage(false);
-                }, 250);
+                // layoutContext?.setLoadingPage(true);
+                // setTimeout(() => {
+                //     layoutContext?.setLoadingPage(false);
+                // }, 250);
                 if (location.pathname === props.to) {
                     navigate('refresh');
                     setTimeout(() => {
