@@ -43,7 +43,7 @@ namespace ElCatoWebApi.Controllers
                 .Select(f => f.Name)
                 .FirstOrDefault();
 
-            string? pageTitle = null;
+            string? pageTitle;
             path ??= string.Empty;
             path = path.ToLower().Trim();
             if (path.StartsWith("page") && int.TryParse(path.Replace("page/", ""), out var pageId))

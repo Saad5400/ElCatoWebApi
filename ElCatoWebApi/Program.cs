@@ -128,7 +128,7 @@ public class Program
                 var contentType = headers["Content-Type"];
                 contentType += "; charset=utf-8";
                 headers["Content-Type"] = contentType;
-                // 7 days cache
+                // Cache
                 ctx.Context.Response.Headers.Append("Cache-Control", $"public,max-age={1 * 60 * 60 * 24 * 30 * 12}");
                 ctx.Context.Response.Headers.Append("Expires", DateTime.UtcNow.AddYears(1).ToString("R", CultureInfo.InvariantCulture));
             }
