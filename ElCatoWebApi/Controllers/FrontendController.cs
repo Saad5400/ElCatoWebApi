@@ -29,12 +29,18 @@ namespace ElCatoWebApi.Controllers
         {
             ViewData["Title"] = "El Cato";
 
-            ViewData["JsFileName"] = Directory.GetFiles("wwwroot/react/static/js", "main.*.js")
-                .Select(Path.GetFileName)
+            var jsDi = new DirectoryInfo("wwwroot/react/static/js");
+            var jsFiles = jsDi.GetFiles("main.*.js");
+            ViewData["JsFileName"] = jsFiles
+                .OrderByDescending(f => f.CreationTimeUtc)
+                .Select(f => f.Name)
                 .FirstOrDefault();
 
-            ViewData["CssFileName"] = Directory.GetFiles("wwwroot/react/static/css", "main.*.css")
-                .Select(Path.GetFileName)
+            var cssDi = new DirectoryInfo("wwwroot/react/static/css");
+            var cssFiles = cssDi.GetFiles("main.*.css");
+            ViewData["CssFileName"] = cssFiles
+                .OrderByDescending(f => f.CreationTimeUtc)
+                .Select(f => f.Name)
                 .FirstOrDefault();
 
             string? pageTitle = null;
