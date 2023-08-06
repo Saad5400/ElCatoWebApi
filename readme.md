@@ -1,6 +1,6 @@
 # El Cato Web API + React
 
-The source code for [https://elcato.azurewebsites.net/](El Cato Website)
+The source code for [El Cato Website](https://elcato.azurewebsites.net)
 
 Which is a website for UQU CIS students to upload their educational materials and share them with their colleagues.
 
