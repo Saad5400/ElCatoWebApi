@@ -7,6 +7,10 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <Content Remove="wwwroot\react\.gitignore" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.9" />
 		<PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="7.0.9" />
 		<PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="7.0.9" />
@@ -34,7 +38,10 @@
 
 	<ItemGroup>
 		<Folder Include="Models\OldModels\Compiled\" />
-		<Folder Include="wwwroot\react\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Include="wwwroot\react\.gitignore" />
 	</ItemGroup>
 
 </Project>

@@ -12,34 +12,30 @@ namespace ElCatoWebApi;
 
 public class Program
 {
+    // To be used later on throught the program by other classes
     public static bool IsDevelopment { get; private set; } = false;
     public static readonly string FixedPolicy = "fixed";
+
     public static void Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
 
-        // Add services to the container.
-        builder.Services.AddControllersWithViews().AddNewtonsoftJson(options =>
-            options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+        // MVC
+        builder.Services.AddControllersWithViews().AddNewtonsoftJson(options => options
+            .SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
         );
 
-        // builder.Services.AddSpaStaticFiles(configuration =>
-        // {
-        //     configuration.RootPath = "wwwroot/react";
-        // });
-
-        // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+        // Swagger
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
 
-        // SQLite database
+        // Databases
         builder.Services.AddDbContext<AppDbContext>(options => options
             .UseLazyLoadingProxies()
             .UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-        builder.Services.AddDbContext<OldDbContext>(options =>
-                options
-                    .UseSqlite(builder.Configuration.GetConnectionString("OldConnection"))
+        builder.Services.AddDbContext<OldDbContext>(options => options
+            .UseSqlite(builder.Configuration.GetConnectionString("OldConnection"))
         //.UseModel(OldDbContext.Instance)
         );
 
@@ -55,16 +51,19 @@ public class Program
             o.SaveToken = true;
             o.TokenValidationParameters = new TokenValidationParameters
             {
-                ValidateIssuer = false,     // Change to true in production
-                ValidateAudience = false,   // Change to true in production
+                ValidateIssuer = true,
+                ValidateAudience = true,
                 ValidateLifetime = true,
                 ValidateIssuerSigningKey = true,
-                ValidIssuer = builder.Configuration["JWT:Issuer"],
-                ValidAudience = builder.Configuration["JWT:Audience"],
+                ValidIssuers = builder.Configuration.GetSection("JWT:Issuers").Get<string[]>(),
+                ValidAudiences = builder.Configuration.GetSection("JWT:Audiences").Get<string[]>(),
                 IssuerSigningKey = new SymmetricSecurityKey(Key)
             };
         });
+        builder.Services.AddAuthorization();
+        builder.Services.AddScoped<JwtManager, JwtManager>();
 
+        // Rate limiter
         builder.Services.AddRateLimiter(limiterOptions =>
         {
             limiterOptions
@@ -80,23 +79,7 @@ public class Program
             limiterOptions.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
         });
 
-        builder.Services.AddAuthorization();
-
-        builder.Services.AddScoped<JwtManager, JwtManager>();
-
-        // CORS
-        const string corsName = "_myAllowedSpecificOrigins";
-        var allowed = builder.Configuration.GetSection("AllowedOrigins").Get<string[]>();
-        builder.Services.AddCors(options =>
-        {
-            options.AddPolicy(corsName, builder =>
-            {
-                builder.AllowAnyOrigin()
-                    .AllowAnyHeader()
-                    .AllowAnyMethod();
-            });
-        });
-
+        // Caching
         builder.Services.AddOutputCache(options =>
         {
             options.AddBasePolicy(builder =>
@@ -104,12 +87,13 @@ public class Program
                 builder.Expire(TimeSpan.FromMinutes(60));
             });
         });
-
         builder.Services.AddResponseCaching();
 
+        /* -- -- -- -- -- -- -- -- -- -- -- -- -- */
+        
         var app = builder.Build();
 
-        // Configure the HTTP request pipeline.
+        // Swagger
         if (app.Environment.IsDevelopment())
         {
             app.UseSwagger();
@@ -133,11 +117,11 @@ public class Program
                 ctx.Context.Response.Headers.Append("Expires", DateTime.UtcNow.AddYears(1).ToString("R", CultureInfo.InvariantCulture));
             }
         });
-        // app.UseSpaStaticFiles();
         app.UseRouting();
-        app.UseCors(corsName);
+
         app.UseResponseCaching();
         app.UseOutputCache();
+
         app.UseRateLimiter();
 
         app.UseAuthentication();

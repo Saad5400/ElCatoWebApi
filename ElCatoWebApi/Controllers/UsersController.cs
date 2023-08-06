@@ -17,20 +17,24 @@ namespace ElCatoWebApi.Controllers
 {
     [EnableRateLimiting("fixed")]
     [Route("api/[controller]")]
+    [Authorize]
     [ApiController]
     public class UsersController : ControllerBase
     {
         private readonly AppDbContext _db;
         private readonly JwtManager _jwtManager;
+        private readonly IConfiguration _configuration;
 
-        public UsersController(AppDbContext db, JwtManager jwtManager)
+        public UsersController(AppDbContext db, JwtManager jwtManager, IConfiguration configuration)
         {
             _db = db;
             _jwtManager = jwtManager;
+            _configuration = configuration;
         }
 
         [HttpPost]
         [Route("login")]
+        [AllowAnonymous]
         [ResponseCache(Duration = 60 * 60)]
         [OutputCache(Duration = 60 * 60)]
         public async Task<ActionResult<Token>> Authenticate(User user)
@@ -45,30 +49,43 @@ namespace ElCatoWebApi.Controllers
             return Ok(token);
         }
 
-        [HttpGet]
-        [Route("update-sitemap")]
-        public async Task<IActionResult> UpdateSiteMap()
-        {
-            var success = await SitemapUpdater.UpdateSiteMap(_db);
-            return success ? Ok("Site Map updated successfully") : BadRequest("Site Map could not be updated");
-        }
-
         [HttpPost]
-        [Authorize]
         [Route("admin")]
-        public async Task<ActionResult<bool>> IsAdmin()
+        public ActionResult<bool> IsAdmin()
         {
-            var username = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
-
-            return Ok(await _db.Users.AnyAsync(u => u.Username == username));
+            return Ok(true);
         }
 
-        /*
         // GET: api/Users
         [HttpGet]
         public async Task<ActionResult<IEnumerable<User>>> GetUsers()
         {
             return await _db.Users.ToListAsync();
+        }
+
+        // POST: api/Users
+        [AllowAnonymous]
+        [HttpPost("{password}")]
+        public async Task<ActionResult<User>> PostUser(string password, [FromBody] User user)
+        {
+            if (password != _configuration.GetSection("UsersPassword").Get<string>())
+            {
+                return NotFound();
+            }
+            _db.Users.Add(user);
+            await _db.SaveChangesAsync();
+
+            return CreatedAtAction("PostUser", new { id = user.Id }, user);
+        }
+
+
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("update-sitemap")]
+        public async Task<IActionResult> UpdateSiteMap()
+        {
+            var success = await SitemapUpdater.UpdateSiteMap(_db);
+            return success ? Ok("Site Map updated successfully") : BadRequest("Site Map could not be updated");
         }
 
         // GET: api/Users/5
@@ -115,17 +132,6 @@ namespace ElCatoWebApi.Controllers
             return NoContent();
         }
 
-        // POST: api/Users
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<User>> PostUser(User user)
-        {
-            _db.Users.Add(user);
-            await _db.SaveChangesAsync();
-
-            return CreatedAtAction("GetUser", new { id = user.Id }, user);
-        }
-
         // DELETE: api/Users/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUser(int id)
@@ -146,6 +152,5 @@ namespace ElCatoWebApi.Controllers
         {
             return (_db.Users?.Any(e => e.Id == id)).GetValueOrDefault();
         }
-        */
     }
 }

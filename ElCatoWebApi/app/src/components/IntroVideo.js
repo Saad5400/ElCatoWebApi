@@ -1,5 +1,6 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
+import intro from "../videos/intro.mp4";
 
 const quotes = [
     '“Any fool can write code that a computer can understand. Good programmers write code that humans can understand.”',
@@ -99,7 +100,7 @@ export default function IntroVideo(props) {
                 className="fixed right-0 bottom-0 w-full h-full object-fill z-[100]"
                 preload="auto"
                 playsInline>
-                <source src="https://saad5400.github.io/UniProgramming/video/video.mp4" type="video/mp4" />
+                <source src={intro} type="video/mp4" />
             </video>
         </>
     );
