@@ -28,6 +28,15 @@ namespace ElCatoWebApi.Controllers
         public async Task<IActionResult> Index(string? path)
         {
             ViewData["Title"] = "El Cato";
+
+            ViewData["JsFileName"] = Directory.GetFiles("wwwroot/react/static/js", "main.*.js")
+                .Select(Path.GetFileName)
+                .FirstOrDefault();
+
+            ViewData["CssFileName"] = Directory.GetFiles("wwwroot/react/static/css", "main.*.css")
+                .Select(Path.GetFileName)
+                .FirstOrDefault();
+
             string? pageTitle = null;
             path ??= string.Empty;
             path = path.ToLower().Trim();
