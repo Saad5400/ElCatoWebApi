@@ -35,11 +35,9 @@ namespace ElCatoWebApi.Controllers
         [HttpPost]
         [Route("login")]
         [AllowAnonymous]
-        [ResponseCache(Duration = 60 * 60)]
-        [OutputCache(Duration = 60 * 60)]
         public async Task<ActionResult<Token>> Authenticate(User user)
         {
-            var token = await _jwtManager.Authenticate(user.Username, user.Password);
+            var token = await _jwtManager.Authenticate(user.Username, user.Password, Request);
 
             if (token == null)
             {

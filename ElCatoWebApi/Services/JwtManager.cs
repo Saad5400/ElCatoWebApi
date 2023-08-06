@@ -19,7 +19,7 @@ public class JwtManager
         _db = db;
     }
 
-    public async Task<Token?> Authenticate(string username, string password)
+    public async Task<Token?> Authenticate(string username, string password, HttpRequest request)
     {
         var user = await _db.Users.FirstOrDefaultAsync(u => username == u.Username && password == u.Password);
 
@@ -37,7 +37,9 @@ public class JwtManager
                 new Claim(ClaimTypes.NameIdentifier, user.Username)
             }),
             Expires = DateTime.UtcNow.AddYears(1),
-            SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(tokenKey), SecurityAlgorithms.HmacSha256Signature)
+            SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(tokenKey), SecurityAlgorithms.HmacSha256Signature),
+            Issuer = request.Host.Value,
+            Audience = request.Host.Value,
         };
         var securityToken = tokenHandler.CreateToken(tokenDescriptor);
         var token = new Token
