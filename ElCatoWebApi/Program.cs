@@ -127,6 +127,9 @@ public class Program
         app.UseAuthentication();
         app.UseAuthorization();
 
+        app.MapGet("sitemap", () =>
+            Results.File("sitemap.xml", "application/xml")
+        );
         app.MapControllerRoute
             (
                 name: "default",
