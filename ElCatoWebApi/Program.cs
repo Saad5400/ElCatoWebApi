@@ -79,6 +79,17 @@ public class Program
             limiterOptions.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
         });
 
+        // CORS
+        builder.Services.AddCors(options =>
+        {
+            options.AddDefaultPolicy(builder =>
+            {
+                builder.AllowAnyOrigin()
+                    .AllowAnyHeader()
+                    .AllowAnyMethod();
+            });
+        });
+
         // Caching
         builder.Services.AddOutputCache(options =>
         {
@@ -98,6 +109,7 @@ public class Program
         {
             app.UseSwagger();
             app.UseSwaggerUI();
+            app.UseCors();
             IsDevelopment = true;
         }
 

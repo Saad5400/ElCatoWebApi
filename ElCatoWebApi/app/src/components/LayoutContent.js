@@ -20,7 +20,7 @@ export default function LayoutContent(props) {
                     <CustomLink to={link.to}>{link.name}</CustomLink>
                 </li>);
             }
-            return (<></>);
+            return (null);
         });
     }
 

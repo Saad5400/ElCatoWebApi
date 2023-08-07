@@ -144,7 +144,7 @@ export default function PagesTable(props) {
                 }} />
             </FormControl>
             <FormControl label="Section" hint="القسم">
-                <select name="sectionId" className="select select-bordered w-full" value={sectionId ? sectionId : ""} onChange={e => {
+                <select name="sectionId" className="select select-bordered w-full" value={sectionId} onChange={e => {
                     setSectionId(e.target.value);
                 }}>
                     {
