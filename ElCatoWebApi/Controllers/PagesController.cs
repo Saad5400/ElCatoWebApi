@@ -9,6 +9,7 @@ using ElCatoWebApi.Data;
 using ElCatoWebApi.Models;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
+using ElCatoWebApi.Services;
 using Microsoft.AspNetCore.OutputCaching;
 using Microsoft.AspNetCore.RateLimiting;
 
@@ -34,14 +35,12 @@ namespace ElCatoWebApi.Controllers
 
         private async Task<string?> GetIpAddress()
         {
-            return HttpContext?.Connection?.RemoteIpAddress?.GetHashCode().ToString();
+            return HttpContext?.Connection?.RemoteIpAddress?.GetHashString();
         }
 
         private async Task<string?> GetFingerPrint(string? current)
         {
-            return string.IsNullOrWhiteSpace(current)
-                ? HttpContext?.Request?.Headers["User-Agent"].GetHashCode().ToString()
-                : current;
+            return current;
         }
 
         // GET: api/Pages
@@ -49,14 +48,17 @@ namespace ElCatoWebApi.Controllers
         [HttpGet]
         public async Task<IActionResult> GetPages(string? fingerPrint)
         {
-            if (! await IsAdmin() && string.IsNullOrWhiteSpace(fingerPrint))
+            if (!await IsAdmin() && string.IsNullOrWhiteSpace(fingerPrint))
             {
                 return Unauthorized();
             }
             else if (!await IsAdmin())
             {
                 var ipAddress = await GetIpAddress();
-                return Ok(_db.Pages.Where(p => p.FingerPrint == fingerPrint || p.IpAddress == ipAddress).Select(p => Page.WithCardSelector(p)).AsParallel());
+                fingerPrint = await GetFingerPrint(fingerPrint);
+                return Ok(_db.Pages.Where(p => p.FingerPrint == fingerPrint || p.IpAddress == ipAddress)
+                    .Select(p => Page.WithCardSelector(p))
+                    .AsParallel());
             }
 
             return Ok(_db.Pages.Select(p => Page.WithCardSelector(p)).AsParallel());
@@ -139,7 +141,7 @@ namespace ElCatoWebApi.Controllers
         {
             page.Card = null;
 
-            if (! await IsAdmin())
+            if (!await IsAdmin())
             {
                 page.Accepted = false;
                 page.IpAddress = await GetIpAddress();
@@ -152,7 +154,7 @@ namespace ElCatoWebApi.Controllers
                 }
 
                 if (await _db.Pages.CountAsync(p => (p.FingerPrint == page.FingerPrint || p.IpAddress == page.IpAddress) &&
-                                         p.CreatedAt > DateTime.UtcNow.AddHours(-1)) >= 3)
+                                         p.CreatedAt > DateTime.UtcNow.AddHours(-1) && p.Accepted != true) >= 3)
                 {
                     return StatusCode(429, $"Too many pages, try again after an hour or contact the admin");
                 }

@@ -4,8 +4,8 @@ import FormControl from "../../components/FormControl";
 import { api } from "../../App";
 import BundledEditor from '../../components/BundledEditor';
 import { UserContext } from "../../App";
-import FingerprintJS from '@fingerprintjs/fingerprintjs';
 import Alert from "../../components/Alert";
+import getFingerPrint from "../../utils/getFingerPrint";
 
 export default function PagesTable(props) {
 
@@ -20,6 +20,10 @@ export default function PagesTable(props) {
     const [fingerPrint, setFingerPrint] = useState(null);
     const [editorError, setEditorError] = useState(null);
 
+    const setFp = async () => {
+        const fp = await getFingerPrint();
+        setFingerPrint(fp);
+    };
 
     useEffect(() => {
         api.get("/sections").then(res => {
@@ -29,12 +33,6 @@ export default function PagesTable(props) {
         }).catch(err => {
             console.log(err);
         });
-
-        const setFp = async () => {
-            const fp = await FingerprintJS.load();
-            const { visitorId } = await fp.get();
-            setFingerPrint(visitorId);
-        };
         setFp();
     }, []);
 
@@ -105,6 +103,7 @@ export default function PagesTable(props) {
                 cardId: sections[0].cards[0].id
             };
         });
+        setFp();
     }
 
     const isSmallScreen = window.matchMedia('(max-width: 1023.5px)').matches;
@@ -197,7 +196,7 @@ export default function PagesTable(props) {
                             { text: 'SQL', value: 'sql' },
                             { text: 'Bash', value: 'bash' },
                         ],
-                        relative_urls : false,
+                        relative_urls: false,
                         promotion: false,
                         mobile: {
                             menubar: 'edit view insert format tools table',

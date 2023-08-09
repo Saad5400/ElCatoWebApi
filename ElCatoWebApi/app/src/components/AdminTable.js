@@ -2,8 +2,8 @@ import { api } from "../App";
 import Alert from "./Alert";
 import { UserContext } from "../App";
 import MyDataTable from "./MyDataTable";
-import FingerprintJS from '@fingerprintjs/fingerprintjs';
 import { useContext, useEffect, useState } from "react";
+import getFingerPrint from "../utils/getFingerPrint";
 
 export default function AdminTable(props) {
 
@@ -17,6 +17,21 @@ export default function AdminTable(props) {
         EDIT = "Edit";
     const [state, setState] = useState(CREATE); // Create, Edit
 
+    async function getModels() {
+        const fp = await getFingerPrint();
+        api.get(props.apiPath, {
+            params: {
+                fingerPrint: fp
+            }
+        }).then(res => {
+            let data = res.data;
+            sort(data);
+            setModels(data);
+        }).catch(err => {
+            console.log(err);
+        });
+    };
+
     useEffect(() => {
         if (userContext.isAdmin) {
             api.get(props.apiPath).then(res => {
@@ -28,22 +43,7 @@ export default function AdminTable(props) {
             });
         }
         else {
-            const setFp = async () => {
-                const fp = await FingerprintJS.load();
-                const { visitorId } = await fp.get();
-                api.get(props.apiPath, {
-                    params: {
-                        fingerPrint: visitorId
-                    }
-                }).then(res => {
-                    let data = res.data;
-                    sort(data);
-                    setModels(data);
-                }).catch(err => {
-                    console.log(err);
-                });
-            };
-            setFp();
+            getModels();
         }
     }, []);
 
@@ -122,13 +122,17 @@ export default function AdminTable(props) {
 
     let columns = props.cols;
     if (userContext.isAdmin) {
-        columns = [...props.cols, {
-            name: "Actions",
-            cell: row => <div className="btn-group">
-                <button className="btn btn-primary" value={row.id} onClick={handleEdit}>Edit</button>
-                <button className="btn btn-error" value={row.id} onClick={handleDelete}>Delete</button>
-            </div>
-        }];
+        columns = [
+            ...props.cols,
+            {
+                name: "Actions",
+                cell: row => <div className="btn-group">
+                    <button className="btn btn-primary" value={row.id} onClick={handleEdit}>Edit</button>
+                    <button className="btn btn-error" value={row.id} onClick={handleDelete}>Delete</button>
+                </div>
+            },
+            { name: "Created At", selector: (p) => p.createdAt },
+        ];
     }
 
     return (<div className="w-full max-w-md md:max-w-6xl h-full tajawal lg:mt-5">
