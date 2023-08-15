@@ -10,8 +10,8 @@ using Microsoft.AspNetCore.RateLimiting;
 namespace ElCatoWebApi.Controllers
 {
     [EnableRateLimiting("fixed")]
-    [ResponseCache(Duration = 60 * 60 * 24 * 7)]
-    [OutputCache(Duration = 60 * 60 * 24 * 7)]
+    [ResponseCache(Duration = 60 * 10)]
+    [OutputCache(Duration = 60 * 10)]
     [Route("/")]
     public class FrontendController : Controller
     {
