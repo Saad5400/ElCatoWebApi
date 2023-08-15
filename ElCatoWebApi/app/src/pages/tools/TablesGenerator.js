@@ -228,18 +228,18 @@ export default function TablesGenerator(props) {
                                                                     }}
                                                                     >
                                                                         <option selected disabled>الفترة</option>
-                                                                        <option value="01">الفترة الاولى</option>
-                                                                        <option value="02">الفترة الثانية</option>
-                                                                        <option value="03">الفترة الثالثة</option>
-                                                                        <option value="04">الفترة الرابعة</option>
-                                                                        <option value="05">الفترة الخامسة</option>
-                                                                        <option value="06">الفترة السادسة</option>
-                                                                        <option value="07">الفترة السابعة</option>
-                                                                        <option value="08">الفترة الثامنة</option>
-                                                                        <option value="09">الفترة التاسعة</option>
-                                                                        <option value="10">الفترة العاشرة</option>
-                                                                        <option value="11">الفترة الحادية عشرة</option>
-                                                                        <option value="12">الفترة الثانية عشرة</option>
+                                                                        <option value="01">1</option>
+                                                                        <option value="02">2</option>
+                                                                        <option value="03">3</option>
+                                                                        <option value="04">4</option>
+                                                                        <option value="05">5</option>
+                                                                        <option value="06">6</option>
+                                                                        <option value="07">7</option>
+                                                                        <option value="08">8</option>
+                                                                        <option value="09">9</option>
+                                                                        <option value="10">10</option>
+                                                                        <option value="11">11</option>
+                                                                        <option value="12">12</option>
                                                                     </select>
                                                                     <button className="indicator-item indicator-start badge badge-error text-white p-[2px]" onClick={(e) => {
                                                                         e.preventDefault();
