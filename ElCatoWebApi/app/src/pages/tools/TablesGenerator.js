@@ -81,7 +81,7 @@ export default function TablesGenerator(props) {
         const tableElements = tables.map((table, tableIndex) => (
             <>
                 <h1 className="w-full flex flex-row items-center justify-center bg-base-300 mt-3">
-                    جدول رقم {tableIndex + 1}
+                    جدول رقم: {tableIndex + 1} | ايام اوف: {table.daysOff} | ساعات فراغ: {table.hoursOff}
                 </h1>
                 <table className="table table-compact table-zebra table-vcenter studyTable" dir="rtl" key={table.id}>
                     <thead>

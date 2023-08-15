@@ -10,8 +10,8 @@ namespace ElCatoWebApi.Controllers;
 public class TablesController : ControllerBase
 {
     [EnableRateLimiting("fixed")]
-    [ResponseCache(Duration = 60 * 10)]
-    [OutputCache(Duration = 60 * 10)]
+    // [ResponseCache(Duration = 60 * 10)]
+    // [OutputCache(Duration = 60 * 10)]
     [HttpPost]
     public ActionResult<List<Table>> PostTable(List<Course> courses)
     {
@@ -71,12 +71,53 @@ public class TablesController : ControllerBase
                     // in case there is a conflict, don't add the table
                     if (!conflict)
                     {
+                        // calculate days off for the clone
+                        var uniqueDays = clone.Courses.Keys
+                            .Select(k => k.Substring(0, 2))
+                            .Distinct();
+                        clone.DaysOff = 5 - uniqueDays.Count();
+
+                        var hoursOff = 0;
+
+                        void calculateHoursOff(IEnumerable<string> days)
+                        {
+                            if (days.Any())
+                            {
+                                var periods = days.Select(k => k.Substring(2));
+                                var periodsInt = periods.Select(p => int.Parse(p));
+
+                                var first = periodsInt.Min();
+                                var last = periodsInt.Max();
+
+                                for (int i = first; i < last; i++)
+                                {
+                                    if (!periodsInt.Contains(i))
+                                    {
+                                        hoursOff++;
+                                    }
+                                }
+
+                            }
+                        }
+
+                        for (int i = 1; i <= 5; i++)
+                        {
+                            calculateHoursOff(clone.Courses.Keys
+                                .Where(k => k.StartsWith($"0{i}")));
+                        }
+
+                        clone.HoursOff = hoursOff;
+
                         clonedTables.Add(clone);
                     }
                 }
             }
             tables = clonedTables;
         }
+
+        tables = tables.OrderByDescending(t => t.DaysOff)
+            .ThenBy(t => t.HoursOff)
+            .ToList();
 
         return Ok(tables);
     }

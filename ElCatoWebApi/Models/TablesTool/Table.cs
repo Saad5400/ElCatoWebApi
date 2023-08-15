@@ -5,6 +5,8 @@ namespace ElCatoWebApi.Models.TablesTool;
 public class Table
 {
     public Dictionary<string, MinimalCourseOption> Courses { get; set; } = new();
+    public int DaysOff { get; set; } = 0;
+    public int HoursOff { get; set; } = 0;
 
     public Table Clone()
     {
