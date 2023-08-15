@@ -68,7 +68,7 @@ export default function TablesGenerator(props) {
                         </tr>
                     </thead>
                     <tbody>
-                        {[...Array(10)].map((_, i) => (
+                        {[...Array(12)].map((_, i) => (
                             <tr key={i}>
                                 <td>{i + 1}</td>
                                 <td>{table.courses[`01${zeroPad(i + 1)}`] ? table.courses[`01${zeroPad(i + 1)}`].course.name + ' ش' + table.courses[`01${zeroPad(i + 1)}`].group : null}</td>
