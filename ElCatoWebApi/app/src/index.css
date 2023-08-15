@@ -106,3 +106,11 @@ pre {
 .prose ol p {
   @apply inline;
 }
+
+.studyTable thead tr th {
+  @apply text-center bg-primary text-primary-content;
+}
+
+.studyTable tbody tr td:not(:empty) {
+  @apply text-center bg-secondary text-secondary-content;
+}

@@ -53,10 +53,10 @@ export default function TablesGenerator(props) {
         console.log(tables);
         const tableElements = tables.map((table, tableIndex) => (
             <>
-                <h1 className="w-full flex flex-row items-center justify-center bg-base-300">
+                <h1 className="w-full flex flex-row items-center justify-center bg-base-300 mt-3">
                     جدول رقم {tableIndex + 1}
                 </h1>
-                <table className="table table-compact table-zebra table-vcenter" dir="rtl" key={table.id}>
+                <table className="table table-compact table-zebra table-vcenter studyTable" dir="rtl" key={table.id}>
                     <thead>
                         <tr>
                             <th>الفترة</th>
@@ -71,8 +71,8 @@ export default function TablesGenerator(props) {
                         {[...Array(10)].map((_, i) => (
                             <tr key={i}>
                                 <td>{i + 1}</td>
-                                <td>{table.courses[`02${zeroPad(i + 1)}`] ? table.courses[`02${zeroPad(i + 1)}`].course.name + ' ش' + table.courses[`02${zeroPad(i + 1)}`].group : null}</td>
                                 <td>{table.courses[`01${zeroPad(i + 1)}`] ? table.courses[`01${zeroPad(i + 1)}`].course.name + ' ش' + table.courses[`01${zeroPad(i + 1)}`].group : null}</td>
+                                <td>{table.courses[`02${zeroPad(i + 1)}`] ? table.courses[`02${zeroPad(i + 1)}`].course.name + ' ش' + table.courses[`02${zeroPad(i + 1)}`].group : null}</td>
                                 <td>{table.courses[`03${zeroPad(i + 1)}`] ? table.courses[`03${zeroPad(i + 1)}`].course.name + ' ش' + table.courses[`03${zeroPad(i + 1)}`].group : null}</td>
                                 <td>{table.courses[`04${zeroPad(i + 1)}`] ? table.courses[`04${zeroPad(i + 1)}`].course.name + ' ش' + table.courses[`04${zeroPad(i + 1)}`].group : null}</td>
                                 <td>{table.courses[`05${zeroPad(i + 1)}`] ? table.courses[`05${zeroPad(i + 1)}`].course.name + ' ش' + table.courses[`05${zeroPad(i + 1)}`].group : null}</td>
