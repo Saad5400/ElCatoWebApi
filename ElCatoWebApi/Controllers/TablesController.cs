@@ -15,6 +15,10 @@ public class TablesController : ControllerBase
     [HttpPost]
     public ActionResult<List<Table>> PostTable(List<Course> courses)
     {
+        if (courses.Any(c => c.Options.Count == 0 || c.Options.Any(o => o.DayPeriods.Any(string.IsNullOrWhiteSpace))))
+        {
+            return BadRequest();
+        }
         // the object to return
         var tables = new List<Table>();
 

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Container from "../../components/Container";
 import Dimmer from "../../components/Dimmer";
 import { api } from "../../App"
+import Alert from "../../components/Alert";
 
 function Remove() {
     return (<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 m-0 p-0">
@@ -29,6 +30,7 @@ export default function TablesGenerator(props) {
         emptyCourse,
     ]);
     const [tables, setTables] = useState([]);
+    const [alert, setAlert] = useState(null);
 
     useEffect(() => {
         // console.log(courses[0].options[0].dayPeriods);
@@ -44,19 +46,38 @@ export default function TablesGenerator(props) {
         api.post("/tables", courses).then((res) => {
             // console.log(res.data);
             handleTable(res.data);
+            setAlert(<Alert className="alert-success">
+                New table generated successfully
+            </Alert>);
         }).catch((err) => {
             console.log(err);
+            setAlert(<Alert className="alert-error">
+            {JSON.stringify(err.response.data)}
+        </Alert>);
         });
 
         setTimeout(() => {
             button.disabled = false;
         }, 100);
+        setTimeout(() => {
+            setAlert(null);
+        }, 5000);
     }
 
     const zeroPad = (num) => String(num).padStart(2, '0')
 
+    function getCourseInfo(course) {
+        if (!course) return null;
+        return (
+            <>
+                <span className="badge badge-primary">{course.course.name}</span>
+                <span className="badge badge-secondary">ش{course.group}</span>
+                <span className="badge badge-secondary">{course.teacher}</span>
+            </>
+        );
+    }
+
     function handleTable(tables) {
-        console.log(tables);
         const tableElements = tables.map((table, tableIndex) => (
             <>
                 <h1 className="w-full flex flex-row items-center justify-center bg-base-300 mt-3">
@@ -77,11 +98,26 @@ export default function TablesGenerator(props) {
                         {[...Array(12)].map((_, i) => (
                             <tr key={i}>
                                 <td>{i + 1}</td>
-                                <td>{table.courses[`01${zeroPad(i + 1)}`] ? table.courses[`01${zeroPad(i + 1)}`].course.name + ' ش' + table.courses[`01${zeroPad(i + 1)}`].group : null}</td>
-                                <td>{table.courses[`02${zeroPad(i + 1)}`] ? table.courses[`02${zeroPad(i + 1)}`].course.name + ' ش' + table.courses[`02${zeroPad(i + 1)}`].group : null}</td>
-                                <td>{table.courses[`03${zeroPad(i + 1)}`] ? table.courses[`03${zeroPad(i + 1)}`].course.name + ' ش' + table.courses[`03${zeroPad(i + 1)}`].group : null}</td>
-                                <td>{table.courses[`04${zeroPad(i + 1)}`] ? table.courses[`04${zeroPad(i + 1)}`].course.name + ' ش' + table.courses[`04${zeroPad(i + 1)}`].group : null}</td>
-                                <td>{table.courses[`05${zeroPad(i + 1)}`] ? table.courses[`05${zeroPad(i + 1)}`].course.name + ' ش' + table.courses[`05${zeroPad(i + 1)}`].group : null}</td>
+                                {/* <td>{table.courses[`01${zeroPad(i + 1)}`] ? table.courses[`01${zeroPad(i + 1)}`].course.name + ' ش' + table.courses[`01${zeroPad(i + 1)}`].group + ' [' + table.courses[`01${zeroPad(i + 1)}`].teacher + ']' : null}</td>
+                                <td>{table.courses[`02${zeroPad(i + 1)}`] ? table.courses[`02${zeroPad(i + 1)}`].course.name + ' ش' + table.courses[`02${zeroPad(i + 1)}`].group + ' [' + table.courses[`02${zeroPad(i + 1)}`].teacher + ']' : null}</td>
+                                <td>{table.courses[`03${zeroPad(i + 1)}`] ? table.courses[`03${zeroPad(i + 1)}`].course.name + ' ش' + table.courses[`03${zeroPad(i + 1)}`].group + ' [' + table.courses[`03${zeroPad(i + 1)}`].teacher + ']' : null}</td>
+                                <td>{table.courses[`04${zeroPad(i + 1)}`] ? table.courses[`04${zeroPad(i + 1)}`].course.name + ' ش' + table.courses[`04${zeroPad(i + 1)}`].group + ' [' + table.courses[`04${zeroPad(i + 1)}`].teacher + ']' : null}</td>
+                                <td>{table.courses[`05${zeroPad(i + 1)}`] ? table.courses[`05${zeroPad(i + 1)}`].course.name + ' ش' + table.courses[`05${zeroPad(i + 1)}`].group + ' [' + table.courses[`05${zeroPad(i + 1)}`].teacher + ']' : null}</td> */}
+                                <td>
+                                    {getCourseInfo(table.courses[`01${zeroPad(i + 1)}`])}
+                                </td>
+                                <td>
+                                    {getCourseInfo(table.courses[`02${zeroPad(i + 1)}`])}
+                                </td>
+                                <td>
+                                    {getCourseInfo(table.courses[`03${zeroPad(i + 1)}`])}
+                                </td>
+                                <td>
+                                    {getCourseInfo(table.courses[`04${zeroPad(i + 1)}`])}
+                                </td>
+                                <td>
+                                    {getCourseInfo(table.courses[`05${zeroPad(i + 1)}`])}
+                                </td>
                             </tr>
                         ))}
                     </tbody>
@@ -93,6 +129,7 @@ export default function TablesGenerator(props) {
 
     return (
         <Dimmer className="text-base-content flex flex-col justify-center items-center tajawal">
+            {alert}
             <Container>
                 <h1 className="text-2xl">
                     اداة توليد الجداول
