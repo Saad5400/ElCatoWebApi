@@ -65,6 +65,10 @@ namespace ElCatoWebApi.Controllers
             {
                 ViewData["Title"] = "El Cato - Admin";
             }
+            else if (path.Contains("tables-generator"))
+            {
+                ViewData["Title"] = "El Cato - Tables Generator";
+            }
             return View();
         }
     }

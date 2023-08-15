@@ -12,6 +12,7 @@ const Empty = loadable(() => import('./components/Empty'));
 const AdminLayout = loadable(() => import('./pages/admin/AdminLayout'));
 const Index = loadable(() => import('./pages/admin/Index'));
 const NotFound = loadable(() => import('./pages/NotFound'));
+const TablesGenerator = loadable(() => import('./pages/tools/TablesGenerator'));
 export const SectionsTable = loadable(() => import('./pages/admin/SectionsTable'));
 export const CardsTable = loadable(() => import('./pages/admin/CardsTable'));
 export const PagesTable = loadable(() => import('./pages/admin/PagesTable'));
@@ -81,12 +82,14 @@ function App(props) {
 								<Route path="page/:id" element={<Page />} />
 								<Route path="admin" element={<AdminLayout />} >
 									<Route index element={<Index />} />
-									<Route path="refresh" element={<Empty />} />
 									{isAdmin ? <>
 										<Route path="sections" element={<SectionsTable />} />
 										<Route path="cards" element={<CardsTable />} />
 									</> : null}
 									<Route path="pages" element={<PagesTable />} />
+								</Route>
+								<Route path="tools">
+									<Route path="tables-generator" element={<TablesGenerator />} />
 								</Route>
 								<Route path="*" element={<NotFound />} />
 							</Route>

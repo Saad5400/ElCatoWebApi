@@ -179,7 +179,7 @@ export default function PagesTable(props) {
 
                         plugins: 'preview searchreplace autolink directionality code visualchars fullscreen image link media codesample table insertdatetime advlist lists wordcount',
 
-                        toolbar: 'undo redo | bold italic | fontsize blocks | ltr rtl alignleft aligncenter alignright alignjustify |  numlist bullist | forecolor backcolor removeformat | fullscreen | image media link codesample',
+                        toolbar: 'undo redo | bold italic codesample | fontsize blocks | ltr rtl alignleft aligncenter alignright alignjustify |  numlist bullist | forecolor backcolor removeformat | fullscreen | image media link',
 
                         image_caption: true,
                         toolbar_mode: 'sliding',

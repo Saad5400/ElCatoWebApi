@@ -135,7 +135,7 @@ export default function AdminTable(props) {
         ];
     }
 
-    return (<div className="w-full max-w-md md:max-w-6xl h-full tajawal lg:mt-5">
+    return (<div className="w-full h-full tajawal lg:mt-5">
         <form id="mainForm">
             <h1 className="flex justify-between">
                 <span className="text-2xl">

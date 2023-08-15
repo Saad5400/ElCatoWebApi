@@ -88,6 +88,8 @@ export default function Page(props) {
                                         prose-sm md:prose-md
                                         text-secondary-content
                                         tajawal
+                                        prose-ul:list-inside
+                                        prose-ol:list-inside
                                     "
                     >
                         {loading &&

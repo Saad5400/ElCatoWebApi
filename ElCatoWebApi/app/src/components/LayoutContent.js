@@ -98,7 +98,7 @@ export default function LayoutContent(props) {
                 </div>
                 {props.introComplete && <BinaryBackground speed={120} size={20} text="01" />}
                 <div className={"m-2 sm:m-3 md:m-4 lg:m-5 xl:m-6 !mt-0 text-primary"}>
-                    <div className="p-2 sm:p-3 md:p-4 lg:p-5 xl:p-6 w-full">
+                    <div className="p-1 sm:p-2 md:p-3 lg:p-4 xl:p-5 2xl:p-6 w-full">
                         {props.children}
                     </div>
                 </div>
