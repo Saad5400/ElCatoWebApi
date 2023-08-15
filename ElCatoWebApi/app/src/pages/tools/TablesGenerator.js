@@ -7,7 +7,7 @@ export default function TablesGenerator(props) {
 
     const emptyOption = {
         group: null,
-        teacher: null,
+        // teacher: null,
         dayPeriods: [
             null,
         ]
@@ -47,33 +47,40 @@ export default function TablesGenerator(props) {
         }, 100);
     }
 
+    const zeroPad = (num) => String(num).padStart(2, '0')
+
     function handleTable(tables) {
         console.log(tables);
-        const tableElements = tables.map(table => (
-            <table className="table table-compact table-zebra table-vcenter" dir="rtl" key={table.id}>
-                <thead>
-                    <tr>
-                        <th>الفترة</th>
-                        <th>الأحد</th>
-                        <th>الاثنين</th>
-                        <th>الثلاثاء</th>
-                        <th>الأربعاء</th>
-                        <th>الخميس</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {[...Array(9)].map((_, i) => (
-                        <tr key={i}>
-                            <td>{i + 1}</td>
-                            <td>{table.courses[`010${i + 1}`] ? table.courses[`010${i + 1}`].course.name : null}</td>
-                            <td>{table.courses[`020${i + 1}`] ? table.courses[`020${i + 1}`].course.name : null}</td>
-                            <td>{table.courses[`030${i + 1}`] ? table.courses[`030${i + 1}`].course.name : null}</td>
-                            <td>{table.courses[`040${i + 1}`] ? table.courses[`040${i + 1}`].course.name : null}</td>
-                            <td>{table.courses[`050${i + 1}`] ? table.courses[`050${i + 1}`].course.name : null}</td>
+        const tableElements = tables.map((table, tableIndex) => (
+            <>
+                <h1 className="w-full flex flex-row items-center justify-center bg-base-300">
+                    جدول رقم {tableIndex + 1}
+                </h1>
+                <table className="table table-compact table-zebra table-vcenter" dir="rtl" key={table.id}>
+                    <thead>
+                        <tr>
+                            <th>الفترة</th>
+                            <th>الأحد</th>
+                            <th>الاثنين</th>
+                            <th>الثلاثاء</th>
+                            <th>الأربعاء</th>
+                            <th>الخميس</th>
                         </tr>
-                    ))}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        {[...Array(10)].map((_, i) => (
+                            <tr key={i}>
+                                <td>{i + 1}</td>
+                                <td>{table.courses[`02${zeroPad(i + 1)}`] ? table.courses[`02${zeroPad(i + 1)}`].course.name + ' ش' + table.courses[`02${zeroPad(i + 1)}`].group : null}</td>
+                                <td>{table.courses[`01${zeroPad(i + 1)}`] ? table.courses[`01${zeroPad(i + 1)}`].course.name + ' ش' + table.courses[`01${zeroPad(i + 1)}`].group : null}</td>
+                                <td>{table.courses[`03${zeroPad(i + 1)}`] ? table.courses[`03${zeroPad(i + 1)}`].course.name + ' ش' + table.courses[`03${zeroPad(i + 1)}`].group : null}</td>
+                                <td>{table.courses[`04${zeroPad(i + 1)}`] ? table.courses[`04${zeroPad(i + 1)}`].course.name + ' ش' + table.courses[`04${zeroPad(i + 1)}`].group : null}</td>
+                                <td>{table.courses[`05${zeroPad(i + 1)}`] ? table.courses[`05${zeroPad(i + 1)}`].course.name + ' ش' + table.courses[`05${zeroPad(i + 1)}`].group : null}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </>
         ));
         setTables(tableElements);
     }
@@ -96,6 +103,20 @@ export default function TablesGenerator(props) {
                         اضغط على زر توليد الجداول وستظهر جميع الجداول الممكنة
                     </li>
                 </ol>
+                <br />
+                <h1 className="text-xl">
+                    ملاحظة
+                </h1>
+                <br />
+                <p dir="rtl">
+                    الفترات عبارة عن رقمين الاول يمثل اليوم والثاني يمثل الفترة
+                    <br />
+                    مثلا 0105 تعني الاحد الفترة الخامسة
+                    <br />
+                    اما 0203,0204 تعني الاثنين الفترة الثالثة والرابعة
+                    <br />
+                    اما 0301,0302,0401,0402 تعني الثلاثاء الفترة الاولى والثانية والاربعاء الفترة الاولى والثانية
+                </p>
                 <br />
                 <div className="w-full flex flex-col gap-2" dir="rtl">
                     {courses.map((course, index) => {
@@ -130,11 +151,11 @@ export default function TablesGenerator(props) {
                                                         newCourses[index].options[optionIndex].group = e.target.value;
                                                         setCourses(newCourses);
                                                     }} />
-                                                    <input name={`teacherName${optionIndex}`} className="input input-bordered w-full" placeholder="اسم المدرس" value={option.teacher} onChange={(e) => {
+                                                    {/* <input name={`teacherName${optionIndex}`} className="input input-bordered w-full" placeholder="اسم المدرس" value={option.teacher} onChange={(e) => {
                                                         let newCourses = [...courses];
                                                         newCourses[index].options[optionIndex].teacher = e.target.value;
                                                         setCourses(newCourses);
-                                                    }} />
+                                                    }} /> */}
                                                     <input name={`periods${optionIndex}`} className="input input-bordered w-full" placeholder="الفترات" value={option.dayPeriods.join(",")} onChange={(e) => {
                                                         let newCourses = [...courses];
                                                         newCourses[index].options[optionIndex].dayPeriods = e.target.value.split(",");

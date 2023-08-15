@@ -9,9 +9,9 @@ namespace ElCatoWebApi.Controllers;
 [ApiController]
 public class TablesController : ControllerBase
 {
-    // [EnableRateLimiting("fixed")]
-    // [ResponseCache(Duration = 60 * 10)]
-    // [OutputCache(Duration = 60 * 10)]
+    [EnableRateLimiting("fixed")]
+    [ResponseCache(Duration = 60 * 10)]
+    [OutputCache(Duration = 60 * 10)]
     [HttpPost]
     public ActionResult<List<Table>> PostTable(List<Course> courses)
     {
