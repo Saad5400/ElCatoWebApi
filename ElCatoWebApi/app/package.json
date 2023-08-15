@@ -7,6 +7,8 @@
     "@loadable/component": "^5.15.3",
     "@tinymce/tinymce-react": "^4.3.0",
     "axios": "^1.4.0",
+    "downloadjs": "^1.4.7",
+    "html-to-image": "^1.11.11",
     "prismjs": "^1.29.0",
     "raw-loader": "^4.0.2",
     "react": "^18.2.0",

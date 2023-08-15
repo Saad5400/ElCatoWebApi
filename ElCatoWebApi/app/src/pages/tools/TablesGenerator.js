@@ -3,6 +3,9 @@ import Container from "../../components/Container";
 import Dimmer from "../../components/Dimmer";
 import { api } from "../../App"
 import Alert from "../../components/Alert";
+import * as htmlToImage from 'html-to-image';
+import { toPng } from 'html-to-image';
+import download from "downloadjs";
 
 function Remove() {
     return (<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 m-0 p-0">
@@ -52,8 +55,8 @@ export default function TablesGenerator(props) {
         }).catch((err) => {
             console.log(err);
             setAlert(<Alert className="alert-error">
-            {JSON.stringify(err.response.data)}
-        </Alert>);
+                {JSON.stringify(err.response.data)}
+            </Alert>);
         });
 
         setTimeout(() => {
@@ -231,7 +234,7 @@ export default function TablesGenerator(props) {
                                                                     </select>
                                                                     <select className="select select-bordered p-1 pe-8" data-course={index} data-option={optionIndex} data-day-period={dayPeriodIndex} onChange={e => {
                                                                         let newCourses = [...courses];
-                                                                        const newValue = (newCourses[index].options[optionIndex].dayPeriods[dayPeriodIndex] ? newCourses[index].options[optionIndex].dayPeriods[dayPeriodIndex].slice(0, 2) : "" ) + e.target.value;
+                                                                        const newValue = (newCourses[index].options[optionIndex].dayPeriods[dayPeriodIndex] ? newCourses[index].options[optionIndex].dayPeriods[dayPeriodIndex].slice(0, 2) : "") + e.target.value;
                                                                         console.log(newValue);
                                                                         newCourses[index].options[optionIndex].dayPeriods[dayPeriodIndex] = newValue;
                                                                         setCourses(newCourses);
@@ -301,7 +304,14 @@ export default function TablesGenerator(props) {
                 </div>
                 <div className="mt-2 w-full">
                     <button className="btn btn-primary btn-block" onClick={() => {
-                        window.print();
+                        const element = document.getElementById('allTablesContainer');
+                        const lastHeight = element.style.maxHeight;
+                        element.style.maxHeight = "none";
+                        htmlToImage.toPng(element)
+                            .then(function (dataUrl) {
+                                download(dataUrl, 'tables.png');
+                                element.style.maxHeight = lastHeight;
+                            });
                     }}>
                         طباعة الجداول
                     </button>
