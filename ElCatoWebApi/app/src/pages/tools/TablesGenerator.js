@@ -151,10 +151,20 @@ export default function TablesGenerator(props) {
                     ملاحظة
                 </h1>
                 <br />
-                <p>
+                <p dir="rtl">
                     في حال وجود اكثر من نشاط للمادة مثل النظري والعملي
                     <br />
                     قم باضافة المقرر مرتين وغير اسمهما ليكونا مختلفين
+                </p>
+                <br />
+                <p dir="rtl">
+                    عند ادخال الفترات ادخل كل ساعة على حدة
+                    <br />
+                    مثلا: الأحد 1،2 ادخلها بالشكل:
+                    <br />
+                    الأحد 1
+                    <br />
+                    الأحد 2
                 </p>
                 <br />
                 <div className="w-full flex flex-col gap-2" dir="rtl">
@@ -241,14 +251,14 @@ export default function TablesGenerator(props) {
                                                                         <option value="11">11</option>
                                                                         <option value="12">12</option>
                                                                     </select>
-                                                                    <button className="indicator-item indicator-start badge badge-error text-white p-[2px]" onClick={(e) => {
+                                                                    {/* <button className="indicator-item indicator-start badge badge-error text-white p-[2px]" onClick={(e) => {
                                                                         e.preventDefault();
                                                                         let newCourses = [...courses];
                                                                         newCourses[index].options[optionIndex].dayPeriods = newCourses[index].options[optionIndex].dayPeriods.filter((_, i) => i != dayPeriodIndex);
                                                                         setCourses(newCourses);
                                                                     }}>
                                                                         <Remove />
-                                                                    </button>
+                                                                    </button> */}
                                                                 </div>
                                                             )
                                                         })}
@@ -287,7 +297,16 @@ export default function TablesGenerator(props) {
                     >توليد الجداول</button>
                 </div>
                 <br />
-                <div className="w-full">
+                <div className="h-2 bg-base-content w-full">
+                </div>
+                <div className="mt-2 w-full">
+                    <button className="btn btn-primary btn-block" onClick={() => {
+                        window.print();
+                    }}>
+                        طباعة الجداول
+                    </button>
+                </div>
+                <div id="allTablesContainer" className="w-full max-h-[120vh] overflow-y-auto">
                     {/* // table data example:
                         /** 0101 = Sunday, 1st period, 0102 = Sunday, 2nd period, 0303 = Tuesday, 3rd period
                          {
