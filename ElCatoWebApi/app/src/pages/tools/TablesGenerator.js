@@ -117,6 +117,11 @@ export default function TablesGenerator(props) {
                     <br />
                     اما 0301,0302,0401,0402 تعني الثلاثاء الفترة الاولى والثانية والاربعاء الفترة الاولى والثانية
                 </p>
+                <p>
+                    في حال وجود اكثر من نشاط للمادة مثل النظري والعملي
+                    <br />
+                    قم باضافة المقرر مرتين وغير اسمهما ليكونا مختلفين
+                </p>
                 <br />
                 <div className="w-full flex flex-col gap-2" dir="rtl">
                     {courses.map((course, index) => {
