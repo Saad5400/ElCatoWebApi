@@ -3,13 +3,19 @@ import Container from "../../components/Container";
 import Dimmer from "../../components/Dimmer";
 import { api } from "../../App"
 
+function Remove() {
+    return (<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 m-0 p-0">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+    </svg>);
+}
+
 export default function TablesGenerator(props) {
 
     const emptyOption = {
         group: null,
         // teacher: null,
         dayPeriods: [
-            null,
+            null
         ]
     };
     const emptyCourse = {
@@ -126,46 +132,108 @@ export default function TablesGenerator(props) {
                 <div className="w-full flex flex-col gap-2" dir="rtl">
                     {courses.map((course, index) => {
                         return (
-                            <div key={index} className=" flex flex-row w-full">
-                                <button className="indicator-item indicator-middle badge badge-error text-white" onClick={() => {
+                            <div key={index} className="indicator flex flex-row w-full">
+                                <button className="indicator-item badge badge-error text-white p-[2px]" onClick={() => {
                                     let newCourses = [...courses];
                                     newCourses = newCourses.filter((_, i) => i != index);
                                     setCourses(newCourses);
                                 }}>
-                                    X
+                                    <Remove />
                                 </button>
                                 <div key={index} className="join w-full flex flex-row flex-wrap border-base-content border-[1px]">
-                                    <input name={`courseName${index}`} className="input input-bordered join-item w-full" placeholder="اسم المقرر" value={course.name} onChange={(e) => {
+                                    <input type="text" required name={`courseName${index}`} className="input input-bordered join-item w-full" placeholder="اسم المقرر*" value={course.name} onChange={(e) => {
                                         let newCourses = [...courses];
                                         newCourses[index].name = e.target.value;
                                         setCourses(newCourses);
                                     }} />
                                     {course.options.map((option, optionIndex) => {
                                         return (
-                                            <div key={optionIndex} className="flex flex-row w-full">
-                                                <button className="indicator-item indicator-middle badge badge-error text-white" onClick={() => {
+                                            <div key={optionIndex} className="indicator flex flex-row w-full">
+                                                <button className="indicator-item indicator-end badge badge-error text-white p-[2px]" onClick={() => {
                                                     let newCourses = [...courses];
                                                     newCourses[index].options = newCourses[index].options.filter((_, i) => i != optionIndex);
                                                     setCourses(newCourses);
                                                 }}>
-                                                    X
+                                                    <Remove />
                                                 </button>
                                                 <div key={optionIndex} className="flex flex-row w-full">
-                                                    <input name={`groupNumber${optionIndex}`} className="input input-bordered w-full" placeholder="الشعبة" value={option.group} onChange={(e) => {
+                                                    <input type="number" required name={`groupNumber${optionIndex}`} className="input input-bordered w-full" placeholder="الشعبة*" value={option.group} onChange={(e) => {
                                                         let newCourses = [...courses];
                                                         newCourses[index].options[optionIndex].group = e.target.value;
                                                         setCourses(newCourses);
                                                     }} />
-                                                    {/* <input name={`teacherName${optionIndex}`} className="input input-bordered w-full" placeholder="اسم المدرس" value={option.teacher} onChange={(e) => {
+                                                    <input name={`teacherName${optionIndex}`} className="input input-bordered w-full" placeholder="الدكتور" value={option.teacher} onChange={(e) => {
                                                         let newCourses = [...courses];
                                                         newCourses[index].options[optionIndex].teacher = e.target.value;
                                                         setCourses(newCourses);
-                                                    }} /> */}
-                                                    <input name={`periods${optionIndex}`} className="input input-bordered w-full" placeholder="الفترات" value={option.dayPeriods.join(",")} onChange={(e) => {
+                                                    }} />
+                                                    {/* <input name={`periods${optionIndex}`} className="input input-bordered w-full" placeholder="الفترات" value={option.dayPeriods.join(",")} onChange={(e) => {
                                                         let newCourses = [...courses];
                                                         newCourses[index].options[optionIndex].dayPeriods = e.target.value.split(",");
                                                         setCourses(newCourses);
-                                                    }} />
+                                                    }} /> */}
+                                                    <div>
+                                                        {option.dayPeriods.map((dayPeriod, dayPeriodIndex) => {
+                                                            return (
+                                                                <div key={dayPeriodIndex} className="indicator flex flex-row w-full">
+                                                                    <select className="select select-bordered p-1 pe-8" data-course={index} data-option={optionIndex} data-day-period={dayPeriodIndex} onChange={e => {
+                                                                        let newCourses = [...courses];
+                                                                        const newValue = e.target.value + (newCourses[index].options[optionIndex].dayPeriods[dayPeriodIndex] ? newCourses[index].options[optionIndex].dayPeriods[dayPeriodIndex].slice(-2) : "");
+                                                                        console.log(newValue);
+                                                                        newCourses[index].options[optionIndex].dayPeriods[dayPeriodIndex] = newValue;
+                                                                        setCourses(newCourses);
+                                                                    }}
+                                                                    >
+                                                                        <option selected disabled>اليوم</option>
+                                                                        <option value="01">الاحد</option>
+                                                                        <option value="02">الاثنين</option>
+                                                                        <option value="03">الثلاثاء</option>
+                                                                        <option value="04">الاربعاء</option>
+                                                                        <option value="05">الخميس</option>
+                                                                    </select>
+                                                                    <select className="select select-bordered p-1 pe-8" data-course={index} data-option={optionIndex} data-day-period={dayPeriodIndex} onChange={e => {
+                                                                        let newCourses = [...courses];
+                                                                        const newValue = (newCourses[index].options[optionIndex].dayPeriods[dayPeriodIndex] ? newCourses[index].options[optionIndex].dayPeriods[dayPeriodIndex].slice(0, 2) : "" ) + e.target.value;
+                                                                        console.log(newValue);
+                                                                        newCourses[index].options[optionIndex].dayPeriods[dayPeriodIndex] = newValue;
+                                                                        setCourses(newCourses);
+                                                                    }}
+                                                                    >
+                                                                        <option selected disabled>الفترة</option>
+                                                                        <option value="01">الفترة الاولى</option>
+                                                                        <option value="02">الفترة الثانية</option>
+                                                                        <option value="03">الفترة الثالثة</option>
+                                                                        <option value="04">الفترة الرابعة</option>
+                                                                        <option value="05">الفترة الخامسة</option>
+                                                                        <option value="06">الفترة السادسة</option>
+                                                                        <option value="07">الفترة السابعة</option>
+                                                                        <option value="08">الفترة الثامنة</option>
+                                                                        <option value="09">الفترة التاسعة</option>
+                                                                        <option value="10">الفترة العاشرة</option>
+                                                                        <option value="11">الفترة الحادية عشرة</option>
+                                                                        <option value="12">الفترة الثانية عشرة</option>
+                                                                    </select>
+                                                                    <button className="indicator-item indicator-start badge badge-error text-white p-[2px]" onClick={(e) => {
+                                                                        e.preventDefault();
+                                                                        let newCourses = [...courses];
+                                                                        newCourses[index].options[optionIndex].dayPeriods = newCourses[index].options[optionIndex].dayPeriods.filter((_, i) => i != dayPeriodIndex);
+                                                                        setCourses(newCourses);
+                                                                    }}>
+                                                                        <Remove />
+                                                                    </button>
+                                                                </div>
+                                                            )
+                                                        })}
+
+                                                        <button className="btn btn-primary btn-block mb-5" onClick={(e) => {
+                                                            e.preventDefault();
+                                                            let newCourses = [...courses];
+                                                            newCourses[index].options[optionIndex].dayPeriods = [...newCourses[index].options[optionIndex].dayPeriods, null];
+                                                            setCourses(newCourses);
+                                                        }}>
+                                                            اضافة فترة
+                                                        </button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         )

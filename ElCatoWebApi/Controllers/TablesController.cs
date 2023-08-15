@@ -15,9 +15,10 @@ public class TablesController : ControllerBase
     [HttpPost]
     public ActionResult<List<Table>> PostTable(List<Course> courses)
     {
+        // the object to return
         var tables = new List<Table>();
 
-        // Populate Course in each CourseOption
+        // make sure each option has a reference to its course
         foreach (var course in courses)
         {
             foreach (var option in course.Options)
@@ -25,51 +26,34 @@ public class TablesController : ControllerBase
                 option.Course = course;
             }
         }
-
-        /*
-         * Notes:
-         * 1. The user will provide all available courses and their options
-         * 2. Each option will contain one or more DayPeriods
-         * 3. DayPeriods look like this: "0101" (Sunday, 1st period) or "0502" (Thursday, 2nd period)
-         * 4. Each table must contain exactly one option from each course
-         *
-         * Algorithm:
-         * 1. Select a course
-         * 2. For each option in the course, create a table
-         * 3. Add that option to the table
-         * 4. For each course after the first
-         * 5. For each option after the first in the course
-         * 6. Clone the existing tables
-         * 7. For each option
-         * 8. Add the option to each table
-         * 9. If there is any conflict while adding, remove the table
-         */
-
-        // 1. Select a course
+        
+        // make the first few tables using the first course
         var firstCourse = courses.First();
 
-        // 2. For each option in the course, create a table
         foreach (var option in firstCourse.Options)
         {
             var table = new Table();
             foreach (var optionDayPeriod in option.DayPeriods)
             {
-                // 3. Add that option to the table
                 table.Courses.Add(optionDayPeriod, option.ToMinimal());
             }
             tables.Add(table);
         }
 
-        // 4. For each course after the first
+        // make the rest of the tables using the rest of the courses
+        // by cloning the tables and adding the new courses
         foreach (var course in courses.Skip(1))
         {
             var clonedTables = new List<Table>();
+            // each option is a group for the course
             foreach (var option in course.Options)
             {
                 foreach (var t in tables)
                 {
                     var clone = t.Clone();
                     var conflict = false;
+
+                    // each dayPeriod is a single hour in a day
                     foreach (var dayPeriod in option.DayPeriods)
                     {
                         if (clone.Courses.ContainsKey(dayPeriod))
@@ -80,6 +64,7 @@ public class TablesController : ControllerBase
                         clone.Courses.Add(dayPeriod, option.ToMinimal());
                     }
 
+                    // in case there is a conflict, don't add the table
                     if (!conflict)
                     {
                         clonedTables.Add(clone);
