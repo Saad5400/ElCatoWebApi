@@ -114,3 +114,22 @@ pre {
 .studyTable tbody tr td:not(:empty) {
   @apply text-center bg-secondary text-secondary-content;
 }
+
+#navbar-center::-webkit-scrollbar {
+  height: 1px;
+}
+
+/* Track */
+#navbar-center::-webkit-scrollbar-track {
+  @apply bg-primary;
+}
+
+/* Handle */
+#navbar-center::-webkit-scrollbar-thumb {
+  @apply bg-primary-content;
+}
+
+/* Hover */
+#navbar-center:hover::-webkit-scrollbar {
+  height: 2vh;
+}
