@@ -115,21 +115,25 @@ pre {
   @apply text-center bg-secondary text-secondary-content;
 }
 
-#navbar-center::-webkit-scrollbar {
-  height: 1px;
+::-webkit-scrollbar {
+  width: auto;
 }
 
 /* Track */
-#navbar-center::-webkit-scrollbar-track {
+::-webkit-scrollbar-track {
   @apply bg-primary;
 }
 
 /* Handle */
-#navbar-center::-webkit-scrollbar-thumb {
+::-webkit-scrollbar-thumb {
   @apply bg-primary-content;
+}
+
+#navbar-center::-webkit-scrollbar {
+  height: 1px;
 }
 
 /* Hover */
 #navbar-center:hover::-webkit-scrollbar {
-  height: 2vh;
+  height: 10px;
 }
