@@ -109,9 +109,9 @@ public class Program
         {
             app.UseSwagger();
             app.UseSwaggerUI();
-            app.UseCors();
             IsDevelopment = true;
         }
+        app.UseCors();
 
         app.UseHttpsRedirection();
         app.UseStaticFiles(new StaticFileOptions()
