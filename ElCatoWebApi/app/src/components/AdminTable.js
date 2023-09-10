@@ -19,6 +19,7 @@ export default function AdminTable(props) {
 
     async function getModels() {
         const fp = await getFingerPrint();
+        api.defaults.headers.common['Cache-Control'] = 'no-cache';
         api.get(props.apiPath, {
             params: {
                 fingerPrint: fp
