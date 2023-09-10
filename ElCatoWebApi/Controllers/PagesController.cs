@@ -93,10 +93,6 @@ namespace ElCatoWebApi.Controllers
             }
             else
             {
-                if (!await IsAdmin())
-                {
-                    return Unauthorized();
-                }
                 return await PutPage(page.Id, page);
             }
         }
@@ -104,15 +100,32 @@ namespace ElCatoWebApi.Controllers
         // PUT: api/Pages/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutPage(int id, Page page)
+        public async Task<IActionResult> PutPage(int id, Page requestPage)
         {
-            page.Card = null;
-            if (id != page.Id)
+            requestPage.Card = null;
+
+            if (id != requestPage.Id)
             {
                 return BadRequest();
             }
 
-            _db.Entry(page).State = EntityState.Modified;
+            var storedPage = await _db.Pages.AsNoTracking().FirstOrDefaultAsync(p => p.Id == id);
+
+            if (storedPage == null)
+            {
+                return NotFound();
+            }
+
+            if (!await IsAdmin() && requestPage.IpAddress != await GetIpAddress() && requestPage.FingerPrint != storedPage.FingerPrint)
+            {
+                return Unauthorized();
+            }
+            else if (!await IsAdmin())
+            {
+                requestPage.Accepted = false;
+            }
+
+            _db.Entry(requestPage).State = EntityState.Modified;
 
             try
             {
@@ -130,7 +143,7 @@ namespace ElCatoWebApi.Controllers
                 }
             }
 
-            return Ok(page);
+            return Ok(requestPage);
         }
 
         // POST: api/Pages

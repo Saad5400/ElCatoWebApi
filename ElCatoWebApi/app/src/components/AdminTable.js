@@ -121,7 +121,7 @@ export default function AdminTable(props) {
     }
 
     let columns = props.cols;
-    if (userContext.isAdmin) {
+    // if (userContext.isAdmin) {
         columns = [
             ...props.cols,
             {
@@ -133,7 +133,7 @@ export default function AdminTable(props) {
             },
             { name: "Created At", selector: (p) => p.createdAt },
         ];
-    }
+    // }
 
     return (<div className="w-full h-full tajawal lg:mt-5">
         <form id="mainForm">
