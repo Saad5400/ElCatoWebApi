@@ -12,7 +12,7 @@ export default function Toast(props) {
                 }}>
                     X
                 </span>
-                <div className="alert alert-info">
+                <div className={"alert alert-info " + props.className}>
                     <span className="max-w-lg whitespace-pre-wrap">
                         {props.children}
                     </span>

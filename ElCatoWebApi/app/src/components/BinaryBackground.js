@@ -1,6 +1,11 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react"
+import "./BinaryBackground.scss"
 
-export default function BinaryBackground(props) {
+export default function BinaryBackground() {
+
+    const speed = 120;
+    const size = 20;
+    const text = "undefined";
 
     const canvasRef = useRef(null);
     const frColorRef = useRef(null);
@@ -23,8 +28,8 @@ export default function BinaryBackground(props) {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
 
-            const binary = props.text;
-            const fontSize = props.size;
+            const binary = text;
+            const fontSize = size;
             const columns = canvas.width / fontSize;
 
             const drops = [];
@@ -60,11 +65,11 @@ export default function BinaryBackground(props) {
                     drops[i]++;
                 }
             }
-            const inter = setInterval(draw, props.speed);
+            const inter = setInterval(draw, speed);
 
             return () => clearInterval(inter);
         }
-    }, [windowWidth, props.size, props.speed, props.text]);
+    }, [windowWidth]);
 
     return (
         <>

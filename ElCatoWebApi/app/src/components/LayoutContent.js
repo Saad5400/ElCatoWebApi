@@ -26,7 +26,7 @@ export default function LayoutContent(props) {
 
     return (
         <div className={props.className} hidden={props.hidden}>
-            <Toast>
+            <Toast className="max-w-[80vw]">
                 {props.randomToast}
             </Toast>
             <div className="bg-transparent sdglitch-tajawal">
