@@ -6,243 +6,186 @@ export default function BinaryBackground() {
     const firstRender = useRef(true);
 
     useLayoutEffect(() => {
-        if (firstRender.current) {
-            firstRender.current = false;
+
+        if (!firstRender.current) {
             return;
         }
-        /*          *     .        *  .    *    *   . 
-         .  *  move your mouse to over the stars   .
-         *  .  .   change these values:   .  *
-           .      * .        .          * .       */
-        const STAR_COLOR = '#fff';
-        const STAR_SIZE = 3;
-        const STAR_MIN_SCALE = 0.2;
-        const OVERFLOW_THRESHOLD = 50;
-        const STAR_COUNT = (window.innerWidth + window.innerHeight) / 81;
-
-        const canvas = document.querySelector('canvas'),
-            context = canvas.getContext('2d');
-
-        let scale = 1, // device pixel ratio
-            width,
-            height;
-
-        let stars = [];
-
-        let pointerX,
-            pointerY;
-
-        let velocity = { x: 0, y: 0, tx: 0, ty: 0, z: 0.0005 };
-
-        let touchInput = false;
-
-        generate();
-        resize();
-        step();
-
-        window.onresize = resize;
-        window.onmousemove = onMouseMove;
-        window.ontouchmove = onTouchMove;
-        window.ontouchend = onMouseLeave;
-        document.onmouseleave = onMouseLeave;
-
-        function generate() {
-
-            for (let i = 0; i < STAR_COUNT; i++) {
-                stars.push({
-                    x: 0,
-                    y: 0,
-                    z: STAR_MIN_SCALE + Math.random() * (1 - STAR_MIN_SCALE)
-                });
-            }
-
+        if (firstRender.current) {
+            firstRender.current = false;
         }
 
-        function placeStar(star) {
+        const c = document.getElementById('c');
 
-            star.x = Math.random() * width;
-            star.y = Math.random() * height;
+        let w = c.width = window.innerWidth,
+            h = c.height = window.innerHeight,
+            ctx = c.getContext('2d'),
 
+            minDist = 10,
+            maxDist = 30,
+            initialWidth = 10,
+            maxLines = 100,
+            initialLines = 4,
+            speed = 2,
+
+            lines = [],
+            frame = 0,
+            timeSinceLast = 0,
+
+            dirs = [
+                // straight x, y velocity
+                [0, 1],
+                [1, 0],
+                [0, -1],
+                [-1, 0],
+                // diagonals, 0.7 = sin(PI/4) = cos(PI/4)
+                [.7, .7],
+                [.7, -.7],
+                [-.7, .7],
+                [-.7, -.7]
+            ],
+            starter = { // starting parent line, just a pseudo line
+
+                x: w / 2,
+                y: h / 2,
+                vx: 0,
+                vy: 0,
+                width: initialWidth
+            };
+
+        function init() {
+
+            lines.length = 0;
+
+            for (var i = 0; i < initialLines; ++i)
+                lines.push(new Line(starter));
+
+            ctx.fillStyle = '#222';
+            ctx.fillRect(0, 0, w, h);
+
+            // if you want a cookie ;)
+            // ctx.lineCap = 'round';
+        }
+        function getColor(x) {
+            return 'rgb(255, 255, 255)';
         }
 
-        function recycleStar(star) {
+        function anim() {
 
-            let direction = 'z';
+            window.requestAnimationFrame(anim);
 
-            let vx = Math.abs(velocity.x),
-                vy = Math.abs(velocity.y);
+            ++frame;
 
-            if (vx > 1 || vy > 1) {
-                let axis;
+            ctx.shadowBlur = 0;
+            ctx.fillStyle = 'rgba(0,0,0,.02)';
+            ctx.fillRect(0, 0, w, h);
+            ctx.shadowBlur = .5;
 
-                if (vx > vy) {
-                    axis = Math.random() < vx / (vx + vy) ? 'h' : 'v';
-                }
-                else {
-                    axis = Math.random() < vy / (vx + vy) ? 'v' : 'h';
-                }
+            for (var i = 0; i < lines.length; ++i)
 
-                if (axis === 'h') {
-                    direction = velocity.x > 0 ? 'l' : 'r';
-                }
-                else {
-                    direction = velocity.y > 0 ? 't' : 'b';
-                }
-            }
+                if (lines[i].step()) { // if true it's dead
 
-            star.z = STAR_MIN_SCALE + Math.random() * (1 - STAR_MIN_SCALE);
+                    lines.splice(i, 1);
+                    --i;
 
-            if (direction === 'z') {
-                star.z = 0.1;
-                star.x = Math.random() * width;
-                star.y = Math.random() * height;
-            }
-            else if (direction === 'l') {
-                star.x = -OVERFLOW_THRESHOLD;
-                star.y = height * Math.random();
-            }
-            else if (direction === 'r') {
-                star.x = width + OVERFLOW_THRESHOLD;
-                star.y = height * Math.random();
-            }
-            else if (direction === 't') {
-                star.x = width * Math.random();
-                star.y = -OVERFLOW_THRESHOLD;
-            }
-            else if (direction === 'b') {
-                star.x = width * Math.random();
-                star.y = height + OVERFLOW_THRESHOLD;
-            }
-
-        }
-
-        function resize() {
-
-            scale = window.devicePixelRatio || 1;
-
-            width = window.innerWidth * scale;
-            height = window.innerHeight * scale;
-
-            canvas.width = width;
-            canvas.height = height;
-
-            stars.forEach(placeStar);
-
-        }
-
-        function step() {
-
-            context.clearRect(0, 0, width, height);
-
-            update();
-            render();
-
-            requestAnimationFrame(step);
-
-        }
-
-        function update() {
-
-            velocity.tx *= 0.96;
-            velocity.ty *= 0.96;
-
-            velocity.x += (velocity.tx - velocity.x) * 0.8;
-            velocity.y += (velocity.ty - velocity.y) * 0.8;
-
-            stars.forEach((star) => {
-
-                star.x += velocity.x * star.z;
-                star.y += velocity.y * star.z;
-
-                star.x += (star.x - width / 2) * velocity.z * star.z;
-                star.y += (star.y - height / 2) * velocity.z * star.z;
-                star.z += velocity.z;
-
-                // recycle when out of bounds
-                if (star.x < -OVERFLOW_THRESHOLD || star.x > width + OVERFLOW_THRESHOLD || star.y < -OVERFLOW_THRESHOLD || star.y > height + OVERFLOW_THRESHOLD) {
-                    recycleStar(star);
                 }
 
-            });
+            // spawn new
 
+            ++timeSinceLast
+
+            if (lines.length < maxLines && timeSinceLast > 10 && Math.random() < .5) {
+
+                timeSinceLast = 0;
+
+                lines.push(new Line(starter));
+
+                // cover the middle;
+                ctx.fillStyle = ctx.shadowColor = getColor(starter.x);
+                ctx.beginPath();
+                ctx.arc(starter.x, starter.y, initialWidth, 0, Math.PI * 2);
+                ctx.fill();
+            }
         }
 
-        function render() {
+        function Line(parent) {
 
-            stars.forEach((star) => {
+            this.x = parent.x | 0;
+            this.y = parent.y | 0;
+            this.width = parent.width / 1.25;
 
-                context.beginPath();
-                context.lineCap = 'round';
-                context.lineWidth = STAR_SIZE * star.z * scale;
-                context.globalAlpha = 0.5 + 0.5 * Math.random();
-                context.strokeStyle = STAR_COLOR;
+            do {
 
-                context.beginPath();
-                context.moveTo(star.x, star.y);
+                var dir = dirs[(Math.random() * dirs.length) | 0];
+                this.vx = dir[0];
+                this.vy = dir[1];
 
-                var tailX = velocity.x * 2,
-                    tailY = velocity.y * 2;
+            } while (
+                (this.vx === -parent.vx && this.vy === -parent.vy) || (this.vx === parent.vx && this.vy === parent.vy));
 
-                // stroke() wont work on an invisible line
-                if (Math.abs(tailX) < 0.1) tailX = 0.5;
-                if (Math.abs(tailY) < 0.1) tailY = 0.5;
+            this.vx *= speed;
+            this.vy *= speed;
 
-                context.lineTo(star.x + tailX, star.y + tailY);
-
-                context.stroke();
-
-            });
+            this.dist = (Math.random() * (maxDist - minDist) + minDist);
 
         }
+        Line.prototype.step = function () {
 
-        function movePointer(x, y) {
+            var dead = false;
 
-            if (typeof pointerX === 'number' && typeof pointerY === 'number') {
+            var prevX = this.x,
+                prevY = this.y;
 
-                let ox = x - pointerX,
-                    oy = y - pointerY;
+            this.x += this.vx;
+            this.y += this.vy;
 
-                velocity.tx = velocity.tx + (ox / 8 * scale) * (touchInput ? 1 : -1);
-                velocity.ty = velocity.ty + (oy / 8 * scale) * (touchInput ? 1 : -1);
+            --this.dist;
 
+            // kill if out of screen
+            if (this.x < 0 || this.x > w || this.y < 0 || this.y > h)
+                dead = true;
+
+            // make children :D
+            if (this.dist <= 0 && this.width > 1) {
+
+                // keep yo self, sometimes
+                this.dist = Math.random() * (maxDist - minDist) + minDist;
+
+                // add 2 children
+                if (lines.length < maxLines) lines.push(new Line(this));
+                if (lines.length < maxLines && Math.random() < .5) lines.push(new Line(this));
+
+                // kill the poor thing
+                if (Math.random() < .2) dead = true;
             }
 
-            pointerX = x;
-            pointerY = y;
+            ctx.strokeStyle = ctx.shadowColor = getColor(this.x);
+            ctx.beginPath();
+            ctx.lineWidth = this.width;
+            ctx.moveTo(this.x, this.y);
+            ctx.lineTo(prevX, prevY);
+            ctx.stroke();
 
+            if (dead) return true
         }
 
-        function onMouseMove(event) {
+        init();
+        anim();
 
-            touchInput = false;
+        window.addEventListener('resize', function () {
 
-            movePointer(event.clientX, event.clientY);
+            w = c.width = window.innerWidth;
+            h = c.height = window.innerHeight;
+            starter.x = w / 2;
+            starter.y = h / 2;
 
-        }
-
-        function onTouchMove(event) {
-
-            touchInput = true;
-
-            movePointer(event.touches[0].clientX, event.touches[0].clientY, true);
-
-            event.preventDefault();
-
-        }
-
-        function onMouseLeave() {
-
-            pointerX = null;
-            pointerY = null;
-
-        }
-
+            init();
+        })
 
     }, []);
 
     return (
         <>
-            <canvas className="fixed top-0 left-0 w-screen h-screen z-[-1]">
+            <canvas id="c" className="fixed top-0 left-0 w-screen h-screen z-[-1]">
 
             </canvas>
         </>
