@@ -61,7 +61,7 @@ public class PagesController : ControllerBase
                 .AsParallel());
         }
 
-        return Ok(_db.Pages.Select(p => Page.WithCardSelector(p)).AsNoTracking());
+        return Ok(_db.Pages.Select(p => Page.WithCardSelector(p)));
     }
 
     // GET: api/Pages/5

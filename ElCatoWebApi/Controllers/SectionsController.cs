@@ -33,7 +33,7 @@ public class SectionsController : ControllerBase
     [OutputCache(Duration = 60 * 10)]
     public IActionResult GetSections()
     {
-        return Ok(_db.Sections.Select(s => Section.WithCardsAndPagesSelector(s)).AsNoTracking());
+        return Ok(_db.Sections.Select(s => Section.WithCardsAndPagesSelector(s)));
     }
 
     // GET: api/Sections/5

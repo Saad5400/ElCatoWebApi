@@ -32,7 +32,7 @@ public class CardsController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetCards()
     {
-        return Ok(_db.Cards.Select(c => Card.WithSectionSelector(c)).AsNoTracking());
+        return Ok(_db.Cards.Select(c => Card.WithSectionSelector(c)));
     }
 
     [HttpPost("upsert")]
