@@ -32,7 +32,7 @@ namespace ElCatoWebApi.Controllers
         [HttpGet]
         public async Task<IActionResult> GetCards()
         {
-            return Ok(_db.Cards.Select(c => Card.WithSectionSelector(c)).AsParallel());
+            return Ok(_db.Cards.AsNoTracking().Select(c => Card.WithSectionSelector(c)).AsParallel());
         }
 
         [HttpPost("upsert")]

@@ -61,7 +61,7 @@ namespace ElCatoWebApi.Controllers
                     .AsParallel());
             }
 
-            return Ok(_db.Pages.Select(p => Page.WithCardSelector(p)).AsParallel());
+            return Ok(_db.Pages.AsNoTracking().Select(p => Page.WithCardSelector(p)).AsParallel());
         }
 
         // GET: api/Pages/5

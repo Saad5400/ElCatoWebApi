@@ -7,6 +7,8 @@ using System.Text;
 using System.Threading.RateLimiting;
 using ElCatoWebApi.Services;
 using Microsoft.AspNetCore.RateLimiting;
+using ElCatoWebApi.Models.Compiled;
+using ElCatoWebApi.Models.OldModels.Compiled;
 
 namespace ElCatoWebApi;
 
@@ -32,11 +34,13 @@ public class Program
         // Databases
         builder.Services.AddDbContext<AppDbContext>(options => options
             .UseLazyLoadingProxies()
-            .UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
+            .UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"))
+            .UseModel(AppDbContextModel.Instance)
+        );
 
         builder.Services.AddDbContext<OldDbContext>(options => options
             .UseSqlite(builder.Configuration.GetConnectionString("OldConnection"))
-        //.UseModel(OldDbContext.Instance)
+            .UseModel(OldDbContextModel.Instance)
         );
 
         // JWT Authentication
@@ -101,7 +105,7 @@ public class Program
         builder.Services.AddResponseCaching();
 
         /* -- -- -- -- -- -- -- -- -- -- -- -- -- */
-        
+
         var app = builder.Build();
 
         // Swagger
@@ -125,8 +129,8 @@ public class Program
                 contentType += "; charset=utf-8";
                 headers["Content-Type"] = contentType;
                 // Cache
-                ctx.Context.Response.Headers.Append("Cache-Control", $"public,max-age={1 * 60 * 60 * 24 * 30 * 12}");
-                ctx.Context.Response.Headers.Append("Expires", DateTime.UtcNow.AddYears(1).ToString("R", CultureInfo.InvariantCulture));
+                ctx.Context.Response.Headers.Append("Cache-Control", $"public,max-age={1 * 60 * 60 * 24}");
+                ctx.Context.Response.Headers.Append("Expires", DateTime.UtcNow.AddDays(1).ToString("R", CultureInfo.InvariantCulture));
             }
         });
         app.UseRouting();
@@ -142,7 +146,7 @@ public class Program
         app.MapGet("sitemap-xml", () =>
             Results.File("sitemap.xml", "application/xml")
         );
-        app.MapGet("sitemap-text", () => 
+        app.MapGet("sitemap-text", () =>
             Results.File("sitemap.txt", "text/plain")
         );
         app.MapControllerRoute

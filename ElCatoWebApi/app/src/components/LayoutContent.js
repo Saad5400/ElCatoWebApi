@@ -33,14 +33,14 @@ export default function LayoutContent(props) {
                 {/* {loadingPage && <progress className="progress progress-primary w-full"></progress>} */}
                 <div className="navbar justify-between bg-base-100 border-b-2 sticky top-0 z-[5] overflow-x-clip">
                     <div className="min-w-fit">
-                        {props.links?.length > 0 && <div className="dropdown">
-                            <label tabIndex={0} className="btn btn-ghost lg:hidden">
+                        {props.links?.length > 0 && <details className="dropdown">
+                            <summary className="btn btn-ghost lg:hidden">
                                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" /></svg>
-                            </label>
-                            <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-300 rounded-box w-52">
+                            </summary>
+                            <ul className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-300 rounded-box w-52">
                                 {getLinks()}
                             </ul>
-                        </div>}
+                        </details>}
                         <CustomLink to={"/"}>
                             <div className="font-bold btn btn-ghost no-animation normal-case text-3xl">
                                 El Cato
@@ -56,11 +56,11 @@ export default function LayoutContent(props) {
                         <div className="btn btn-ghost !px-0">
 
                         </div>
-                        <div className="dropdown dropdown-end">
-                            <label tabIndex={0} className="btn btn-square btn-ghost">
+                        <details className="dropdown dropdown-end">
+                            <summary className="btn btn-square btn-ghost">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="inline-block w-5 h-5 stroke-current"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"></path></svg>
-                            </label>
-                            <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-base-300 rounded-box w-52">
+                            </summary>
+                            <ul className="dropdown-content z-[1] menu p-2 shadow bg-base-300 rounded-box w-52">
                                 <li>
                                     <CustomLink to={"/admin"}>
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
@@ -93,7 +93,7 @@ export default function LayoutContent(props) {
                                         Buy me a server</a>
                                 </li>
                             </ul>
-                        </div>
+                        </details>
                     </div>
                 </div>
                 {props.introComplete && <BinaryBackground speed={120} size={20} text="01" />}

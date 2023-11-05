@@ -33,7 +33,7 @@ namespace ElCatoWebApi.Controllers
         [OutputCache(Duration = 60 * 10)]
         public IActionResult GetSections()
         {
-            return Ok(_db.Sections.Select(s => Section.WithCardsAndPagesSelector(s)));
+            return Ok(_db.Sections.AsNoTracking().Select(s => Section.WithCardsAndPagesSelector(s)));
         }
 
         // GET: api/Sections/5
