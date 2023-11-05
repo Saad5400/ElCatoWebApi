@@ -11,118 +11,117 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.OutputCaching;
 using Microsoft.AspNetCore.RateLimiting;
 
-namespace ElCatoWebApi.Controllers
+namespace ElCatoWebApi.Controllers;
+
+[Authorize]
+[Route("api/[controller]")]
+[ApiController]
+public class CardsController : ControllerBase
 {
-    [Authorize]
-    [Route("api/[controller]")]
-    [ApiController]
-    public class CardsController : ControllerBase
+    private readonly AppDbContext _db;
+
+    public CardsController(AppDbContext db)
     {
-        private readonly AppDbContext _db;
+        _db = db;
+    }
 
-        public CardsController(AppDbContext db)
+    // GET: api/Cards
+    [AllowAnonymous]
+    [EnableRateLimiting("fixed")]
+    [ResponseCache(Duration = 60 * 10)]
+    [HttpGet]
+    public async Task<IActionResult> GetCards()
+    {
+        return Ok(_db.Cards.Select(c => Card.WithSectionSelector(c)).AsNoTracking());
+    }
+
+    [HttpPost("upsert")]
+    public async Task<IActionResult> UpsertCard(Card card)
+    {
+        if (card.Id == 0)
         {
-            _db = db;
+            return await PostCard(card);
+        }
+        else
+        {
+            return await PutCard(card.Id, card);
+        }
+    }
+
+    // GET: api/Cards/5
+    [HttpGet("{id}")]
+    public async Task<ActionResult<Card>> GetCard(int id)
+    {
+        var card = await _db.Cards.FindAsync(id);
+
+        if (card == null)
+        {
+            return NotFound();
         }
 
-        // GET: api/Cards
-        [AllowAnonymous]
-        [EnableRateLimiting("fixed")]
-        [ResponseCache(Duration = 60 * 10)]
-        [HttpGet]
-        public async Task<IActionResult> GetCards()
+        return card;
+    }
+
+    // PUT: api/Cards/5
+    // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+    [HttpPut("{id}")]
+    public async Task<IActionResult> PutCard(int id, Card card)
+    {
+        if (id != card.Id)
         {
-            return Ok(_db.Cards.AsNoTracking().Select(c => Card.WithSectionSelector(c)).AsParallel());
+            return BadRequest();
         }
 
-        [HttpPost("upsert")]
-        public async Task<IActionResult> UpsertCard(Card card)
+        _db.Entry(card).State = EntityState.Modified;
+
+        try
         {
-            if (card.Id == 0)
+            await _db.SaveChangesAsync();
+        }
+        catch (DbUpdateConcurrencyException)
+        {
+            if (!CardExists(id))
             {
-                return await PostCard(card);
+                return NotFound();
             }
             else
             {
-                return await PutCard(card.Id, card);
+                throw;
             }
         }
 
-        // GET: api/Cards/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Card>> GetCard(int id)
+        return Ok(card);
+    }
+
+    // POST: api/Cards
+    // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+    [HttpPost]
+    public async Task<IActionResult> PostCard(Card card)
+    {
+        _db.Cards.Add(card);
+        await _db.SaveChangesAsync();
+
+        return CreatedAtAction("GetCard", new { id = card.Id }, card);
+    }
+
+    // DELETE: api/Cards/5
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteCard(int id)
+    {
+        var card = await _db.Cards.FindAsync(id);
+        if (card == null)
         {
-            var card = await _db.Cards.FindAsync(id);
-
-            if (card == null)
-            {
-                return NotFound();
-            }
-
-            return card;
+            return NotFound();
         }
 
-        // PUT: api/Cards/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutCard(int id, Card card)
-        {
-            if (id != card.Id)
-            {
-                return BadRequest();
-            }
+        _db.Cards.Remove(card);
+        await _db.SaveChangesAsync();
 
-            _db.Entry(card).State = EntityState.Modified;
+        return NoContent();
+    }
 
-            try
-            {
-                await _db.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!CardExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return Ok(card);
-        }
-
-        // POST: api/Cards
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<IActionResult> PostCard(Card card)
-        {
-            _db.Cards.Add(card);
-            await _db.SaveChangesAsync();
-
-            return CreatedAtAction("GetCard", new { id = card.Id }, card);
-        }
-
-        // DELETE: api/Cards/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteCard(int id)
-        {
-            var card = await _db.Cards.FindAsync(id);
-            if (card == null)
-            {
-                return NotFound();
-            }
-
-            _db.Cards.Remove(card);
-            await _db.SaveChangesAsync();
-
-            return NoContent();
-        }
-
-        private bool CardExists(int id)
-        {
-            return (_db.Cards?.Any(e => e.Id == id)).GetValueOrDefault();
-        }
+    private bool CardExists(int id)
+    {
+        return (_db.Cards?.Any(e => e.Id == id)).GetValueOrDefault();
     }
 }
