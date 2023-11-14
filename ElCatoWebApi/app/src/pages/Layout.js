@@ -26,7 +26,7 @@ export default function Layout(props) {
     }, []);
 
     const [introComplete, setIntroComplete] = useState(false);
-    const [bgDim, setBgDim] = useState(85);
+    const [bgDim, setBgDim] = useState(90);
     const [links, setLinks] = useState([]);
 
     return (

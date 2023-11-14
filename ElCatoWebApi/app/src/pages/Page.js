@@ -86,6 +86,7 @@ export default function Page(props) {
                     </h1>
                     <article id="content" className="mb-5 prose max-w-full
                                         prose-sm md:prose-md
+                                        prose-td:text-sm md:prose-td:text-lg
                                         text-secondary-content
                                         tajawal
                                         prose-ul:list-inside
