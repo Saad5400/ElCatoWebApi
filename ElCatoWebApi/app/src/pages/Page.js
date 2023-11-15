@@ -76,7 +76,7 @@ export default function Page(props) {
         <>
             <Dimmer>
                 <div className="max-w-5xl mx-auto">
-                    <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-base-content mb-5">
+                    <h1 className="text-xl md:text-2xl lg:text-3xl  font-bold text-base-content/90 mb-5">
                         {loading ?
                             <div role="status" className="animate-pulse">
                                 <div className="h-2.5 bg-base-content rounded-full w-full mb-4"></div>
@@ -84,7 +84,7 @@ export default function Page(props) {
                             : title}
                         <hr className="border-base-content" />
                     </h1>
-                    <article id="content" className="mb-5 prose max-w-full
+                    <article id="content" className="prose max-w-full
                                         prose-sm md:prose-md
                                         prose-td:text-sm md:prose-td:text-lg
                                         text-secondary-content
