@@ -138,3 +138,6 @@ pre {
   height: 10px;
 }
 
+pre, code {
+  @apply !whitespace-pre-wrap !break-words;
+}

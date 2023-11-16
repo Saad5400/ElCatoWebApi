@@ -91,6 +91,7 @@ export default function Page(props) {
                                         tajawal
                                         prose-ul:list-inside
                                         prose-ol:list-inside
+                                        break-words
                                     "
                     >
                         {loading &&
