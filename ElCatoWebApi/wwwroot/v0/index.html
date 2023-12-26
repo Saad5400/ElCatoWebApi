@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <!-- <script async src=  "https://api.countapi.xyz/hit/saad5400.github.io/41ad7b17-be3b-4b69-b2d4-bd05ea176d23?callback=websiteVisits"></script> -->
+    <!--to check go to   https://api.countapi.xyz/get/saad5400.github.io/41ad7b17-be3b-4b69-b2d4-bd05ea176d23 -->
+    <!--to reset counter https://api.countapi.xyz/set/saad5400.github.io/41ad7b17-be3b-4b69-b2d4-bd05ea176d23?value=0 -->
+
+    <title>
+        حلول عملي البرمجة 1
+    </title>
+
+    <link rel="stylesheet" href="../css/bootstrap.css">
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+	<link rel="icon" type="image/png" href="../favicon.png">
+
+    <style>
+            hr {
+                position: relative;
+                top: 10px;
+                border: none;
+                height: 6px;
+                background: white;
+                margin-bottom: 25px;
+                margin-top: 0px;
+            }
+
+            #myVideo {
+                position: fixed;
+                right: 0;
+                bottom: 0;
+                width: 100%;
+                height: 100%;
+                object-fit: fill;
+                }
+
+            a {
+                text-decoration: none;
+            }
+
+            @media (max-width: 500px) {
+                .space {
+                    margin-top: 3vh;
+                }
+                .watching {
+                    font-size: 30px;
+                    margin-top: 10px;
+                }
+                .largeScreen {
+                    display: none;
+                }
+
+            }
+            @media (min-width: 500px) {
+                .smallScreen {
+                    display: none;
+                }
+            }
+    </style>
+</head>
+
+
+<body class="container">
+    <audio controls hidden id="audio_player">
+        <source src="../audio/music.mp3" type="audio/mp3">
+      </audio>
+      <script>
+        let clickCount = 0;
+        window.onclick = function() {
+            let el = document.getElementById("audio_player");
+            let vid = document.getElementById("myVideo");
+            clickCount++;
+            if (clickCount > 7 && vid.currentTime < 10) {
+                vid.currentTime = 10;
+            }
+            if (clickCount > 20) {
+                el.pause();
+            }
+        }
+      </script>
+    <br>
+    <div class="largeScreen row">
+        <div class="col">
+            <img class="w-75" src="../images/hacking.webp" >
+        </div>
+        <div class="col mx-auto align-self-center">
+            <h1 class="watching">
+                WE ARE <a class="link-danger" href="../home.html" style="text-decoration: underline;">WATCHING</a>
+            </h1>
+        </div>
+    </div>
+    <div class="smallScreen">
+        <div class="row">
+            <img class="" src="../images/hacking.webp" >
+        </div>
+        <div class="row">
+            <h1 class="watching text-center">
+                WE ARE <a class="link-danger" href="../home.html">WATCHING</a>
+            </h1>
+        </div>
+    </div>
+    <br>
+
+    <h5 class="text-warning">
+        JAVA 1
+    </h5>
+    <hr class="">
+    <div>
+        <h4>
+            MAN UP AND DO IT <strong class="text-danger">YOURSELF</strong>!
+        </h4>
+        <p>
+            <strong class="text-danger">DO NOT DARE</strong> TO SIMPLY COPY AND PASTE.
+        </p>
+        <ul>
+            <li>
+                <a href="JAVA_1/LAB_1.java" target="_blank">LAB 1</a>
+            </li>
+            <li>
+                <a href="JAVA_1_EXP/LAB_1.html" target="_blank" class="link-success">LAB 1 <strong>شرح</strong></a>
+            </li>
+            <li>
+                <a href="JAVA_1/ASSIGNMENT_1_OLD.java" target="_blank">ASSIGNMENT 1 (OLD)</a>
+            </li>
+            <li>
+                <a href="JAVA_1/ASSIGNMENT_1_NEW.java" target="_blank">ASSIGNMENT 1 (NEW)</a>
+            </li>
+            <li>
+                <a href="JAVA_1_EXP/ASSIGNMENT_1.html" target="_blank" class="link-success">ASSIGNMENT 1 <strong>شرح</strong></a>
+            </li>
+            <li>
+                <a href="JAVA_1/LAB_2.java" target="_blank">LAB 2</a>
+            </li>
+            <li>
+                <a href="JAVA_1_EXP/LAB_2.html" target="_blank" class="link-success">LAB 2 <strong>شرح</strong></a>
+            </li>
+            <li>
+                <a href="JAVA_1/LAB_3.java" target="_blank">LAB 3 (App.java)</a>
+            </li>
+            <li>
+                <a href="JAVA_1/LAB_3_TEST.java" target="_blank">LAB 3 (AppTest.java)</a>
+            </li>
+            <li>
+                <a href="JAVA_1_EXP/LAB_3.html" target="_blank" class="link-success">LAB 3 <strong>شرح</strong></a>
+            </li>
+            <li>
+                <a href="https://www.buymeacoffee.com/Saad5400" target="_blank" class="link-info" dir="rtl">اشتري لي شاهي (:</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="space">
+        
+    </div>
+
+    <div id = "toHide" style="position: fixed; top: 0px; left: 0px; width: 100%; height: 100%; padding-top: 150px; text-align: center; background: #eee; background-color: black;">
+        <div id="innerHide" style="position: fixed; top: 45%; left: 50%; transform: translate(-50%, -50%);">
+            <a id="enterBtn" class="btn btn-lg btn-outline-danger mt-5 px-5" onclick="hide()">
+                ENTER
+            </a>
+            <p id="quote" class="mt-3" style="color: gray;">
+                
+            </p>
+        </div>
+    </div>
+    <video id="myVideo" hidden>
+        <source src="../video/video.mp4#t=5,30">
+    </video>
+    <p id="skipHint" hidden style="position: fixed; bottom: 10%; left: 50%; transform: translate(-50%, -50%);">
+        Click repeatedly to skip
+    </p>
+
+    <script>
+
+        const videoEndTime = 10;
+        const startMusicAfterMS = 5500 + ((10 - videoEndTime) * 1000);
+
+        let vid = document.getElementById("myVideo");
+        let skipEl = document.getElementById("skipHint");
+        let innerDiv = document.getElementById("innerHide");
+        let mainDiv = document.getElementById("toHide");
+
+        let quotes = [
+            '“Any fool can write code that a computer can understand. Good programmers write code that humans can understand.”',
+            '“Experience is the name everyone gives to their mistakes.”',
+            '“Java is to Javascript what car is to Carpet.”',
+            '“Knowledge is power”',
+            '“Perfection is achieved not when there is nothing more to add, but rather when there is nothing more to take away.”',
+            '“Code is like humor. When you have to explain it, it\'s bad.”',
+            '“Never Gonna Give You Up”',
+            '“Life is not a problem to be solved, but a reality to be experienced.”',
+            '“Every saint has a past, and every sinner has a future.”',
+            '“You will not be punished for your anger, you will be punished by your anger.”',
+            '“Keep your face always toward the sunshine and shadows will fall behind you.”',
+            '“Dead people receive more flowers than the living ones because regret is stronger than gratitude.”',
+            '“Better a cruel truth than a comfortable delusion.”',
+            '“Don\'t use yesterday\'s state of mind, to make today\'s decision.”',
+            '“A ship in harbor is safe, but that is not what ships are built for.”',
+            '“Once we accept our limits, we go beyond them.”',
+            '“No.”'
+        ];
+
+        let randomNum =  Math.floor(Math.random() * (quotes.length));
+        document.getElementById("quote").innerHTML = quotes[randomNum];
+
+        function hide() {
+            vid.hidden = false;
+            vid.play();
+            skipEl.hidden = false;
+            setTimeout(function() {
+                innerDiv.hidden = true;
+            }, 500);
+        }
+
+        let interval = setInterval(function () {
+            if (vid.currentTime > videoEndTime) {
+                vid.hidden = true;
+                skipEl.hidden = true;
+                mainDiv.hidden = true;
+                setTimeout(() => {
+                    let el = document.getElementById("audio_player");
+                    if (el.paused) {
+                        el.play();
+                    }
+                }, startMusicAfterMS);
+                clearInterval(interval);
+            }
+        }, 10);
+
+    </script>
+
+</body>
+
+</html>
